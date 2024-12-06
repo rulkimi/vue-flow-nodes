@@ -39,5 +39,9 @@ const description = computed(() => {
 </script>
 
 <template>
-  <NodeBox title="Trigger" :description="description" />
+  <NodeBox 
+    title="Trigger"
+    :description="description"
+    icon="bolt"
+  />
 </template>

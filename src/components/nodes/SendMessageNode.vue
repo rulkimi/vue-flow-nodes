@@ -16,7 +16,7 @@ const props = defineProps<{
 </script>
 
 <template>
-  <NodeBox :title="data.name">
+  <NodeBox :title="data.name" icon="paper-plane">
     <template #description>
       <div
         v-for="item in data.payload"

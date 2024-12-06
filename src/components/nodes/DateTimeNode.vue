@@ -26,5 +26,9 @@ const description = computed(() => {
 </script>
 
 <template>
-  <NodeBox :title="data.name" :description="description" />
+  <NodeBox
+    :title="data.name"
+    :description="description"
+    icon="calendar-days"
+  />
 </template>

@@ -13,5 +13,9 @@ const props = defineProps<{
 </script>
 
 <template>
-  <NodeBox :title="data.name" :description="data.comment" />
+  <NodeBox
+    :title="data.name"
+    :description="data.comment"
+    icon="comment-dots"
+  />
 </template>
