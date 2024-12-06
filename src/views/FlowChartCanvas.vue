@@ -9,6 +9,7 @@ import EdgeWithButton from '../components/EdgeWithButton.vue';
 import TriggerNode from '../components/nodes/TriggerNode.vue';
 import SendMessageNode from '../components/nodes/SendMessageNode.vue';
 import AddCommentNode from '../components/nodes/AddCommentNode.vue';
+import DateTimeNode from '../components/nodes/DateTimeNode.vue';
 
 const createNodes = (nodesArray) =>
   nodesArray.map((node) => ({
@@ -32,14 +33,12 @@ const initialNodes = computed(() =>
       class: 'light',
     },
     {
-      name: 'Away Message',
+      name: 'Business Hours',
       id: '2',
-      type: 'sendMessage',
+      type: 'dateTime',
       data: {
-        payload: [{
-          type: 'text',
-          text: 'Sorry, we are currently away. We will respond as soon as possible.',
-        }],
+        timezone: 'UTC',
+        action: 'businessHours'
       },
       position: { x: 250, y: 200 },
       class: 'light',
@@ -127,6 +126,12 @@ const initialEdges = ref([
       <AddCommentNode
         :id="addCommentNodeProps.id"
         :data="addCommentNodeProps.data"
+      />
+    </template>
+    <template #node-dateTime="DateTimeNodeProps">
+      <DateTimeNode
+        :id="DateTimeNodeProps.id"
+        :data="DateTimeNodeProps.data"
       />
     </template>
     <template #edge-button="buttonEdgeProps">
