@@ -6,12 +6,18 @@ import { Background } from '@vue-flow/background';
 import { MiniMap } from '@vue-flow/minimap';
 
 import EdgeWithButton from '../components/EdgeWithButton.vue';
+import TriggerNode from '../components/nodes/TriggerNode.vue';
+
+import { presets } from '../components/nodes/presets.ts';
 
 const initialNodes = ref([
   {
     id: '1',
-    type: 'input',
-    data: { label: 'Node 1' },
+    type: 'trigger',
+    data: { 
+      type: 'conversationOpened',
+      oncePerContact: false
+    },
     position: { x: 250, y: 0 },
     class: 'light',
   },
@@ -73,6 +79,9 @@ const initialEdges = ref([
 
 <template>
   <VueFlow :nodes="initialNodes" :edges="initialEdges" fit-view-on-init>
+    <template #node-trigger="triggerNodeProps">
+      <TriggerNode :id="triggerNodeProps.id" :data="triggerNodeProps.data" />
+    </template>
     <template #edge-button="buttonEdgeProps">
       <EdgeWithButton
         :id="buttonEdgeProps.id"
