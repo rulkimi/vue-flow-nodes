@@ -45,19 +45,6 @@ const initialNodes = computed(() =>
     },
     {
       name: 'Away Message',
-      id: '3',
-      type: 'sendMessage',
-      data: {
-        payload: [{
-          type: 'text',
-          text: 'Sorry, we are currently away. We will respond as soon as possible.',
-        }],
-      },
-      position: { x: 100, y: 500 },
-      class: 'light',
-    },
-    {
-      name: 'Welcome Message',
       id: '4',
       type: 'sendMessage',
       data: {
@@ -67,6 +54,19 @@ const initialNodes = computed(() =>
         }],
       },
       position: { x: 400, y: 500 },
+      class: 'light',
+    },
+    {
+      name: 'Welcome Message',
+      id: '3',
+      type: 'sendMessage',
+      data: {
+        payload: [{
+          type: 'text',
+          text: 'Sorry, we are currently away. We will respond as soon as possible.',
+        }],
+      },
+      position: { x: 100, y: 500 },
       class: 'light',
     },
     {
