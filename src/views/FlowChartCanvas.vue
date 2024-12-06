@@ -48,10 +48,12 @@ const initialNodes = computed(() =>
       id: '4',
       type: 'sendMessage',
       data: {
-        payload: [{
-          type: 'text',
-          text: 'Sorry, we are currently away. We will respond as soon as possible.',
-        }],
+        payload: [
+          {
+            type: 'text',
+            text: 'Sorry, we are currently away. We will respond as soon as possible.',
+          },
+        ],
       },
       position: { x: 400, y: 500 },
       class: 'light',
@@ -61,10 +63,12 @@ const initialNodes = computed(() =>
       id: '3',
       type: 'sendMessage',
       data: {
-        payload: [{
-          type: 'attachment',
-          attachment: 'https://fastly.picsum.photos/id/396/536/354.jpg?hmac=GmUosOuXb6nGkFhmTE-83i0ciQcaleMyvIyqzeFbW58',
-        }],
+        payload: [
+          {
+            type: 'attachment',
+            attachment: 'https://fastly.picsum.photos/id/396/536/354.jpg?hmac=GmUosOuXb6nGkFhmTE-83i0ciQcaleMyvIyqzeFbW58',
+          }
+        ],
       },
       position: { x: 100, y: 500 },
       class: 'light',

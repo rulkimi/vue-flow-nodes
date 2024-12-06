@@ -35,16 +35,18 @@ for (const edge of outputEdges) {
     :icon-color="themeColor"
   >
     <template #description>
-      <div
-        v-for="item in data.payload"
-      >
-        <div>Message:</div>
-        <template v-if="item.type === 'text'">
-          <div class="italic">{{ item.text }}</div>
-        </template>
-        <template v-else-if="item.type === 'attachment'">
-          <div class="italic">{{ item.attachment }}</div>
-        </template>
+      <div class="flex flex-col gap-2">
+        <div
+          v-for="item in data.payload"
+        >
+          <div>Message:</div>
+          <template v-if="item.type === 'text'">
+            <div class="italic">{{ item.text }}</div>
+          </template>
+          <template v-else-if="item.type === 'attachment'">
+            <div class="italic">{{ item.attachment }}</div>
+          </template>
+        </div>
       </div>
     </template>
   </NodeBox>
