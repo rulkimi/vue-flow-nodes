@@ -5,6 +5,8 @@ import { VueFlow } from '@vue-flow/core';
 import { Background } from '@vue-flow/background';
 import { MiniMap } from '@vue-flow/minimap';
 
+import BaseLayout from '../layouts/BaseLayout.vue';
+
 import EdgeWithButton from '../components/EdgeWithButton.vue';
 import TriggerNode from '../components/nodes/TriggerNode.vue';
 import SendMessageNode from '../components/nodes/SendMessageNode.vue';
@@ -113,47 +115,107 @@ const initialEdges = ref([
     target: '5',
   },
 ]);
+
+const showDrawer = ref(true)
+const vueFlowKey = ref(0)
+
+const week = ref([
+  { day: 'Mon' },
+  { day: 'Tue' },
+  { day: 'Wed' },
+  { day: 'Thu' },
+  { day: 'Fri' },
+  { day: 'Sat' },
+  { day: 'Sun' },
+])
 </script>
 
 <template>
-  <VueFlow :nodes="initialNodes" :edges="initialEdges" fit-view-on-init>
-    <template #node-trigger="triggerNodeProps">
-      <TriggerNode :id="triggerNodeProps.id" :data="triggerNodeProps.data" />
-    </template>
-    <template #node-sendMessage="sendMessageNodeProps">
-      <SendMessageNode
-        :id="sendMessageNodeProps.id"
-        :data="sendMessageNodeProps.data"
-      />
-    </template>
-    <template #node-addComment="addCommentNodeProps">
-      <AddCommentNode
-        :id="addCommentNodeProps.id"
-        :data="addCommentNodeProps.data"
-      />
-    </template>
-    <template #node-dateTime="DateTimeNodeProps">
-      <DateTimeNode
-        :id="DateTimeNodeProps.id"
-        :data="DateTimeNodeProps.data"
-      />
-    </template>
-    <template #edge-button="buttonEdgeProps">
-      <EdgeWithButton
-        :id="buttonEdgeProps.id"
-        :source-x="buttonEdgeProps.sourceX"
-        :source-y="buttonEdgeProps.sourceY"
-        :target-x="buttonEdgeProps.targetX"
-        :target-y="buttonEdgeProps.targetY"
-        :source-position="buttonEdgeProps.sourcePosition"
-        :target-position="buttonEdgeProps.targetPosition"
-        :marker-end="buttonEdgeProps.markerEnd"
-        :style="buttonEdgeProps.style"
-      />
-    </template>
+  <BaseLayout>
+    <template #canvas>
+      <VueFlow :key="vueFlowKey" :nodes="initialNodes" :edges="initialEdges" fit-view-on-init>
+        <template #node-trigger="triggerNodeProps">
+          <TriggerNode :id="triggerNodeProps.id" :data="triggerNodeProps.data" />
+        </template>
+        <template #node-sendMessage="sendMessageNodeProps">
+          <SendMessageNode :id="sendMessageNodeProps.id" :data="sendMessageNodeProps.data" />
+        </template>
+        <template #node-addComment="addCommentNodeProps">
+          <AddCommentNode :id="addCommentNodeProps.id" :data="addCommentNodeProps.data" />
+        </template>
+        <template #node-dateTime="DateTimeNodeProps">
+          <DateTimeNode :id="DateTimeNodeProps.id" :data="DateTimeNodeProps.data" />
+        </template>
+        <template #edge-button="buttonEdgeProps">
+          <EdgeWithButton
+            :id="buttonEdgeProps.id"
+            :source-x="buttonEdgeProps.sourceX"
+            :source-y="buttonEdgeProps.sourceY"
+            :target-x="buttonEdgeProps.targetX"
+            :target-y="buttonEdgeProps.targetY"
+            :source-position="buttonEdgeProps.sourcePosition"
+            :target-position="buttonEdgeProps.targetPosition"
+            :marker-end="buttonEdgeProps.markerEnd"
+            :style="buttonEdgeProps.style"
+          />
+        </template>
 
-    <Background />
-    <MiniMap />
-  </VueFlow>
+        <Background />
+        <MiniMap />
+      </VueFlow>
+    </template>
+    <template #drawer>
+      <div class="flex items-center gap-2 mb-4">
+        <font-awesome-icon style="color: #f9511e" :icon="['fas', 'calendar-days']" size="xl" />
+        <h2 class="text-2xl font-bold">Business Hours</h2>
+      </div>
+      <div class="border-b pb-2">
+        <span>
+          Allows a branch to be created based on date & time conditions.
+          Use it to set business hours or date range conditions.
+        </span>
+      </div>
+
+      <div class="grid grid-cols-12 py-4">
+        <div class="col-span-3 ml-6">
+          <font-awesome-icon class="mr-1" :icon="['far', 'calendar']" />
+          <span>Day</span>
+        </div>
+        <div class="col-span-9">
+          <font-awesome-icon class="mr-1" :icon="['far', 'clock']" />
+          <span>Time</span>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-2 mb-12">
+        <div
+          v-for="item in week"
+          :key="item.day"
+          class="grid grid-cols-12"
+        >
+          <span class="col-span-1"></span>
+          <span class="col-span-2 text-start font-bold">{{ item.day }}</span>
+          <div class="col-span-3 flex items-center gap-4">
+            <input class="border rounded-lg p-1 w-16 text-center" value="09:00" />
+            <font-awesome-icon :icon="['far', 'clock']" />
+          </div>
+          <span class="col-span-1">to</span>
+          <div class="col-span-3 flex items-center gap-4">
+            <input class="border rounded-lg p-1 w-16 text-center" value="17:00" />
+            <font-awesome-icon :icon="['far', 'clock']" />
+          </div>
+        </div>
+      </div>
+
+      <label>
+        <p class="text-slate-500 mb-1">Time Zone</p>
+        <select class="border rounded-lg p-1 w-full">
+          <option disabled>Select Time Zone</option>
+          <option value="UTC" selected>(GMT+00:00) UTC</option>
+        </select>
+      </label>
+    </template>
+  </BaseLayout>
 </template>
+
 
