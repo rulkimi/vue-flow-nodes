@@ -7,7 +7,7 @@ const props = defineProps<{
 </script>
 
 <template>
-  <div class="bg-white border rounded-lg shadow-md w-60">
+  <div class="bg-white border rounded-2xl shadow-md w-60">
     <div class="border-b p-3 font-semibold">{{ title }}</div>
     <div class="p-3">
       <slot name="description">{{ description }}</slot>

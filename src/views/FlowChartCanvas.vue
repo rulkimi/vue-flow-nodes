@@ -8,6 +8,7 @@ import { MiniMap } from '@vue-flow/minimap';
 import EdgeWithButton from '../components/EdgeWithButton.vue';
 import TriggerNode from '../components/nodes/TriggerNode.vue';
 import SendMessageNode from '../components/nodes/SendMessageNode.vue';
+import AddCommentNode from '../components/nodes/AddCommentNode.vue';
 
 const createNodes = (nodesArray) =>
   nodesArray.map((node) => ({
@@ -56,6 +57,15 @@ const initialNodes = computed(() =>
       position: { x: 400, y: 200 },
       class: 'light',
     },
+    {
+      id: '4',
+      type: 'addComment',
+      data: {
+        comment: 'User message during off hours'
+      },
+      name: 'Add Comment #1',
+      position: { x: 400, y: 450}
+    }
   ])
 );
 
@@ -74,6 +84,12 @@ const initialEdges = ref([
     source: '1',
     target: '3',
   },
+  {
+    id: 'e3-4',
+    type: 'button',
+    source: '3',
+    target: '4',
+  },
 ]);
 </script>
 
@@ -86,6 +102,12 @@ const initialEdges = ref([
       <SendMessageNode
         :id="sendMessageNodeProps.id"
         :data="sendMessageNodeProps.data"
+      />
+    </template>
+    <template #node-addComment="addCommentNodeProps">
+      <AddCommentNode
+        :id="addCommentNodeProps.id"
+        :data="addCommentNodeProps.data"
       />
     </template>
     <template #edge-button="buttonEdgeProps">
