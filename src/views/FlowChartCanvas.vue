@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 
 import { VueFlow } from '@vue-flow/core';
 import { Background } from '@vue-flow/background';
@@ -7,47 +7,59 @@ import { MiniMap } from '@vue-flow/minimap';
 
 import EdgeWithButton from '../components/EdgeWithButton.vue';
 import TriggerNode from '../components/nodes/TriggerNode.vue';
+import SendMessageNode from '../components/nodes/SendMessageNode.vue';
 
-import { presets } from '../components/nodes/presets.ts';
-
-const initialNodes = ref([
-  {
-    id: '1',
-    type: 'trigger',
-    data: { 
-      type: 'conversationOpened',
-      oncePerContact: false
+const createNodes = (nodesArray) =>
+  nodesArray.map((node) => ({
+    ...node,
+    data: {
+      ...node.data,
+      name: node.name 
     },
-    position: { x: 250, y: 0 },
-    class: 'light',
-  },
-  {
-    id: '2',
-    type: 'output',
-    data: { label: 'Node 2' },
-    position: { x: 100, y: 100 },
-    class: 'light',
-  },
-  {
-    id: '3',
-    data: { label: 'Node 3' },
-    position: { x: 400, y: 100 },
-    class: 'light',
-  },
-  {
-    id: '4',
-    data: { label: 'Node 4' },
-    position: { x: 150, y: 200 },
-    class: 'light',
-  },
-  {
-    id: '5',
-    type: 'output',
-    data: { label: 'Node 5' },
-    position: { x: 300, y: 300 },
-    class: 'light',
-  },
-]);
+  }));
+
+const initialNodes = computed(() => 
+  createNodes([
+    {
+      id: '1',
+      type: 'trigger',
+      data: { 
+        type: 'conversationOpened',
+        oncePerContact: false,
+      },
+      position: { x: 250, y: 0 },
+      class: 'light',
+    },
+    {
+      name: 'Away Message',
+      id: '2',
+      type: 'sendMessage',
+      data: {
+        payload: [{
+          type: 'text',
+          text: 'Sorry, we are currently away. We will respond as soon as possible.',
+        }],
+      },
+      position: { x: 100, y: 200 },
+      class: 'light',
+    },
+    {
+      name: 'Welcome Message',
+      id: '3',
+      type: 'sendMessage',
+      data: {
+        payload: [{
+          type: 'text',
+          text: 'Sorry, we are currently away. We will respond as soon as possible.',
+        }],
+      },
+      position: { x: 400, y: 200 },
+      class: 'light',
+    },
+  ])
+);
+
+console.log(initialNodes.value)
 
 const initialEdges = ref([
   {
@@ -62,18 +74,6 @@ const initialEdges = ref([
     source: '1',
     target: '3',
   },
-  {
-    id: 'e4-5',
-    type: 'button',
-    source: '4',
-    target: '5',
-  },
-  {
-    id: 'e3-4',
-    type: 'button',
-    source: '3',
-    target: '4',
-  },
 ]);
 </script>
 
@@ -81,6 +81,12 @@ const initialEdges = ref([
   <VueFlow :nodes="initialNodes" :edges="initialEdges" fit-view-on-init>
     <template #node-trigger="triggerNodeProps">
       <TriggerNode :id="triggerNodeProps.id" :data="triggerNodeProps.data" />
+    </template>
+    <template #node-sendMessage="sendMessageNodeProps">
+      <SendMessageNode
+        :id="sendMessageNodeProps.id"
+        :data="sendMessageNodeProps.data"
+      />
     </template>
     <template #edge-button="buttonEdgeProps">
       <EdgeWithButton
