@@ -30,10 +30,10 @@ const path = computed(() => getSmoothStepPath(props))
       class="nodrag nopan"
     >
       <button
-        class="text-xs text-gray-500 bg-white w-4 h-4 rounded-full border flex items-center justify-center border-gray-400"
+        class="text-xs text-gray-500 bg-white p-1 rounded-full border flex items-center justify-center border-gray-400"
         @click="console.log(id)"
       >
-        +
+        <font-awesome-icon :icon="['fas', 'plus']" />
       </button>
     </div>
   </EdgeLabelRenderer>
