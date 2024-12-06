@@ -41,11 +41,11 @@ const initialNodes = computed(() =>
           text: 'Sorry, we are currently away. We will respond as soon as possible.',
         }],
       },
-      position: { x: 100, y: 200 },
+      position: { x: 250, y: 200 },
       class: 'light',
     },
     {
-      name: 'Welcome Message',
+      name: 'Away Message',
       id: '3',
       type: 'sendMessage',
       data: {
@@ -54,17 +54,30 @@ const initialNodes = computed(() =>
           text: 'Sorry, we are currently away. We will respond as soon as possible.',
         }],
       },
-      position: { x: 400, y: 200 },
+      position: { x: 100, y: 500 },
       class: 'light',
     },
     {
+      name: 'Welcome Message',
       id: '4',
+      type: 'sendMessage',
+      data: {
+        payload: [{
+          type: 'text',
+          text: 'Sorry, we are currently away. We will respond as soon as possible.',
+        }],
+      },
+      position: { x: 400, y: 500 },
+      class: 'light',
+    },
+    {
+      id: '5',
       type: 'addComment',
       data: {
         comment: 'User message during off hours'
       },
       name: 'Add Comment #1',
-      position: { x: 400, y: 450}
+      position: { x: 400, y: 750}
     }
   ])
 );
@@ -79,16 +92,22 @@ const initialEdges = ref([
     type: 'button',
   },
   {
-    id: 'e1-3',
+    id: 'e2-3',
     type: 'button',
-    source: '1',
+    source: '2',
     target: '3',
   },
   {
-    id: 'e3-4',
+    id: 'e2-4',
     type: 'button',
-    source: '3',
+    source: '2',
     target: '4',
+  },
+  {
+    id: 'e4-5',
+    type: 'button',
+    source: '4',
+    target: '5',
   },
 ]);
 </script>
