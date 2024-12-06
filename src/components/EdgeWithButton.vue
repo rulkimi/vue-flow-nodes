@@ -18,7 +18,15 @@ const path = computed(() => getSmoothStepPath(props))
 </script>
 
 <template>
-  <BaseEdge :id="id" :style="style" :path="path[0]" :marker-end="markerEnd" />
+  <BaseEdge
+    :id="id"
+    :style="{
+      ...style,
+      strokeWidth: 2.5
+    }"
+    :path="path[0]"
+    :marker-end="markerEnd"
+  />
 
   <EdgeLabelRenderer>
     <div

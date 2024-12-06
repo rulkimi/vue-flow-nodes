@@ -3,7 +3,7 @@ import NodeBox from '../templates/NodeBox.vue'
 
 import { useVueFlow } from '@vue-flow/core'
 
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 
 const props = defineProps<{
   id: string
@@ -24,7 +24,17 @@ const description = computed(() => {
   }
 });
 
-// const { updateNodeData, getConnectedEdges } = useVueFlow()
+const themeColor = ref('#ea487e')
+
+const { updateNodeData, getConnectedEdges } = useVueFlow()
+
+const connectedEdges = getConnectedEdges(props.id);
+const outputEdges = connectedEdges.filter(edge => edge.source === props.id);
+for (const edge of outputEdges) {
+  edge.style = {
+    stroke: themeColor.value
+  };
+}
 
 // function onSelect(color) {
 //   updateNodeData(props.id, { color, isGradient: false })
@@ -43,5 +53,6 @@ const description = computed(() => {
     title="Trigger"
     :description="description"
     icon="bolt"
+    :icon-color="themeColor"
   />
 </template>

@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import NodeBox from '../templates/NodeBox.vue'
 
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
+import { useVueFlow } from '@vue-flow/core'
 
 const props = defineProps<{
   id: string
@@ -13,10 +14,26 @@ const props = defineProps<{
     }>
   }
 }>();
+
+const themeColor = ref('#3baca1')
+
+const { updateNodeData, getConnectedEdges } = useVueFlow()
+
+const connectedEdges = getConnectedEdges(props.id);
+const outputEdges = connectedEdges.filter(edge => edge.source === props.id);
+for (const edge of outputEdges) {
+  edge.style = {
+    stroke: themeColor.value
+  };
+}
 </script>
 
 <template>
-  <NodeBox :title="data.name" icon="paper-plane">
+  <NodeBox
+    :title="data.name"
+    icon="paper-plane"
+    :icon-color="themeColor"
+  >
     <template #description>
       <div
         v-for="item in data.payload"
