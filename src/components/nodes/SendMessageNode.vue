@@ -4,14 +4,14 @@ import NodeBox from '../templates/NodeBox.vue'
 import { computed, ref } from 'vue'
 import { useVueFlow } from '@vue-flow/core'
 
+type TextPayload = { type: 'text'; text: string };
+type AttachmentPayload = { type: 'attachment'; attachment: string };
+
 const props = defineProps<{
   id: string
   data: {
     name: string
-    payload: Array<{
-      type: 'text' | 'attachment'
-      text: string
-    }>
+    payload: Array<TextPayload | AttachmentPayload>
   }
 }>();
 
@@ -39,7 +39,12 @@ for (const edge of outputEdges) {
         v-for="item in data.payload"
       >
         <div>Message:</div>
-        <div class="italic">{{ item.text }}</div>
+        <template v-if="item.type === 'text'">
+          <div class="italic">{{ item.text }}</div>
+        </template>
+        <template v-else-if="item.type === 'attachment'">
+          <div class="italic">{{ item.attachment }}</div>
+        </template>
       </div>
     </template>
   </NodeBox>

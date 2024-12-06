@@ -17,7 +17,7 @@ const props = defineProps<{
       />
       <div>{{ title }}</div>
     </div>
-    <div class="p-3">
+    <div class="p-3 break-words">
       <slot name="description">{{ description }}</slot>
     </div>
   </div>
