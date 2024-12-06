@@ -43,5 +43,6 @@ for (const edge of outputEdges) {
     :title="data.name"
     :description="description"
     icon="calendar-days"
+    :icon-color="themeColor"
   />
 </template>
