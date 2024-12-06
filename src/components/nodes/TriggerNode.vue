@@ -52,7 +52,7 @@ for (const edge of outputEdges) {
   <NodeBox 
     title="Trigger"
     :description="description"
-    icon="bolt"
+    icon="lightbulb"
     :icon-color="themeColor"
   />
 </template>

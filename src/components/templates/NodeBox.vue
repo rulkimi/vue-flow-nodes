@@ -12,7 +12,7 @@ const props = defineProps<{
     <div class="border-b p-3 flex items-center gap-2 font-semibold">
       <font-awesome-icon
         v-if="icon"
-        :icon="['fas', icon]"
+        :icon="['far', icon]"
         :style="{ color: iconColor }"
       />
       <div>{{ title }}</div>
