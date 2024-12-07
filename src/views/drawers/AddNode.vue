@@ -27,7 +27,7 @@ const nodeTypes = ref([
 const selectedNodeType = ref()
 
 type TextPayload = { id: string, type: 'text'; text: string };
-type AttachmentPayload = { id: string, type: 'attachment'; attachment: string };
+type AttachmentPayload = { id: string, type: 'attachment'; attachment: File | null | string };
 
 const sendMessageTitle = ref()
 const messages = ref<Array<TextPayload | AttachmentPayload>>([])
@@ -36,11 +36,10 @@ const onFileChange = (event: Event, index: number) => {
   const input = event.target as HTMLInputElement;
   const file = input.files?.[0];
   if (file) {
-    const updatedMessage = { ...messages.value[index], attachment: file.name };
+    const updatedMessage = { ...messages.value[index], attachment: file };
     messages.value.splice(index, 1, updatedMessage);
   }
 };
-
 
 const addTextMessage = () => {
   const generatedId = Date.now().toString()
@@ -55,7 +54,7 @@ const addTextMessage = () => {
 
 const addAttachmentMessage = () => {
   const generatedId = Date.now().toString()
-  const newMessage: AttachmentPayload = { id: generatedId, type: 'attachment', attachment: '' };
+  const newMessage: AttachmentPayload = { id: generatedId, type: 'attachment', attachment: null };
   messages.value.push(newMessage);
   nextTick(() => {
     const fileInputElement = document.getElementById(generatedId) as HTMLInputElement;
@@ -152,7 +151,13 @@ const addAttachmentMessage = () => {
                     <p class="text-slate-500 mb-1 text-sm">Message #{{ index + 1 }} - {{ message.type }}</p>
                     <div class="border rounded-lg px-2 py-1 w-full flex items-center gap-2">
                       <div class="px-1 py-0.5 bg-blue-500/10 rounded-full text-sm">Choose File</div>
-                      <span>{{ message.attachment || 'No File Chosen' }}</span>
+                      <span>
+                        {{
+                          typeof message.attachment === 'string'
+                            ? message.attachment
+                            : message.attachment?.name || 'No File Chosen'
+                        }}
+                      </span>
                     </div>
                     <input
                       :id="message.id"
@@ -178,6 +183,8 @@ const addAttachmentMessage = () => {
                   <font-awesome-icon class="text-slate-500 mr-1" :icon="['fas', 'paperclip']" /> Add Attachment
                 </div>
               </div>
+
+              <button key="button-add" @click="console.log(messages)">Add Node</button>
             </transition-group>
             
           </div>
