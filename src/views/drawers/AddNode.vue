@@ -11,18 +11,21 @@ const nodeTypes = ref([
   { 
     value: 'sendMessage', 
     label: 'Send Message', 
+    description: 'Send a message, including text or attachment.',
     icon: 'paper-plane',
     color: '#3baca1',
   },
   { 
     value: 'addComment', 
     label: 'Add Comment', 
+    description: 'Remark for more explanation.',
     icon: 'comment-dots',
     color: '#8b93d0',
   },
   { 
     value: 'businessHours', 
     label: 'Business Hours', 
+    description: ' Allows a branch to be created based on date & time conditions.',
     icon: 'calendar-days',
     color: '#f9511e',
   }
@@ -48,18 +51,22 @@ const selectedNodeType = ref()
         <label
           v-for="type in nodeTypes"
           :key="type.value"
-          class="cursor-pointer flex items-center justify-center border rounded-lg p-4 w-full h-16 transition-all duration-200"
+          class="cursor-pointer flex items-center justify-center border rounded-lg p-4 w-full h-20 transition-all duration-200"
           :class="selectedNodeType === type.value ? 'bg-blue-500/10 border-blue-500' : 'hover:bg-gray-100'"
         >
           <div class="w-full grid grid-cols-12">
-            <font-awesome-icon
-              :style="{ color: type.color }"
-              :icon="['far', type.icon]"
-              size="xl"
-              class="col-span-2"
-            />
-            <div class="col-span-8 text-center text-sm text-slate-700">
-              {{ type.label }}
+            <div class="col-span-2 flex items-center justify-start">
+              <font-awesome-icon
+                :style="{ color: type.color }"
+                :icon="['far', type.icon]"
+                size="xl"
+              />
+            </div>
+            <div class="col-span-8 ">
+              <div class="text-start text-sm text-slate-700 font-bold">
+                {{ type.label }}
+              </div>
+              <div class="text-xs">{{ type.description }}</div>
             </div>
             <div class="col-span-2 flex justify-end items-center">
               <input
