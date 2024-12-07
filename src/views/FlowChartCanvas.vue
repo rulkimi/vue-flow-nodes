@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useMainStore } from '../stores';
-import { useVueFlow, DefaultEdge} from '@vue-flow/core';
+import { useVueFlow, DefaultEdge } from '@vue-flow/core';
 import { Node } from '../types'
 
 import { NodeMouseEvent, VueFlow } from '@vue-flow/core';
@@ -151,7 +151,7 @@ const addNewNode = () => {
             :source-position="buttonEdgeProps.sourcePosition"
             :target-position="buttonEdgeProps.targetPosition"
             :marker-end="buttonEdgeProps.markerEnd"
-            :style="buttonEdgeProps.style as Record<string, unknown>"
+            :style="buttonEdgeProps.style"
           />
         </template>
         <template #edge-custom="customEdgeProps">
@@ -164,7 +164,7 @@ const addNewNode = () => {
             :source-position="customEdgeProps.sourcePosition"
             :target-position="customEdgeProps.targetPosition"
             :marker-end="customEdgeProps.markerEnd"
-            :style="customEdgeProps.style as Record<string, unknown>"
+            :style="customEdgeProps.style"
           />
         </template>
 

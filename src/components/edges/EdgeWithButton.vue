@@ -13,7 +13,7 @@ const props = defineProps<{
   sourcePosition: Position
   targetPosition: Position
   markerEnd?: string
-  style?: Record<string, unknown>
+  style?: any
 }>()
 
 const path = computed(() => getSmoothStepPath(props))
