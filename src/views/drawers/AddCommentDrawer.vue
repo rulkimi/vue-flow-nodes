@@ -17,7 +17,7 @@ const node = computed(() => {
   <div v-if="node">
     <div class="flex items-center gap-2 mb-4">
       <font-awesome-icon style="color: #8b93d0" :icon="['far', 'comment-dots']" size="xl" />
-      <h2 class="text-2xl font-bold">Add Comment</h2>
+      <h2 class="text-2xl font-bold">{{ node.name }}</h2>
     </div>
     <div class="border-b pb-2">
       <span>
