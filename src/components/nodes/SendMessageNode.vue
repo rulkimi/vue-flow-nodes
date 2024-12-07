@@ -17,7 +17,7 @@ const props = defineProps<{
 
 const themeColor = ref('#3baca1')
 
-const { updateNodeData, getConnectedEdges } = useVueFlow()
+const { getConnectedEdges } = useVueFlow()
 
 const connectedEdges = getConnectedEdges(props.id);
 const outputEdges = connectedEdges.filter(edge => edge.source === props.id);

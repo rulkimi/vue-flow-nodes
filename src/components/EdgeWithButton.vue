@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import { BaseEdge, EdgeLabelRenderer, getSmoothStepPath, useVueFlow } from '@vue-flow/core';
+import { BaseEdge, EdgeLabelRenderer, getSmoothStepPath, Position } from '@vue-flow/core';
 
 const props = defineProps<{
   id: string
@@ -8,8 +8,8 @@ const props = defineProps<{
   sourceY: number
   targetX: number
   targetY: number
-  sourcePosition: string
-  targetPosition: string
+  sourcePosition: Position
+  targetPosition: Position
   markerEnd?: string
   style?: Record<string, unknown>
 }>()

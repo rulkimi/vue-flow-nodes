@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import NodeBox from '../templates/NodeBox.vue'
 
-import { computed, ref } from 'vue'
+import { ref } from 'vue'
 import { useVueFlow } from '@vue-flow/core'
 
 const props = defineProps<{
@@ -14,7 +14,7 @@ const props = defineProps<{
 
 const themeColor = ref('#8b93d0')
 
-const { updateNodeData, getConnectedEdges } = useVueFlow()
+const { getConnectedEdges } = useVueFlow()
 
 const connectedEdges = getConnectedEdges(props.id);
 const outputEdges = connectedEdges.filter(edge => edge.source === props.id);

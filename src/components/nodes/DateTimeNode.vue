@@ -7,6 +7,7 @@ import { useVueFlow } from '@vue-flow/core'
 const props = defineProps<{
   id: string
   data: {
+    name: string
     timezone: string
     action: string
   }
@@ -27,7 +28,7 @@ const description = computed(() => {
 
 const themeColor = ref('#f9511e')
 
-const { updateNodeData, getConnectedEdges } = useVueFlow()
+const { getConnectedEdges } = useVueFlow()
 
 const connectedEdges = getConnectedEdges(props.id);
 const outputEdges = connectedEdges.filter(edge => edge.source === props.id);

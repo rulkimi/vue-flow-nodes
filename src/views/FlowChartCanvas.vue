@@ -2,7 +2,7 @@
 import { ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
 
-import { VueFlow } from '@vue-flow/core';
+import { NodeMouseEvent, VueFlow } from '@vue-flow/core';
 import { Background } from '@vue-flow/background';
 import { MiniMap } from '@vue-flow/minimap';
 
@@ -14,7 +14,25 @@ import SendMessageNode from '../components/nodes/SendMessageNode.vue';
 import AddCommentNode from '../components/nodes/AddCommentNode.vue';
 import DateTimeNode from '../components/nodes/DateTimeNode.vue';
 
-const createNodes = (nodesArray) =>
+interface NodeData {
+  type?: string;
+  oncePerContact?: boolean;
+  timezone?: string;
+  action?: string;
+  payload?: Array<{ type: string; text?: string; attachment?: string }>;
+  comment?: string;
+}
+
+interface Node {
+  id: string;
+  type: string;
+  data: NodeData;
+  name?: string;
+  position: { x: number; y: number };
+  class?: string;
+}
+
+const createNodes = (nodesArray: Node[]): Node[] =>
   nodesArray.map((node) => ({
     ...node,
     data: {
@@ -88,8 +106,6 @@ const initialNodes = computed(() =>
   ])
 );
 
-console.log(initialNodes.value)
-
 const initialEdges = ref([
   {
     id: 'e1-2',
@@ -117,11 +133,10 @@ const initialEdges = ref([
   },
 ]);
 
-const showDrawer = ref(true)
 const vueFlowKey = ref(0)
 
 const router = useRouter()
-const onNodeClick = ({ event, node }) => {
+const onNodeClick = ({ event, node }: NodeMouseEvent) => {
   console.log('Node clicked: ', node, event);
 
   if (node.type === 'dateTime') router.push({ name: 'date-time', params: { nodeId: node.id } })
@@ -162,7 +177,7 @@ const onNodeClick = ({ event, node }) => {
             :source-position="buttonEdgeProps.sourcePosition"
             :target-position="buttonEdgeProps.targetPosition"
             :marker-end="buttonEdgeProps.markerEnd"
-            :style="buttonEdgeProps.style"
+            :style="buttonEdgeProps.style as Record<string, unknown>"
           />
         </template>
 

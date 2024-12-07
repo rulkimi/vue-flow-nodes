@@ -26,7 +26,7 @@ const description = computed(() => {
 
 const themeColor = ref('#ea487e')
 
-const { updateNodeData, getConnectedEdges } = useVueFlow()
+const { getConnectedEdges } = useVueFlow()
 
 const connectedEdges = getConnectedEdges(props.id);
 const outputEdges = connectedEdges.filter(edge => edge.source === props.id);
