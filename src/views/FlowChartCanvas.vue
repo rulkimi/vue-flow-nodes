@@ -21,8 +21,8 @@ const vueFlowKey = ref(0)
 const store = useMainStore()
 
 const router = useRouter()
-const onNodeClick = ({ event, node }: NodeMouseEvent) => {
-  console.log('Node clicked: ', node, event);
+const onNodeClick = ({ node }: NodeMouseEvent) => {
+  // console.log('Node clicked: ', node, event);
 
   store.setActiveNode(node.id)
 

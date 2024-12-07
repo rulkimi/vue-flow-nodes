@@ -48,21 +48,44 @@ export const useMainStore = defineStore('main', () => {
     (newNodes) => {
       if (!newNodes) return;
 
-      const newEdges = generateEdges(newNodes);
+      const newEdges = generateEdges();
       edges.value = newEdges;
     },
     { deep: true, immediate: true }
   );
 
-  const generateEdges = (nodes: Node[]): { id: string; source: string; target: string; type: string }[] => {
-    return nodes
-      .filter((node) => node.parentId && node.parentId !== -1)
-      .map((node) => ({
+  const generateEdges = (): { id: string; source: string; target: string; type: string }[] => {
+    return nodes.value
+      .filter((node: Node) => node.parentId && node.parentId !== -1)
+      .map((node: Node) => ({
         id: `${node.parentId}-${node.id}`,
         source: `${node.parentId}`,
         target: `${node.id}`,
         type: node.type === 'dateTimeConnector' ? 'custom' : 'button',
       }));
+  };
+
+  const addNode = (node: Node) => {
+    nodes.value = [...nodes.value, node];
+    edges.value = generateEdges();
+  };
+
+  const editNode = (nodeId: string, updatedProperties: Partial<Node>) => {
+    nodes.value = nodes.value.map((node: Node) => {
+      if (node.id === nodeId) {
+        return {
+          ...node,
+          ...updatedProperties,
+          data: {
+            ...node.data,
+            ...(updatedProperties.data || {}),
+          },
+          position: updatedProperties.position || node.position,
+        };
+      }
+      return node;
+    });
+    edges.value = generateEdges();
   };
 
   return {
@@ -71,5 +94,8 @@ export const useMainStore = defineStore('main', () => {
     activeNode,
     setActiveNode,
     setNodes,
+    generateEdges,
+    addNode,
+    editNode,
   };
 });
