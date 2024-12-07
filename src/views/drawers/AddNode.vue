@@ -1,5 +1,10 @@
 <script setup lang="ts">
-import { ref, nextTick } from 'vue';
+import { ref, nextTick, watch } from 'vue';
+import { useMainStore } from '../../stores';
+
+defineProps<{
+  edgeId: string
+}>()
 
 const nodeTypes = ref([
   { 
@@ -61,6 +66,16 @@ const addAttachmentMessage = () => {
     fileInputElement?.click();
   });
 };
+
+const store = useMainStore()
+watch(
+  () => messages.value,
+  (newValue, oldValue) => {
+    console.log("messages array changed", newValue, oldValue);
+    store.setNewNodeData({ messages: messages, title: sendMessageTitle.value });
+  },
+  { deep: true } // Enable deep watching
+);
 
 </script>
 
@@ -184,7 +199,6 @@ const addAttachmentMessage = () => {
                 </div>
               </div>
 
-              <button key="button-add" @click="console.log(messages)">Add Node</button>
             </transition-group>
             
           </div>

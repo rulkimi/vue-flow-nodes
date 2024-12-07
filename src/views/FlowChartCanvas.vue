@@ -2,6 +2,8 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useMainStore } from '../stores';
+import { useVueFlow, DefaultEdge} from '@vue-flow/core';
+import { Node } from '../types'
 
 import { NodeMouseEvent, VueFlow } from '@vue-flow/core';
 import { Background } from '@vue-flow/background';
@@ -31,6 +33,78 @@ const onNodeClick = ({ node }: NodeMouseEvent) => {
   else if (node.type === 'addComment') router.push({ name: 'add-comment', params: { nodeId: node.id } })
   else router.push({ name: 'flowchart' })
 }
+
+const { findEdge, updateNode, addNodes } = useVueFlow()
+
+const moveChildNodesRecursively = (parentNodeId: string, yOffset: number) => {
+  const childEdges = store.edges.filter((e: DefaultEdge) => e.source === parentNodeId);
+
+  // Map these edges to their respective child nodes
+  const childNodes = childEdges.map((e: DefaultEdge) => store.nodes.find((n: Node) => n.id === e.target));
+
+  childNodes.forEach((childNode: Node) => {
+    if (childNode) {
+      const newChildPosition = {
+        x: childNode.position.x,
+        y: childNode.position.y + yOffset
+      };
+
+      // Update the child's position
+      updateNode(childNode.id, { position: newChildPosition });
+      store.editNode(childNode.id, { position: newChildPosition });
+
+      // Recursively move the child's children
+      moveChildNodesRecursively(childNode.id, yOffset);
+    }
+  });
+};
+
+const generateRandomId = () => Math.random().toString(16).slice(2, 8);
+
+const addNewNode = () => {
+  const edge = findEdge(store.edgeId);
+  console.log(edge)
+  if (!edge) return;
+  const { sourceNode, targetNode } = edge;
+
+  const newNode = {
+    id: generateRandomId(),
+    data: {
+      name: store.newNodeData.title,
+      payload: store.newNodeData.messages
+    },
+    type: 'sendMessage',
+    position: { 
+      x: targetNode.position.x,
+      y: targetNode.position.y
+    },
+    parentId: sourceNode.id
+  };
+
+  // Add the new node
+  addNodes(newNode);
+  store.addNode(newNode);
+
+  console.log(store.nodes);
+
+  // Update the target node's position
+  const updatedTargetPosition = {
+    x: targetNode.position.x,
+    y: targetNode.position.y + 200
+  };
+
+  updateNode(targetNode.id, { position: updatedTargetPosition });
+  store.editNode(targetNode.id, {
+    position: updatedTargetPosition,
+    parentId: newNode.id,
+  });
+
+  // Recursively move all the child nodes' positions
+  moveChildNodesRecursively(targetNode.id, 200);
+
+  const newEdges = store.generateEdges();
+  console.log(newEdges);
+};
 </script>
 
 <template>
@@ -85,6 +159,7 @@ const onNodeClick = ({ node }: NodeMouseEvent) => {
           />
         </template>
 
+        <button class="text-4xl fixed bottom-0 right-2" @click="addNewNode">ADD NODE</button>
         <Background />
         <MiniMap />
       </VueFlow>

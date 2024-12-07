@@ -34,9 +34,12 @@ const routes = [
         })
       },
       {
-        path: 'add-node',
+        path: 'add-node/:edgeId?',
         name: 'add-node',
-        component: () => import('../views/drawers/AddNode.vue')
+        component: () => import('../views/drawers/AddNode.vue'),
+        props: (route: RouteLocation) => ({
+          edgeId: route.params.edgeId,
+        })
       }
     ]
   },
