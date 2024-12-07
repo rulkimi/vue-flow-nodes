@@ -12,6 +12,7 @@ const store = useMainStore()
 store.setActiveNode(props.nodeId)
 
 const node = computed(() => {
+  if (!store.nodes) return;
   return store.nodes.find((node: Node) => node.id === props.nodeId)
 })
 </script>
