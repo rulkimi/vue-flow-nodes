@@ -16,6 +16,14 @@ const routes = [
         props: (route: RouteLocation) => ({
           nodeId: route.params.nodeId
         })
+      },
+      {
+        path: 'send-message/:nodeId?',
+        name: 'send-message',
+        component: () => import('../views/drawers/SendMessageDrawer.vue'),
+        props: (route: RouteLocation) => ({
+          nodeId: route.params.nodeId,
+        })
       }
     ]
   },
