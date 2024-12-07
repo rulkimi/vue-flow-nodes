@@ -61,7 +61,7 @@ export const useMainStore = defineStore('main', () => {
         id: `${node.parentId}-${node.id}`,
         source: `${node.parentId}`,
         target: `${node.id}`,
-        type: node.type === 'dateTimeConnector' ? 'smoothstep' : 'button',
+        type: node.type === 'dateTimeConnector' ? 'custom' : 'button',
       }));
   };
 

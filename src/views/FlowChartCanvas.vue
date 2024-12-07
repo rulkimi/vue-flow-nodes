@@ -9,7 +9,8 @@ import { MiniMap } from '@vue-flow/minimap';
 
 import BaseLayout from '../layouts/BaseLayout.vue';
 
-import EdgeWithButton from '../components/EdgeWithButton.vue';
+import EdgeWithButton from '../components/edges/EdgeWithButton.vue';
+import CustomEdge from '../components/edges/CustomEdge.vue';
 import TriggerNode from '../components/nodes/TriggerNode.vue';
 import SendMessageNode from '../components/nodes/SendMessageNode.vue';
 import AddCommentNode from '../components/nodes/AddCommentNode.vue';
@@ -68,6 +69,19 @@ const onNodeClick = ({ event, node }: NodeMouseEvent) => {
             :target-position="buttonEdgeProps.targetPosition"
             :marker-end="buttonEdgeProps.markerEnd"
             :style="buttonEdgeProps.style as Record<string, unknown>"
+          />
+        </template>
+        <template #edge-custom="customEdgeProps">
+          <CustomEdge
+            :id="customEdgeProps.id"
+            :source-x="customEdgeProps.sourceX"
+            :source-y="customEdgeProps.sourceY"
+            :target-x="customEdgeProps.targetX"
+            :target-y="customEdgeProps.targetY"
+            :source-position="customEdgeProps.sourcePosition"
+            :target-position="customEdgeProps.targetPosition"
+            :marker-end="customEdgeProps.markerEnd"
+            :style="customEdgeProps.style as Record<string, unknown>"
           />
         </template>
 
