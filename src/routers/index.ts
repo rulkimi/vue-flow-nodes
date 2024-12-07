@@ -32,6 +32,11 @@ const routes = [
         props: (route: RouteLocation) => ({
           nodeId: route.params.nodeId,
         })
+      },
+      {
+        path: 'create-node',
+        name: 'create-node',
+        component: () => import('../views/drawers/AddNode.vue')
       }
     ]
   },

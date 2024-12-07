@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import { BaseEdge, EdgeLabelRenderer, getSmoothStepPath, Position } from '@vue-flow/core';
+import { BaseEdge, getSmoothStepPath, Position } from '@vue-flow/core';
 
 const props = defineProps<{
   id: string

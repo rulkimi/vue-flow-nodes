@@ -3,6 +3,7 @@ import { computed } from 'vue';
 import { BaseEdge, DefaultEdge, EdgeLabelRenderer, getSmoothStepPath, Position } from '@vue-flow/core';
 import { useVueFlow } from '@vue-flow/core';
 import { useMainStore } from '../../stores';
+import { useRouter } from 'vue-router';
 
 import { Node } from '../../types'
 
@@ -48,7 +49,7 @@ const moveChildNodesRecursively = (parentNodeId: string, yOffset: number) => {
 const generateRandomId = () => `testing-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
 
 
-const onAddButtonClick = (edgeId: string) => {
+const addNewNode = (edgeId: string) => {
   const edge = findEdge(edgeId);
   if (!edge) return;
   const { sourceNode, targetNode } = edge;
@@ -96,6 +97,12 @@ const onAddButtonClick = (edgeId: string) => {
   const newEdges = store.generateEdges();
   console.log(newEdges);
 };
+
+const router = useRouter()
+const onAddButtonClick = (edgeId: string) => {
+  console.log('here')
+  router.push({ name: 'create-node' })
+}
 </script>
 
 <template>
