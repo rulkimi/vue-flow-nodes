@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { ref, nextTick, watch } from 'vue';
+import { ref, nextTick, watch, onMounted } from 'vue';
 import { useMainStore } from '../../stores';
 
-defineProps<{
+const props = defineProps<{
   edgeId: string
 }>()
 
@@ -70,12 +70,14 @@ const addAttachmentMessage = () => {
 const store = useMainStore()
 watch(
   () => messages.value,
-  (newValue, oldValue) => {
-    console.log("messages array changed", newValue, oldValue);
-    store.setNewNodeData({ messages: messages, title: sendMessageTitle.value });
+  () => {
+    if (selectedNodeType.value === 'sendMessage') store.setNewNodeData({ messages: messages, title: sendMessageTitle.value });
   },
   { deep: true } // Enable deep watching
 );
+onMounted(() => {
+  store.setEdgeId(props.edgeId)
+})
 
 </script>
 
