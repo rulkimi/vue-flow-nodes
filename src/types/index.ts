@@ -5,6 +5,7 @@ export interface NodeData {
   action?: string;
   payload?: Array<{ type: string; text?: string; attachment?: string }>;
   comment?: string;
+  name?: string
 }
 
 export interface Node {
@@ -15,4 +16,5 @@ export interface Node {
   position: { x: number; y: number };
   class?: string;
   parentId?: string | number;
+  draggable?: boolean
 }
