@@ -2,13 +2,15 @@
 import { useMainStore } from '../../stores';
 import { computed } from 'vue';
 
+import { Node } from '../../types'
+
 const props = defineProps<{
   nodeId: string
 }>();
 
 const store = useMainStore()
 const node = computed(() => {
-  return store.nodes.find(node => node.id === props.nodeId)
+  return store.nodes.find((node: Node) => node.id === props.nodeId)
 })
 
 </script>
