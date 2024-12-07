@@ -43,7 +43,7 @@ export const useMainStore = defineStore('main', () => {
       },
       {
         name: 'Business Hours',
-        id: '2',
+        id: 'd09c08',
         type: 'dateTime',
         data: {
           timezone: 'UTC',
@@ -54,7 +54,7 @@ export const useMainStore = defineStore('main', () => {
       },
       {
         name: 'Away Message',
-        id: '4',
+        id: 'b6a0c1',
         type: 'sendMessage',
         data: {
           payload: [
@@ -69,7 +69,7 @@ export const useMainStore = defineStore('main', () => {
       },
       {
         name: 'Welcome Message',
-        id: '3',
+        id: 'b0653a',
         type: 'sendMessage',
         data: {
           payload: [
@@ -83,7 +83,7 @@ export const useMainStore = defineStore('main', () => {
         class: 'light',
       },
       {
-        id: '5',
+        id: 'e879e4',
         type: 'addComment',
         data: {
           comment: 'User message during off hours'
@@ -96,28 +96,28 @@ export const useMainStore = defineStore('main', () => {
   
   const edges = ref([
     {
-      id: 'e1-2',
+      id: 'e1-d09c08',
       source: '1',
-      target: '2',
+      target: 'd09c08',
       type: 'button',
     },
     {
-      id: 'e2-3',
+      id: 'd09c08-b0653a',
       type: 'button',
-      source: '2',
-      target: '3',
+      source: 'd09c08',
+      target: 'b0653a',
     },
     {
-      id: 'e2-4',
+      id: 'd09c08-b6a0c1',
       type: 'button',
-      source: '2',
-      target: '4',
+      source: 'd09c08',
+      target: 'b6a0c1',
     },
     {
-      id: 'e4-5',
+      id: 'b6a0c1-e879e4',
       type: 'button',
-      source: '4',
-      target: '5',
+      source: 'b6a0c1',
+      target: 'e879e4',
     },
   ]);
 
