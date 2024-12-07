@@ -19,7 +19,7 @@ const week = ref([
 <template>
   <div>
     <div class="flex items-center gap-2 mb-4">
-      <font-awesome-icon style="color: #f9511e" :icon="['fas', 'calendar-days']" size="xl" />
+      <font-awesome-icon style="color: #f9511e" :icon="['far', 'calendar-days']" size="xl" />
       <h2 class="text-2xl font-bold">Business Hours</h2>
     </div>
     <div class="border-b pb-2">
