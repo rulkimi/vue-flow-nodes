@@ -3,6 +3,7 @@ import NodeBox from '../templates/NodeBox.vue'
 
 import { ref } from 'vue'
 import { useVueFlow } from '@vue-flow/core'
+import { useMainStore } from '../../stores';
 
 const props = defineProps<{
   id: string
@@ -12,6 +13,7 @@ const props = defineProps<{
   }
 }>();
 
+const store = useMainStore()
 const themeColor = ref('#8b93d0')
 
 const { getConnectedEdges } = useVueFlow()
@@ -31,5 +33,6 @@ for (const edge of outputEdges) {
     :description="data.comment"
     icon="comment-dots"
     :icon-color="themeColor"
+    :border-color="store.activeNode === id ? themeColor: ''"
   />
 </template>

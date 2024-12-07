@@ -2,7 +2,7 @@
 import NodeBox from '../templates/NodeBox.vue'
 
 import { useVueFlow } from '@vue-flow/core'
-
+import { useMainStore } from '../../stores';
 import { computed, ref } from 'vue'
 
 const props = defineProps<{
@@ -24,6 +24,7 @@ const description = computed(() => {
   }
 });
 
+const store = useMainStore()
 const themeColor = ref('#ea487e')
 
 const { getConnectedEdges } = useVueFlow()
@@ -54,5 +55,6 @@ for (const edge of outputEdges) {
     :description="description"
     icon="lightbulb"
     :icon-color="themeColor"
+    :border-color="store.activeNode === id ? themeColor: ''"
   />
 </template>

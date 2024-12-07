@@ -3,6 +3,7 @@ import NodeBox from '../templates/NodeBox.vue'
 
 import { ref } from 'vue'
 import { useVueFlow } from '@vue-flow/core'
+import { useMainStore } from '../../stores';
 
 type TextPayload = { type: 'text'; text: string };
 type AttachmentPayload = { type: 'attachment'; attachment: string };
@@ -15,6 +16,7 @@ const props = defineProps<{
   }
 }>();
 
+const store = useMainStore()
 const themeColor = ref('#3baca1')
 
 const { getConnectedEdges } = useVueFlow()
@@ -33,6 +35,7 @@ for (const edge of outputEdges) {
     :title="data.name"
     icon="paper-plane"
     :icon-color="themeColor"
+    :border-color="store.activeNode === id ? themeColor: ''"
   >
     <template #description>
       <div class="flex flex-col gap-2">

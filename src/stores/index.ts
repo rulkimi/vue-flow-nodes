@@ -121,9 +121,16 @@ export const useMainStore = defineStore('main', () => {
     },
   ]);
 
+  const activeNode = ref()
+  const setActiveNode = (nodeId: string) => {
+    activeNode.value = nodeId;
+  }
+
 
   return {
     nodes,
     edges,
+    activeNode,
+    setActiveNode,
   };
 });

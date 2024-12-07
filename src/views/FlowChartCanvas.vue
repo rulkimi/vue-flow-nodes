@@ -22,6 +22,8 @@ const router = useRouter()
 const onNodeClick = ({ event, node }: NodeMouseEvent) => {
   console.log('Node clicked: ', node, event);
 
+  store.setActiveNode(node.id)
+
   if (node.type === 'dateTime') router.push({ name: 'date-time', params: { nodeId: node.id } })
   else if (node.type === 'sendMessage') router.push({ name: 'send-message', params: { nodeId: node.id } })
   else router.push({ name: 'flowchart' })

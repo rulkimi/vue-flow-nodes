@@ -3,6 +3,7 @@ import NodeBox from '../templates/NodeBox.vue'
 
 import { computed, ref } from 'vue'
 import { useVueFlow } from '@vue-flow/core'
+import { useMainStore } from '../../stores';
 
 const props = defineProps<{
   id: string
@@ -12,6 +13,8 @@ const props = defineProps<{
     action: string
   }
 }>();
+
+const store = useMainStore()
 
 const description = computed(() => {
   let action;
@@ -45,5 +48,6 @@ for (const edge of outputEdges) {
     :description="description"
     icon="calendar-days"
     :icon-color="themeColor"
+    :border-color="store.activeNode === id ? themeColor: ''"
   />
 </template>
