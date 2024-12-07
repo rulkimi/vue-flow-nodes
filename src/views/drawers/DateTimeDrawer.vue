@@ -1,19 +1,20 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
+import { useMainStore } from '../../stores';
+import { Node } from '../../types'
 
-defineProps<{
+const props = defineProps<{
   nodeId: string
 }>()
 
-const week = ref([
-  { day: 'Mon' },
-  { day: 'Tue' },
-  { day: 'Wed' },
-  { day: 'Thu' },
-  { day: 'Fri' },
-  { day: 'Sat' },
-  { day: 'Sun' },
-])
+const store = useMainStore()
+const node = computed(() => {
+  return store.nodes.find((node: Node) => node.id === props.nodeId)
+})
+
+const capitalizeFirstLetter = (word: string) => {
+  return String(word).charAt(0).toUpperCase() + String(word).slice(1)
+}
 </script>
 
 <template>
@@ -40,28 +41,40 @@ const week = ref([
     </div>
     <div class="flex flex-col gap-2 mb-12">
       <div
-        v-for="item in week"
+        v-for="item in node.data.times"
         :key="item.day"
         class="grid grid-cols-12"
       >
         <span class="col-span-1"></span>
-        <span class="col-span-2 text-start font-bold">{{ item.day }}</span>
+        <span class="col-span-2 text-start font-bold">{{ capitalizeFirstLetter(item.day) }}</span>
         <div class="col-span-3 flex items-center gap-4">
-          <input class="border rounded-lg p-1 w-16 text-center" value="09:00" />
+          <input 
+            v-model="item.startTime"
+            :id="`${item.day}-starttime`"
+            class="border rounded-lg p-1 w-16 text-center"
+          />
           <font-awesome-icon :icon="['far', 'clock']" />
         </div>
         <span class="col-span-1">to</span>
         <div class="col-span-3 flex items-center gap-4">
-          <input class="border rounded-lg p-1 w-16 text-center" value="17:00" />
+          <input
+            v-model="item.endTime"
+            :id="`${item.day}-endtime`"
+            class="border rounded-lg p-1 w-16 text-center"
+          />
           <font-awesome-icon :icon="['far', 'clock']" />
         </div>
       </div>
     </div>
     <label>
       <p class="text-slate-500 mb-1">Time Zone</p>
-      <select class="border rounded-lg p-1 w-full">
+      <select
+        v-model="node.data.timezone"
+        id="timezone"
+        class="border rounded-lg p-1 w-full"
+      >
         <option disabled>Select Time Zone</option>
-        <option value="UTC" selected>(GMT+00:00) UTC</option>
+        <option value="UTC">(GMT+00:00) UTC</option>
       </select>
     </label>
   </div>
