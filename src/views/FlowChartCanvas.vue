@@ -168,7 +168,13 @@ const addNewNode = () => {
           />
         </template>
 
-        <button class="text-4xl fixed bottom-0 right-2" @click="addNewNode">ADD NODE</button>
+        <button
+          class="fixed z-10 bottom-4 right-4 border border-blue-500/50 text-blue-500 font-semibold px-4 py-2 rounded-lg shadow-sm hover:bg-blue-500 hover:text-white transition-all duration-300"
+          @click="addNewNode"
+        >
+          <font-awesome-icon class="mr-2" :icon="['fas', 'plus']" /> Add Node
+        </button>
+
         <Background />
         <MiniMap />
       </VueFlow>

@@ -109,7 +109,7 @@ onMounted(() => {
         <label
           v-for="type in nodeTypes"
           :key="type.value"
-          class="cursor-pointer flex items-center justify-center border rounded-lg p-4 w-full h-20 transition-all duration-200"
+          class="cursor-pointer flex items-center justify-center border rounded-lg p-4 w-full h-16 transition-all duration-200"
           :class="selectedNodeType === type.value ? 'bg-blue-500/10 border-blue-500' : 'hover:bg-gray-100'"
         >
           <div class="w-full grid grid-cols-12">
