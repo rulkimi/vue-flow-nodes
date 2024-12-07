@@ -27,7 +27,7 @@ const router = useRouter()
 const onNodeClick = ({ node }: NodeMouseEvent) => {
   // console.log('Node clicked: ', node, event);
 
-  store.setActiveNode(node.id)
+  store.setActiveNodeId(node.id)
 
   if (node.type === 'dateTime') router.push({ name: 'date-time', params: { nodeId: node.id } })
   else if (node.type === 'sendMessage') router.push({ name: 'send-message', params: { nodeId: node.id } })
@@ -35,7 +35,7 @@ const onNodeClick = ({ node }: NodeMouseEvent) => {
   else router.push({ name: 'flowchart' })
 }
 
-const { findEdge, updateNode, addNodes } = useVueFlow()
+const { findEdge, updateNode, addNodes, removeNodes } = useVueFlow()
 
 const moveChildNodesRecursively = (parentNodeId: string, yOffset: number) => {
   const childEdges = store.edges.filter((e: DefaultEdge) => e.source === parentNodeId);
@@ -43,7 +43,7 @@ const moveChildNodesRecursively = (parentNodeId: string, yOffset: number) => {
   // Map these edges to their respective child nodes
   const childNodes = childEdges.map((e: DefaultEdge) => store.nodes.find((n: Node) => n.id === e.target));
 
-  childNodes.forEach((childNode: Node) => {
+  childNodes.forEach((childNode) => {
     if (childNode) {
       const newChildPosition = {
         x: childNode.position.x,
@@ -111,10 +111,13 @@ const addNewNode = () => {
 
   // Recursively move all the child nodes' positions
   moveChildNodesRecursively(targetNode.id, 200);
-
-  const newEdges = store.generateEdges();
-  console.log(newEdges);
 };
+
+const removeNode = () => {
+  if (!store.activeNodeId) return;
+  store.removeNode(store.activeNodeId)
+  removeNodes(store.activeNodeId)
+}
 
 onMounted(() => {
   setTimeout(() => {
@@ -197,12 +200,22 @@ onMounted(() => {
           />
         </template>
 
-        <button
-          class="fixed z-10 bottom-4 right-4 border border-blue-500/50 text-blue-500 font-semibold px-4 py-2 rounded-lg shadow-sm hover:bg-blue-500 hover:text-white transition-all duration-300"
-          @click="addNewNode"
-        >
-          <font-awesome-icon class="mr-2" :icon="['fas', 'plus']" /> Add Node
-        </button>
+        <div class="fixed z-10 bottom-4 right-4 flex gap-2">
+          <button
+            v-if="store.activeNodeId"
+            class="border border-red-500/50 text-red-500 font-semibold px-4 py-2 rounded-lg shadow-sm hover:bg-red-500 hover:text-white transition-all duration-300"
+            @click="removeNode"
+          >
+            Remove Node
+          </button>
+          <button
+            v-if="store.activeEdgeId"
+            class="border border-blue-500/50 text-blue-500 font-semibold px-4 py-2 rounded-lg shadow-sm hover:bg-blue-500 hover:text-white transition-all duration-300"
+            @click="addNewNode"
+          >
+            <font-awesome-icon class="mr-2" :icon="['fas', 'plus']" /> Add Node
+          </button>
+        </div>
 
         <Background />
         <MiniMap />

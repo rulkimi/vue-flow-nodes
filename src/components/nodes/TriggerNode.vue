@@ -55,6 +55,6 @@ for (const edge of outputEdges) {
     :description="description"
     icon="lightbulb"
     :icon-color="themeColor"
-    :border-color="store.activeNode === id ? themeColor: ''"
+    :border-color="store.activeNodeId === id ? themeColor: ''"
   />
 </template>

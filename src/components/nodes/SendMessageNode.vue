@@ -35,7 +35,7 @@ for (const edge of outputEdges) {
     :title="data.name"
     icon="paper-plane"
     :icon-color="themeColor"
-    :border-color="store.activeNode === id ? themeColor: ''"
+    :border-color="store.activeNodeId === id ? themeColor: ''"
   >
     <template #description>
       <div class="flex flex-col gap-2">

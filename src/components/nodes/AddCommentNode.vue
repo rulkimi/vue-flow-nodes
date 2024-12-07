@@ -33,6 +33,6 @@ for (const edge of outputEdges) {
     :description="data.comment"
     icon="comment-dots"
     :icon-color="themeColor"
-    :border-color="store.activeNode === id ? themeColor: ''"
+    :border-color="store.activeNodeId === id ? themeColor: ''"
   />
 </template>

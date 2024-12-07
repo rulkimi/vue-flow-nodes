@@ -5,7 +5,7 @@ import { Node } from '../types';
 
 export const useMainStore = defineStore('main', () => {
   const nodes = ref<Node[]>([]);
-  const activeNode = ref<string | null>(null);
+  const activeNodeId = ref<string | null>(null);
   const activeEdgeId = ref<string | null>(null);
   const newNodeData = ref<any>(null);
 
@@ -43,8 +43,9 @@ export const useMainStore = defineStore('main', () => {
       }))
   );
 
-  const setActiveNode = (nodeId: string | null) => {
-    activeNode.value = nodeId;
+  const setActiveNodeId = (nodeId: string | null) => {
+    activeEdgeId.value = null
+    activeNodeId.value = nodeId;
   };
 
   const addNode = (node: Node) => {
@@ -81,6 +82,7 @@ export const useMainStore = defineStore('main', () => {
   };
 
   const setActiveEdgeId = (newEdgeId: string | null) => {
+    activeNodeId.value = null
     activeEdgeId.value = newEdgeId;
   };
 
@@ -91,10 +93,10 @@ export const useMainStore = defineStore('main', () => {
   return {
     nodes,
     edges,
-    activeNode,
+    activeNodeId,
     activeEdgeId,
     newNodeData,
-    setActiveNode,
+    setActiveNodeId,
     setNodes,
     addNode,
     removeNode,
