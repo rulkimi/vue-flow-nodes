@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import NodeBox from '../templates/NodeBox.vue'
 
-import { computed, ref } from 'vue'
+import { ref } from 'vue'
 import { useVueFlow } from '@vue-flow/core'
 
 type TextPayload = { type: 'text'; text: string };
