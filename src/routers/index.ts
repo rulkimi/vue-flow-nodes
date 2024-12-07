@@ -34,8 +34,8 @@ const routes = [
         })
       },
       {
-        path: 'create-node',
-        name: 'create-node',
+        path: 'add-node',
+        name: 'add-node',
         component: () => import('../views/drawers/AddNode.vue')
       }
     ]

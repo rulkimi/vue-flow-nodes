@@ -101,7 +101,7 @@ const addNewNode = (edgeId: string) => {
 const router = useRouter()
 const onAddButtonClick = (edgeId: string) => {
   console.log('here')
-  router.push({ name: 'create-node' })
+  router.push({ name: 'add-node' })
 }
 </script>
 
