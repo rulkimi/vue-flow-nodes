@@ -1,9 +1,29 @@
-import { createWebHistory, createRouter } from 'vue-router';
+import { createWebHistory, createRouter, RouteLocation } from 'vue-router';
 
 import FlowChartCanvas from '../views/FlowChartCanvas.vue';
 
 const routes = [
-  { path: '/', component: FlowChartCanvas },
+  { path: '/', redirect: { name: 'flowchart' } },
+  { 
+    path: '/flowchart',
+    name: 'flowchart',
+    component: FlowChartCanvas,
+    children: [
+      {
+        path: 'date-time/:nodeId?',
+        name: 'date-time',
+        component: () => import('../views/drawers/DateTimeDrawer.vue'),
+        props: (route: RouteLocation) => ({
+          nodeId: route.params.nodeId
+        })
+      }
+    ]
+  },
+  {
+    path: '/:notFound(.*)',
+    name: 'not-found',
+    redirect: '/'
+  }
 ]
 
 const router = createRouter({
