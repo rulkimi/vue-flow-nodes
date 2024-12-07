@@ -24,6 +24,14 @@ const routes = [
         props: (route: RouteLocation) => ({
           nodeId: route.params.nodeId,
         })
+      },
+      {
+        path: 'add-comment/:nodeId?',
+        name: 'add-comment',
+        component: () => import('../views/drawers/AddCommentDrawer.vue'),
+        props: (route: RouteLocation) => ({
+          nodeId: route.params.nodeId,
+        })
       }
     ]
   },
