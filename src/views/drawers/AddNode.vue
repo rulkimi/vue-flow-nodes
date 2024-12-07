@@ -52,7 +52,6 @@ const addTextMessage = () => {
   messages.value.push(newMessage);
   nextTick(() => {
     const inputElement = document.getElementById(generatedId) as HTMLInputElement;
-    console.log(inputElement)
     inputElement?.focus();
   });
 };

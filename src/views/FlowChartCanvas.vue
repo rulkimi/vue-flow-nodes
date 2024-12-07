@@ -25,8 +25,6 @@ const store = useMainStore()
 
 const router = useRouter()
 const onNodeClick = ({ node }: NodeMouseEvent) => {
-  // console.log('Node clicked: ', node, event);
-
   store.setActiveNodeId(node.id)
 
   if (node.type === 'dateTime') router.push({ name: 'date-time', params: { nodeId: node.id } })
@@ -50,11 +48,9 @@ const moveChildNodesRecursively = (parentNodeId: string, yOffset: number) => {
         y: childNode.position.y + yOffset
       };
 
-      // Update the child's position
       updateNode(childNode.id, { position: newChildPosition });
       store.editNode(childNode.id, { position: newChildPosition });
 
-      // Recursively move the child's children
       moveChildNodesRecursively(childNode.id, yOffset);
     }
   });
@@ -91,13 +87,9 @@ const addNewNode = () => {
     parentId: sourceNode.id
   };
 
-  // Add the new node
   addNodes(newNode);
   store.addNode(newNode);
 
-  console.log(store.nodes);
-
-  // Update the target node's position
   const updatedTargetPosition = {
     x: targetNode.position.x,
     y: targetNode.position.y + 200
@@ -109,7 +101,6 @@ const addNewNode = () => {
     parentId: newNode.id,
   });
 
-  // Recursively move all the child nodes' positions
   moveChildNodesRecursively(targetNode.id, 200);
 };
 
@@ -140,7 +131,6 @@ onMounted(() => {
         store.addNode(newNode)
       } 
     })
-    console.log(store.nodes)
   }, 50)
 })
 </script>

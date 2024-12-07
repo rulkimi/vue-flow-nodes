@@ -6,6 +6,7 @@ export interface NodeData {
   payload?: Array<{ type: string; text?: string; attachment?: string }>;
   comment?: string;
   name?: string
+  times?: Array<{ startTime: string, endTime: string, day: string}>
 }
 
 export interface Node {
