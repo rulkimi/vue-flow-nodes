@@ -22,7 +22,7 @@ const router = useRouter()
 const store = useMainStore()
 const onAddButtonClick = (edgeId: string) => {
   // addNewNode(edgeId)
-  store.setEdgeId(edgeId)
+  store.setActiveEdgeId(edgeId)
   router.push({ name: 'add-node', params: { edgeId: edgeId } })
 }
 </script>

@@ -91,9 +91,9 @@ export const useMainStore = defineStore('main', () => {
     edges.value = generateEdges();
   };
 
-  const edgeId = ref<string>()
-  const setEdgeId = (newEdgeId: string) => {
-    edgeId.value = newEdgeId
+  const activeEdgeId = ref<string>()
+  const setActiveEdgeId = (newEdgeId: string) => {
+    activeEdgeId.value = newEdgeId
   }
 
   const newNodeData = ref()
@@ -110,8 +110,8 @@ export const useMainStore = defineStore('main', () => {
     generateEdges,
     addNode,
     editNode,
-    setEdgeId,
-    edgeId,
+    setActiveEdgeId,
+    activeEdgeId,
     newNodeData,
     setNewNodeData,
   };

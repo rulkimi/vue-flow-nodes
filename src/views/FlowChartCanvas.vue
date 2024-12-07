@@ -63,7 +63,7 @@ const moveChildNodesRecursively = (parentNodeId: string, yOffset: number) => {
 const generateRandomId = () => Math.random().toString(16).slice(2, 8);
 
 const addNewNode = () => {
-  const edge = findEdge(store.edgeId);
+  const edge = findEdge(store.activeEdgeId);
   if (!edge) return;
   const { sourceNode, targetNode } = edge;
 

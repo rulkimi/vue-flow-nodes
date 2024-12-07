@@ -86,7 +86,7 @@ watch(
   { deep: true }
 );
 onMounted(() => {
-  store.setEdgeId(props.edgeId)
+  store.setActiveEdgeId(props.edgeId)
 })
 
 </script>
