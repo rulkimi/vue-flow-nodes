@@ -14,6 +14,7 @@ import TriggerNode from '../components/nodes/TriggerNode.vue';
 import SendMessageNode from '../components/nodes/SendMessageNode.vue';
 import AddCommentNode from '../components/nodes/AddCommentNode.vue';
 import DateTimeNode from '../components/nodes/DateTimeNode.vue';
+import DateTimeConnectorNode from '../components/nodes/DateTimeConnectorNode.vue';
 
 const vueFlowKey = ref(0)
 const store = useMainStore()
@@ -52,6 +53,9 @@ const onNodeClick = ({ event, node }: NodeMouseEvent) => {
         </template>
         <template #node-dateTime="DateTimeNodeProps">
           <DateTimeNode :id="DateTimeNodeProps.id" :data="DateTimeNodeProps.data" />
+        </template>
+        <template #node-dateTimeConnector="DateTimeConnectorNodeProps">
+          <DateTimeConnectorNode :id="DateTimeConnectorNodeProps.id" :data="DateTimeConnectorNodeProps.data" />
         </template>
         <template #edge-button="buttonEdgeProps">
           <EdgeWithButton

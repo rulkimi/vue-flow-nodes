@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { computed } from 'vue';
 import { useMainStore } from '../../stores';
 import { Node } from '../../types'
+import { capitalizeFirstLetter } from '../../utils';
 
 const props = defineProps<{
   nodeId: string
@@ -11,10 +12,6 @@ const store = useMainStore()
 const node = computed(() => {
   return store.nodes.find((node: Node) => node.id === props.nodeId)
 })
-
-const capitalizeFirstLetter = (word: string) => {
-  return String(word).charAt(0).toUpperCase() + String(word).slice(1)
-}
 </script>
 
 <template>

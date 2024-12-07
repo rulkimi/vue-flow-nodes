@@ -14,4 +14,5 @@ export interface Node {
   name?: string;
   position: { x: number; y: number };
   class?: string;
+  parentId?: string | number;
 }
