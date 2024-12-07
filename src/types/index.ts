@@ -8,7 +8,7 @@ export interface NodeData {
 }
 
 export interface Node {
-  id: string | number;
+  id: string;
   type: string;
   data: NodeData;
   name?: string;

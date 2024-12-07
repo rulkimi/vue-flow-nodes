@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import { BaseEdge, EdgeLabelRenderer, getSmoothStepPath, Position } from '@vue-flow/core';
+import { BaseEdge, DefaultEdge, EdgeLabelRenderer, getSmoothStepPath, Position } from '@vue-flow/core';
 import { useVueFlow } from '@vue-flow/core';
 import { useMainStore } from '../../stores';
+
+import { Node } from '../../types'
 
 const props = defineProps<{
   id: string
@@ -17,15 +19,42 @@ const props = defineProps<{
 }>()
 
 const path = computed(() => getSmoothStepPath(props))
-const { findEdge, updateNode, addNodes, updateEdge } = useVueFlow()
+const { findEdge, updateNode, addNodes } = useVueFlow()
 const store = useMainStore()
 
+const moveChildNodesRecursively = (parentNodeId: string, yOffset: number) => {
+  const childEdges = store.edges.filter((e: DefaultEdge) => e.source === parentNodeId);
+
+  // Map these edges to their respective child nodes
+  const childNodes = childEdges.map((e: DefaultEdge) => store.nodes.find((n: Node) => n.id === e.target));
+
+  childNodes.forEach((childNode: Node) => {
+    if (childNode) {
+      const newChildPosition = {
+        x: childNode.position.x,
+        y: childNode.position.y + yOffset
+      };
+
+      // Update the child's position
+      updateNode(childNode.id, { position: newChildPosition });
+      store.editNode(childNode.id, { position: newChildPosition });
+
+      // Recursively move the child's children
+      moveChildNodesRecursively(childNode.id, yOffset);
+    }
+  });
+};
+
+const generateRandomId = () => `testing-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+
+
 const onAddButtonClick = (edgeId: string) => {
-  const edge = findEdge(edgeId)
+  const edge = findEdge(edgeId);
   if (!edge) return;
   const { sourceNode, targetNode } = edge;
+
   const newNode = {
-    id: 'testing',
+    id: generateRandomId(),
     data: {
       name: 'Testing',
       payload: [
@@ -41,33 +70,32 @@ const onAddButtonClick = (edgeId: string) => {
       y: targetNode.position.y
     },
     parentId: sourceNode.id
-  }
-  addNodes(newNode)
-  store.addNode(newNode)
-  console.log(store.nodes)
-  updateNode(
-    targetNode.id, 
-    { 
-      position: { 
-        x: targetNode.position.x, 
-        y: targetNode.position.y + 200
-      },
-    }
-  )
-  store.editNode(
-    targetNode.id,
-    { 
-      position: { 
-        x: targetNode.position.x, 
-        y: targetNode.position.y + 200
-      },
-      parentId: newNode.id
-    },
-  )
-  const newEdges = store.generateEdges()
-  console.log(newEdges)
-}
+  };
 
+  // Add the new node
+  addNodes(newNode);
+  store.addNode(newNode);
+
+  console.log(store.nodes);
+
+  // Update the target node's position
+  const updatedTargetPosition = {
+    x: targetNode.position.x,
+    y: targetNode.position.y + 200
+  };
+
+  updateNode(targetNode.id, { position: updatedTargetPosition });
+  store.editNode(targetNode.id, {
+    position: updatedTargetPosition,
+    parentId: newNode.id,
+  });
+
+  // Recursively move all the child nodes' positions
+  moveChildNodesRecursively(targetNode.id, 200);
+
+  const newEdges = store.generateEdges();
+  console.log(newEdges);
+};
 </script>
 
 <template>

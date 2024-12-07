@@ -15,7 +15,7 @@ export const useMainStore = defineStore('main', () => {
         if (node.position) return node.position;
 
         switch (node.id) {
-            case 1: return { x: 250, y: 0 };
+            case '1': return { x: 250, y: 0 };
             case 'd09c08': return { x: 250, y: 200 };
             case '161f52': return { x: 180, y: 350 };
             case '28c4b9': return { x: 485, y: 350 };
@@ -38,7 +38,10 @@ export const useMainStore = defineStore('main', () => {
   }
 
   const setNodes = (node: Node[]) => {
-    const filteredNode = node;
+    const filteredNode = node.map((node: any) => ({
+      ...node,
+      id: typeof node.id === 'number' ? node.id.toString() : node.id
+    }));
     const newNodes = createNodes(filteredNode);
     nodes.value = newNodes;
   }
