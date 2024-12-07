@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useMainStore } from '../stores';
 import { useVueFlow, DefaultEdge } from '@vue-flow/core';
@@ -18,6 +18,7 @@ import SendMessageNode from '../components/nodes/SendMessageNode.vue';
 import AddCommentNode from '../components/nodes/AddCommentNode.vue';
 import DateTimeNode from '../components/nodes/DateTimeNode.vue';
 import DateTimeConnectorNode from '../components/nodes/DateTimeConnectorNode.vue';
+import EmptyNode from '../components/nodes/EmptyNode.vue';
 
 const vueFlowKey = ref(0)
 const store = useMainStore()
@@ -114,6 +115,31 @@ const addNewNode = () => {
   const newEdges = store.generateEdges();
   console.log(newEdges);
 };
+
+onMounted(() => {
+  setTimeout(() => {
+    store.nodes.forEach((node: Node) => {
+      const hasOutgoingEdge = store.edges.some(
+        (edge: DefaultEdge) => edge.source === node.id
+      )
+      if (!hasOutgoingEdge && node.type !== 'emptyNode') {
+        const newNode = {
+          id: generateRandomId(),
+          type: 'emptyNode',
+          data: {},
+          position: { 
+            x: node.position.x,
+            y: node.position.y + 250
+          },
+          parentId: node.id
+        }
+        addNodes(newNode)
+        store.addNode(newNode)
+      } 
+    })
+    console.log(store.nodes)
+  }, 50)
+})
 </script>
 
 <template>
@@ -140,6 +166,9 @@ const addNewNode = () => {
         </template>
         <template #node-dateTimeConnector="DateTimeConnectorNodeProps">
           <DateTimeConnectorNode :id="DateTimeConnectorNodeProps.id" :data="DateTimeConnectorNodeProps.data" />
+        </template>
+        <template #node-emptyNode="EmptyNodeProps">
+          <EmptyNode :id="EmptyNodeProps.id" />
         </template>
         <template #edge-button="buttonEdgeProps">
           <EdgeWithButton

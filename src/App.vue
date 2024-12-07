@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { useMainStore } from './stores';
-import { onMounted } from 'vue';
+import { onBeforeMount } from 'vue';
 
 const store = useMainStore()
 
-onMounted(async () => {
+onBeforeMount(async () => {
   try {
     // Replace 'example.json' with your file name
     const response = await fetch('/payload.json'); 
