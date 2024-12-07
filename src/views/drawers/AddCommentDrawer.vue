@@ -9,6 +9,8 @@ const props = defineProps<{
 }>();
 
 const store = useMainStore()
+store.setActiveNode(props.nodeId)
+
 const node = computed(() => {
   return store.nodes.find((node: Node) => node.id === props.nodeId)
 })
