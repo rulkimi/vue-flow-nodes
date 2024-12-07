@@ -63,17 +63,26 @@ const generateRandomId = () => Math.random().toString(16).slice(2, 8);
 
 const addNewNode = () => {
   const edge = findEdge(store.edgeId);
-  console.log(edge)
   if (!edge) return;
   const { sourceNode, targetNode } = edge;
 
-  const newNode = {
-    id: generateRandomId(),
-    data: {
+  let data;
+  if (store.newNodeData.type === 'sendMessage') {
+    data = {
       name: store.newNodeData.title,
       payload: store.newNodeData.messages
-    },
-    type: 'sendMessage',
+    }
+  } else {
+    data = {
+      name: store.newNodeData.title,
+      comment: store.newNodeData.comment
+    }
+  }
+
+  const newNode = {
+    id: generateRandomId(),
+    data: data,
+    type: store.newNodeData.type,
     position: { 
       x: targetNode.position.x,
       y: targetNode.position.y

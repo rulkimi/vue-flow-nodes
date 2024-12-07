@@ -67,13 +67,23 @@ const addAttachmentMessage = () => {
   });
 };
 
+const addCommentTitle = ref()
+const addCommentText = ref()
+
 const store = useMainStore()
 watch(
   () => messages.value,
   () => {
-    if (selectedNodeType.value === 'sendMessage') store.setNewNodeData({ messages: messages, title: sendMessageTitle.value });
+    store.setNewNodeData({ messages: messages, title: sendMessageTitle.value, type: selectedNodeType });
   },
-  { deep: true } // Enable deep watching
+  { deep: true } 
+);
+watch(
+  [() => addCommentTitle.value, () => addCommentText.value],
+  () => {
+    store.setNewNodeData({ comment: addCommentText.value, title: addCommentTitle.value, type: selectedNodeType});
+  },
+  { deep: true }
 );
 onMounted(() => {
   store.setEdgeId(props.edgeId)
@@ -208,7 +218,31 @@ onMounted(() => {
 
       </div>
       <div v-else-if="selectedNodeType === 'addComment'">
-        Add Comment
+        <div class="font-bold">Add Comment</div>
+
+        <div class="flex flex-col gap-2 mt-4">
+          <label>
+            <p class="text-slate-500 mb-1">Title<sup class="text-red-500">*</sup></p>
+            <input
+              v-model="addCommentTitle"
+              id="add-comment-title"
+              type="text"
+              placeholder="E.g. Welcome Message"
+              class="border rounded-lg px-2 py-1 w-full"
+            >
+          </label>
+          <label>
+            <p class="text-slate-500 mb-1">Title<sup class="text-red-500">*</sup></p>
+            <input
+              v-model="addCommentText"
+              id="add-comment-text"
+              type="text"
+              placeholder="E.g. Welcome Message"
+              class="border rounded-lg px-2 py-1 w-full"
+            >
+          </label>
+        </div>
+
       </div>
       <div v-else-if="selectedNodeType === 'businessHours'">
         Business Hours
