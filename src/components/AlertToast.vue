@@ -8,18 +8,18 @@ const toastStore = useToastStore();
   <transition name="appear" mode="out-in">
     <div
       v-if="toastStore.toasts.length"
-      class="fixed bottom-0 right-0 m-6"
+      class="fixed bottom-4 right-4"
     >
       <transition-group name="list" tag="ul" class="flex flex-col gap-2">
         <li
           v-for="toast in toastStore.toasts"
           :key="toast.id"
           v-show="toast.isVisible"
-          class="z-10 bg-background border dark:border-slate-700 p-4 shadow rounded-lg flex items-center gap-2 justify-between min-w-[300px] hover:scale-105 transition-all duration-200"
+          class="z-10 bg-white border p-4 shadow rounded-lg flex items-center gap-2 justify-between min-w-[300px] hover:scale-105 transition-all duration-200"
         >
           <div class="flex items-center gap-2">
-            <font-awesome-icon v-if="toast.icon" :icon="toast.icon" />
-            <div>{{ toast.message }}</div>
+            <font-awesome-icon v-if="toast.icon" :icon="['far', toast.icon]" :style="{ color: toast.iconColor }"/>
+            <div v-html="toast.message"></div>
           </div>
           <font-awesome-icon
             class="hover:scale-110 cursor-pointer"

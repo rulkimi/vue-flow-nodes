@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useMainStore } from '../../stores';
+import { useToastStore } from '../../stores/toastStore';
 import { computed, ref, watch } from 'vue';
 
 import { Node } from '../../types'
@@ -19,6 +20,7 @@ const node = computed(() => {
 const commentTitle = ref(node?.value?.data.name)
 const commentText = ref(node?.value?.data.comment)
 
+const toast = useToastStore()
 const update = () => {
   if (!node.value) return
   store.editNode(node.value.id, {
@@ -26,6 +28,11 @@ const update = () => {
       name: commentTitle.value,
       comment: commentText.value
     }
+  })
+  toast.showToast({
+    message: `<strong>${commentTitle.value}</strong> updated.`,
+    icon: 'comment-dots',
+    iconColor: '#8b93d0'
   })
 }
 

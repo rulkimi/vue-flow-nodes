@@ -5,6 +5,7 @@ interface Toast {
   id: number
   message: string
   icon: string
+  iconColor?: string
   isVisible: boolean
   timeout: ReturnType<typeof setTimeout> | null
 }
@@ -14,11 +15,12 @@ export const useToastStore = defineStore('toast', () => {
 
   const MAX_TOASTS = 3;
 
-  const showToast = ({ message, icon } = { message: 'Default message', icon: '' }) => {
+  const showToast = ({ message, icon, iconColor } = { message: 'Default message', icon: '', iconColor: '' }) => {
     const toast: Toast = {
       id: Date.now(), 
       message,
       icon,
+      iconColor,
       isVisible: true,
       timeout: null,
     };

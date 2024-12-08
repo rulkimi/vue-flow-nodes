@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { useMainStore } from '../../stores';
-import { computed, ref , watch} from 'vue';
+import { computed, ref , watch } from 'vue';
 import { Node } from '../../types';
 import SendMessageDetails from '../../components/templates/SendMessageDetails.vue';
+import { useToastStore } from '../../stores/toastStore';
 
 const props = defineProps<{
   nodeId: string;
@@ -20,6 +21,8 @@ const messageTitle = ref(node?.value?.data.name);
 const payload = ref(JSON.parse(JSON.stringify(node?.value?.data.payload)));
 const sendMessageKey = ref(0)
 
+const toast = useToastStore()
+
 const update = () => {
   if (!node.value) return;
   store.editNode(node.value.id, {
@@ -29,6 +32,12 @@ const update = () => {
       payload: payload.value,
     },
   });
+
+  toast.showToast({ 
+    message: `<strong>${messageTitle.value}</strong> updated.`, 
+    icon: 'paper-plane',
+    iconColor: '#3baca1',
+  })
 };
 
 watch(() => props.nodeId, (newNodeId) => {
@@ -41,7 +50,6 @@ watch(() => props.nodeId, (newNodeId) => {
     sendMessageKey.value++
   }
 });
-
 </script>
 
 <template>

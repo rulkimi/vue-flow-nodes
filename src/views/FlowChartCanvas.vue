@@ -2,6 +2,7 @@
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useMainStore } from '../stores';
+import { useToastStore } from '../stores/toastStore';
 import { useVueFlow, DefaultEdge } from '@vue-flow/core';
 import { Node, NodeData } from '../types'
 
@@ -64,6 +65,8 @@ const generateRandomId = () => {
   return id;
 };
 
+const toast = useToastStore()
+
 const addNewNode = () => {
   const edge = findEdge(store.activeEdgeId);
   if (!edge) return;
@@ -101,9 +104,14 @@ const addNewNode = () => {
     parentId: sourceNode.id
   };
   
-  console.log(newNode)
   addNodes(newNode);
   store.addNode(newNode);
+
+  toast.showToast({
+    message: `<strong>${newNode.name}</strong> node added.`,
+    icon: 'circle-check',
+    iconColor: 'green'
+  })
 
   const updatedTargetPosition = {
     x: targetNode.position.x,
@@ -138,6 +146,11 @@ const removeNode = () => {
   store.removeNode(nodeId);
   store.setActiveNodeId(null);
   router.push({ name: 'flowchart' })
+  toast.showToast({
+    message: `<strong>${nodeToRemove?.name ?? ''}</strong> node deleted.`,
+    icon: 'circle-check',
+    iconColor: 'green'
+  })
 };
 
 
