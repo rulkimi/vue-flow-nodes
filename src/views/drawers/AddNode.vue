@@ -157,7 +157,7 @@ watch(
             <p class="text-slate-500 mb-1">Title<sup class="text-red-500">*</sup></p>
             <input
               v-model="addCommentTitle"
-              id="add-comment-title"
+              id="add-comment-title-drawer"
               type="text"
               placeholder="E.g. Welcome Message"
               class="border rounded-lg px-2 py-1 w-full"
@@ -167,7 +167,7 @@ watch(
             <p class="text-slate-500 mb-1">Comment<sup class="text-red-500">*</sup></p>
             <input
               v-model="addCommentText"
-              id="add-comment-text"
+              id="add-comment-text-drawer"
               type="text"
               placeholder="E.g. Welcome Message"
               class="border rounded-lg px-2 py-1 w-full"

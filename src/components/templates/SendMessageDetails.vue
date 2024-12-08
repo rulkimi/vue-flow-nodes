@@ -116,7 +116,7 @@ const openUrl = (url: string) => {
                 />
               </p>
               <input
-                :id="message.id"
+                :id="message.id ?? `message-${index}`"
                 v-model="message.text"
                 class="border rounded-lg px-2 py-1 w-full"
               />
@@ -162,7 +162,7 @@ const openUrl = (url: string) => {
                 </span>
               </div>
               <input
-                :id="message.id"
+                :id="message.id ?? `message-${index}`"
                 type="file"
                 class="hidden"
                 @change="onFileChange($event, index)"

@@ -78,7 +78,7 @@ watch(
           <p class="text-slate-500 mb-1">Comment<sup class="text-red-500">*</sup></p>
           <input
             v-model="commentText"
-            id="add-comment-title"
+            id="add-comment-text"
             type="text"
             placeholder="E.g. Welcome Message"
             class="border rounded-lg px-2 py-1 w-full"

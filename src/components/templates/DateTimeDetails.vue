@@ -26,9 +26,9 @@ function updateNode(newValue: any) {
         <!-- Styled Input for start time -->
         <div class="col-span-4 flex items-center gap-4">
           <input
-            type="time"
             v-model="item.startTime"
             :id="`${item.day}-starttime`"
+            type="time"
             class="border rounded-lg p-1 text-center w-full"
             @change="updateNode(props.modelValue)"
           />
@@ -38,9 +38,9 @@ function updateNode(newValue: any) {
 
         <div class="col-span-4 flex items-center gap-4">
           <input
-            type="time"
             v-model="item.endTime"
             :id="`${item.day}-endtime`"
+            type="time"
             class="border rounded-lg p-1 text-center w-full"
             @change="updateNode(props.modelValue)"
           />
