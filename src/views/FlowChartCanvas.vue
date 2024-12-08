@@ -36,10 +36,9 @@ const onNodeClick = ({ node }: NodeMouseEvent) => {
 
 const { findEdge, updateNode, addNodes } = useVueFlow()
 
-const moveChildNodesRecursively = (parentNodeId: string, yOffset: number) => {
+const moveChildNodes = (parentNodeId: string, yOffset: number) => {
   const childEdges = store.edges.filter((e: DefaultEdge) => e.source === parentNodeId);
 
-  // Map these edges to their respective child nodes
   const childNodes = childEdges.map((e: DefaultEdge) => store.nodes.find((n: Node) => n.id === e.target));
 
   childNodes.forEach((childNode) => {
@@ -52,7 +51,7 @@ const moveChildNodesRecursively = (parentNodeId: string, yOffset: number) => {
       updateNode(childNode.id, { position: newChildPosition });
       store.editNode(childNode.id, { position: newChildPosition });
 
-      moveChildNodesRecursively(childNode.id, yOffset);
+      moveChildNodes(childNode.id, yOffset);
     }
   });
 };
@@ -109,7 +108,7 @@ const addNewNode = () => {
     parentId: newNode.id,
   });
 
-  moveChildNodesRecursively(targetNode.id, 200);
+  moveChildNodes(targetNode.id, 200);
 };
 
 const removeNode = () => {
@@ -121,6 +120,8 @@ const removeNode = () => {
 
   const nodeToRemove = store.nodes.find(node => node.id === nodeId);
   const parentId = nodeToRemove?.parentId;
+
+  moveChildNodes(nodeId, -200);
 
   childNodes.forEach(childNode => {
     store.editNode(childNode.id, { parentId });
