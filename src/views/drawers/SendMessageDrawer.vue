@@ -59,7 +59,7 @@ watch(() => props.nodeId, (newNodeId) => {
       <font-awesome-icon style="color: #3baca1" :icon="['far', 'paper-plane']" size="xl" />
       <h2 class="text-2xl font-bold">{{ node.name }}</h2>
     </div>
-    
+
     <div class="border-b pb-2">
       <span>
         Send a message, including text or attachment.
@@ -81,6 +81,5 @@ watch(() => props.nodeId, (newNodeId) => {
         </button>
       </div>
     </div>
-
   </div>
 </template>

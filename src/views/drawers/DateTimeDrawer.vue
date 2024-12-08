@@ -8,17 +8,18 @@ import DateTimeDetails from '../../components/templates/DateTimeDetails.vue';
 
 const props = defineProps<{
   nodeId: string
-}>()
+}>();
 
-const store = useMainStore()
-store.setActiveNodeId(props.nodeId)
+const store = useMainStore();
+const toast = useToastStore();
+
+store.setActiveNodeId(props.nodeId);
 
 const node = computed(() => {
   if (!store.nodes) return;
-  return store.nodes.find((node: Node) => node.id === props.nodeId)
-})
+  return store.nodes.find((node: Node) => node.id === props.nodeId);
+});
 
-const toast = useToastStore()
 const update = () => {
   if (!node.value) return;
   store.editNode(node.value.id, {
@@ -32,7 +33,7 @@ const update = () => {
     message: `<strong>Business Hours</strong> updated.`,
     icon: 'calendar-days',
     iconColor: '#f9511e'
-  })
+  });
 };
 </script>
 

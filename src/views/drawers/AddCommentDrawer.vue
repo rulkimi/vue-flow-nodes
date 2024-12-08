@@ -1,26 +1,25 @@
 <script setup lang="ts">
+import { computed, ref, watch } from 'vue';
 import { useMainStore } from '../../stores';
 import { useToastStore } from '../../stores/toastStore';
-import { computed, ref, watch } from 'vue';
-
 import { Node } from '../../types'
 
 const props = defineProps<{
   nodeId: string
 }>();
 
-const store = useMainStore()
-store.setActiveNodeId(props.nodeId)
+const store = useMainStore();
+const toast = useToastStore();
+store.setActiveNodeId(props.nodeId);
 
 const node = computed(() => {
   if (!store.nodes) return;
   return store.nodes.find((node: Node) => node.id === props.nodeId)
-})
+});
 
-const commentTitle = ref(node?.value?.data.name)
-const commentText = ref(node?.value?.data.comment)
+const commentTitle = ref(node?.value?.data.name);
+const commentText = ref(node?.value?.data.comment);
 
-const toast = useToastStore()
 const update = () => {
   if (!node.value) return
   store.editNode(node.value.id, {
@@ -33,7 +32,7 @@ const update = () => {
     message: `<strong>${commentTitle.value}</strong> updated.`,
     icon: 'comment-dots',
     iconColor: '#8b93d0'
-  })
+  });
 }
 
 watch(
@@ -56,6 +55,7 @@ watch(
       <font-awesome-icon style="color: #8b93d0" :icon="['far', 'comment-dots']" size="xl" />
       <h2 class="text-2xl font-bold">{{ node.data.name }}</h2>
     </div>
+
     <div class="border-b pb-2">
       <span>
         Remark for more explanation.
@@ -94,8 +94,5 @@ watch(
         </button>
       </div>
     </div>
-
-    
-
   </div>
 </template>

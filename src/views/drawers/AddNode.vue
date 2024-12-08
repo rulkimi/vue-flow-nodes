@@ -1,12 +1,19 @@
 <script setup lang="ts">
 import { ref, watch, onMounted } from 'vue';
 import { useMainStore } from '../../stores';
+
 import SendMessageDetails from '../../components/templates/SendMessageDetails.vue';
 import DateTimeDetails from '../../components/templates/DateTimeDetails.vue';
 
 const props = defineProps<{
   edgeId: string
-}>()
+}>();
+
+const store = useMainStore();
+
+onMounted(() => {
+  store.setActiveEdgeId(props.edgeId)
+});
 
 const nodeTypes = ref([
   { 
@@ -14,14 +21,14 @@ const nodeTypes = ref([
     label: 'Send Message', 
     description: 'Send a message, including text or attachment.',
     icon: 'paper-plane',
-    color: '#3baca1',
+    color: '#3baca1'
   },
   { 
     value: 'addComment', 
     label: 'Add Comment', 
     description: 'Remark for more explanation.',
     icon: 'comment-dots',
-    color: '#8b93d0',
+    color: '#8b93d0'
   },
   { 
     value: 'businessHours', 
@@ -30,19 +37,17 @@ const nodeTypes = ref([
     icon: 'calendar-days',
     color: '#f9511e',
   }
-]) 
-const selectedNodeType = ref()
+]);
+const selectedNodeType = ref();
 
 type TextPayload = { id: string, type: 'text'; text: string };
 type AttachmentPayload = { id: string, type: 'attachment'; attachment: File | string };
 
-const messages = ref<Array<TextPayload | AttachmentPayload>>([])
-const sendMessageTitle = ref()
+const messages = ref<Array<TextPayload | AttachmentPayload>>([]);
+const sendMessageTitle = ref();
 
-const addCommentTitle = ref()
-const addCommentText = ref()
-
-const store = useMainStore()
+const addCommentTitle = ref();
+const addCommentText = ref();
 
 const businessHourNode = ref({
   type: 'dateTime',
@@ -58,7 +63,7 @@ const businessHourNode = ref({
     ],
     timezone: 'UTC'
   }
-})
+});
 
 watch(
   [() => businessHourNode.value, () => selectedNodeType.value],
@@ -83,10 +88,6 @@ watch(
   },
   { deep: true }
 );
-onMounted(() => {
-  store.setActiveEdgeId(props.edgeId)
-})
-
 </script>
 
 <template>
@@ -95,6 +96,7 @@ onMounted(() => {
       <font-awesome-icon style="color: #8b93d0" :icon="['far', 'square-plus']" size="xl" />
       <h2 class="text-2xl font-bold">Add Node</h2>
     </div>
+
     <div class="border-b pb-2">
       <span>
         Nodes represent specific actions or steps within the flow.
@@ -142,7 +144,10 @@ onMounted(() => {
         <div class="font-bold">Send Messages</div>
 
         <div class="flex flex-col gap-2 mt-4">
-          <SendMessageDetails v-model:model-messages="messages" v-model:model-send-message-title="sendMessageTitle" />
+          <SendMessageDetails
+            v-model:model-messages="messages"
+            v-model:model-send-message-title="sendMessageTitle"           
+          />
         </div>
 
       </div>
@@ -173,6 +178,7 @@ onMounted(() => {
         </div>
 
       </div>
+
       <div v-else-if="selectedNodeType === 'businessHours'">
         <div class="flex flex-col gap-2 mt-4">
           <div class="font-bold">Business Hours</div>
@@ -180,6 +186,5 @@ onMounted(() => {
         </div>
       </div>
     </div>
-
   </div>
 </template>
