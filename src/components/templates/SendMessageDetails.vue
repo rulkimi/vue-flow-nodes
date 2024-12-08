@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, nextTick, watch } from 'vue'
 import { useMainStore } from '../../stores';
+import { useRoute } from 'vue-router';
 import { TextPayload, AttachmentPayload } from '../../types';
 
 const props = defineProps<{
@@ -12,6 +13,7 @@ const props = defineProps<{
 const emit = defineEmits(['update:modelSendMessageTitle', 'update:modelMessages', 'update:modelDescription', 'save']);
 
 const store = useMainStore();
+const route = useRoute();
 
 const sendMessageTitle = ref(props.modelSendMessageTitle || '');
 const messages = ref<Array<TextPayload | AttachmentPayload>>(props.modelMessages || []);
@@ -212,7 +214,7 @@ const openUrl = (url: string) => {
             <font-awesome-icon class="text-slate-500 mr-1" :icon="['fas', 'paperclip']" /> Add Attachment
           </div>
         </div>
-        <div class="text-end" key="last-child">
+        <div v-if="route.name !== 'add-node'" class="text-end" key="last-child">
           <button
             class="py-1 px-2 border border-blue-500/50 text-blue-500 font-bold rounded-md hover:bg-blue-500 hover:text-white transition-colors duration-300"
             @click="emit('save')"
