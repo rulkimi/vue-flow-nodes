@@ -71,15 +71,8 @@ watch(() => props.nodeId, (newNodeId) => {
         v-model:model-send-message-title="messageTitle"
         v-model:model-messages="payload" 
         v-model:model-description="description"
+        @save="update"
       />
-      <div class="text-end">
-        <button
-          class="mt-4 py-1 px-2 border border-blue-500/50 text-blue-500 font-bold rounded-md hover:bg-blue-500 hover:text-white transition-colors duration-300"
-          @click="update"
-        >
-          Save
-        </button>
-      </div>
     </template>
   </DrawerLayout>
 </template>
