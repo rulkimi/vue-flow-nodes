@@ -2,6 +2,7 @@
 import { ref, watch, onMounted } from 'vue';
 import { useMainStore } from '../../stores';
 import SendMessageDetails from '../../components/templates/SendMessageDetails.vue';
+import DateTimeDetails from '../../components/templates/DateTimeDetails.vue';
 
 const props = defineProps<{
   edgeId: string
@@ -43,10 +44,42 @@ const addCommentText = ref()
 
 const store = useMainStore()
 
+const businessHourNode = ref({
+  type: 'dateTime',
+  data: {
+    times: [
+      { day: 'mon', startTime: '09:00', endTime: '17:00' },
+      { day: 'tue', startTime: '09:00', endTime: '17:00' },
+      { day: 'wed', startTime: '09:00', endTime: '17:00' },
+      { day: 'thu', startTime: '09:00', endTime: '17:00' },
+      { day: 'fri', startTime: '09:00', endTime: '17:00' },
+      { day: 'sat', startTime: '09:00', endTime: '17:00' },
+      { day: 'sun', startTime: '09:00', endTime: '17:00' },
+    ],
+    timezone: 'UTC'
+  }
+})
+
+watch(
+  [() => businessHourNode.value, () => selectedNodeType.value],
+  () => {
+    if (selectedNodeType.value === 'businessHours') {
+      store.setNewNodeData({
+        action: 'businessHours',
+        title: 'Business Hours',
+        type: 'dateTime',
+        times: businessHourNode.value.data.times,
+        timezone: businessHourNode.value.data.timezone
+      });
+    }
+  },
+  { deep: true }
+);
+
 watch(
   [() => addCommentTitle.value, () => addCommentText.value],
   () => {
-    store.setNewNodeData({ comment: addCommentText.value, title: addCommentTitle.value, type: selectedNodeType});
+    store.setNewNodeData({ comment: addCommentText.value, title: addCommentTitle.value, type: selectedNodeType.value });
   },
   { deep: true }
 );
@@ -141,7 +174,7 @@ onMounted(() => {
 
       </div>
       <div v-else-if="selectedNodeType === 'businessHours'">
-        Business Hours
+        <DateTimeDetails v-model="businessHourNode" />
       </div>
     </div>
 

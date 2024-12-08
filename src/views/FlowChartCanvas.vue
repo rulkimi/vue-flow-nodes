@@ -80,8 +80,10 @@ const addNewNode = () => {
       name: store.newNodeData.title,
       comment: store.newNodeData.comment
     }
-  } else if (store.newNodeData.type === 'businessHours') {
+  } else if (store.newNodeData.type === 'dateTime') {
     data = {
+      action: store.newNodeData.action,
+      name: store.newNodeData.title,
       times: store.newNodeData.times,
       timezone: store.newNodeData.timezone,
     }
@@ -98,7 +100,8 @@ const addNewNode = () => {
     },
     parentId: sourceNode.id
   };
-
+  
+  console.log(newNode)
   addNodes(newNode);
   store.addNode(newNode);
 
