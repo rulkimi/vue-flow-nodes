@@ -118,6 +118,11 @@ export const useMainStore = defineStore('main', () => {
     newNodeData.value = data;
   };
 
+  const isDrawerOpen = ref(false);
+  const setIsDrawerOpen = (status: boolean) => {
+    isDrawerOpen.value = status;
+  }
+
   return {
     nodes,
     edges,
@@ -134,5 +139,7 @@ export const useMainStore = defineStore('main', () => {
     setActiveEdgeId,
     setNewNodeData,
     getNodeDescription,
+    isDrawerOpen,
+    setIsDrawerOpen
   };
 });

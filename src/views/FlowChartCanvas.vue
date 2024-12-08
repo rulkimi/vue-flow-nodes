@@ -250,24 +250,6 @@ const generateRandomId = () => {
             :style="emptyEdgeProps.style"
           />
         </template>
-
-        <div class="fixed z-10 bottom-4 right-4 flex gap-2">
-          <button
-            v-if="store.activeNodeId"
-            class="border border-red-500/50 text-red-500 font-semibold px-4 py-2 rounded-lg shadow-sm hover:bg-red-500 hover:text-white transition-all duration-300"
-            @click="removeNode"
-          >
-            Delete Node
-          </button>
-          <button
-            v-if="store.activeEdgeId"
-            class="border border-blue-500/50 text-blue-500 font-semibold px-4 py-2 rounded-lg shadow-sm hover:bg-blue-500 hover:text-white transition-all duration-300"
-            @click="addNewNode"
-          >
-            <font-awesome-icon class="mr-2" :icon="['fas', 'plus']" /> Add Node
-          </button>
-        </div>
-
         <Background />
         <MiniMap />
       </VueFlow>
@@ -276,6 +258,24 @@ const generateRandomId = () => {
       <router-view></router-view>
     </template>
   </BaseLayout>
+  <div class="fixed z-10 bottom-4 right-4 flex gap-2">
+    <button
+      v-if="store.activeNodeId"
+      :class="store.isDrawerOpen ? 'md:block ' : 'hidden md:block'"
+      class="border border-red-500/50 text-red-500 font-semibold px-4 py-2 rounded-lg shadow-sm hover:bg-red-500 hover:text-white transition-all duration-300"
+      @click="removeNode"
+    >
+      Delete Node
+    </button>
+    <button
+      v-if="store.activeEdgeId"
+      :class="store.isDrawerOpen ? 'md:block ' : 'hidden md:block'"
+      class="border border-blue-500/50 text-blue-500 font-semibold px-4 py-2 rounded-lg shadow-sm hover:bg-blue-500 hover:text-white transition-all duration-300"
+      @click="addNewNode"
+    >
+      <font-awesome-icon class="mr-2" :icon="['fas', 'plus']" /> Add Node
+    </button>
+  </div>
 </template>
 
 
