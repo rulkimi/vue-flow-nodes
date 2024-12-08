@@ -106,9 +106,22 @@ const addNewNode = () => {
 
 const removeNode = () => {
   if (!store.activeNodeId) return;
-  store.removeNode(store.activeNodeId)
-  removeNodes(store.activeNodeId)
-}
+
+  const nodeId = store.activeNodeId;
+
+  const childNodes = store.nodes.filter(node => node.parentId === nodeId);
+
+  const nodeToRemove = store.nodes.find(node => node.id === nodeId);
+  const parentId = nodeToRemove?.parentId;
+
+  childNodes.forEach(childNode => {
+    store.editNode(childNode.id, { parentId });
+  });
+
+  store.removeNode(nodeId);
+  store.setActiveNodeId(null);
+};
+
 
 onMounted(() => {
   setTimeout(() => {
