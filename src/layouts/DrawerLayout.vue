@@ -1,10 +1,15 @@
 <script setup lang="ts">
+import { computed, useSlots } from 'vue';
+
 defineProps<{
   color?: string
   title: string | undefined
   description: string | undefined
   icon: string
 }>();
+
+const slot = useSlots()
+const hasTopContent = computed(() => !!slot['top-content']);
 </script>
 
 <template>
@@ -26,6 +31,10 @@ defineProps<{
       <slot name="description">
         <span>{{ description }}</span>
       </slot>
+    </div>
+
+    <div v-if="hasTopContent" class="mt-4">
+      <slot name="top-content"></slot>
     </div>
 
     <div class="mt-4">

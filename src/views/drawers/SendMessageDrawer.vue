@@ -5,6 +5,7 @@ import { Node } from '../../types';
 import { useToastStore } from '../../stores/toastStore';
 
 import SendMessageDetails from '../../components/templates/SendMessageDetails.vue';
+import DrawerLayout from '../../layouts/DrawerLayout.vue';
 
 const props = defineProps<{
   nodeId: string;
@@ -57,17 +58,14 @@ watch(() => props.nodeId, (newNodeId) => {
 </script>
 
 <template>
-  <div v-if="node">
-    <div class="flex items-center gap-2 mb-4">
-      <font-awesome-icon style="color: #3baca1" :icon="['far', 'paper-plane']" size="xl" />
-      <h2 class="text-2xl font-bold">{{ node.data.name }}</h2>
-    </div>
-
-    <div class="border-b pb-2">
-      <span>{{ node.data.description }}</span>
-    </div>
-
-    <div class="mt-4">
+  <DrawerLayout
+    v-if="node"
+    color="#3baca1"
+    icon="paper-plane"
+    :title="node.data.name"
+    :description="node.data.description"
+  >
+    <template #content>
       <SendMessageDetails
         :key="sendMessageKey"
         v-model:model-send-message-title="messageTitle"
@@ -82,6 +80,6 @@ watch(() => props.nodeId, (newNodeId) => {
           Save
         </button>
       </div>
-    </div>
-  </div>
+    </template>
+  </DrawerLayout>
 </template>

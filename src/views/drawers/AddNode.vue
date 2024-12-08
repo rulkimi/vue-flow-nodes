@@ -6,6 +6,7 @@ import { TextPayload, AttachmentPayload } from '../../types';
 import SendMessageDetails from '../../components/templates/SendMessageDetails.vue';
 import DateTimeDetails from '../../components/templates/DateTimeDetails.vue';
 import AddCommentDetails from '../../components/templates/AddCommentDetails.vue';
+import DrawerLayout from '../../layouts/DrawerLayout.vue';
 
 const props = defineProps<{
   edgeId: string
@@ -91,19 +92,13 @@ watch(
 </script>
 
 <template>
-  <div>
-    <div class="flex items-center gap-2 mb-4">
-      <font-awesome-icon style="color: #8b93d0" :icon="['far', 'square-plus']" size="xl" />
-      <h2 class="text-2xl font-bold">Add Node</h2>
-    </div>
-
-    <div class="border-b pb-2">
-      <span>
-        Nodes represent specific actions or steps within the flow.
-      </span>
-    </div>
-
-    <div class="mt-4">
+  <DrawerLayout
+    color="#8b93d0"
+    icon="square-plus"
+    title="Add Node"
+    description="Nodes represent specific actions or steps within the flow."
+  >
+    <template #top-content>
       <p class="text-slate-500 mb-2">Select Node Type</p>
       <div class="flex flex-col space-y-2">
         <label
@@ -137,9 +132,8 @@ watch(
           </div>
         </label>
       </div>
-    </div>
-
-    <div class="mt-4">
+    </template>
+    <template #content>
       <div v-if="selectedNodeType === 'sendMessage'">
         <div class="font-bold">Send Messages</div>
 
@@ -180,6 +174,6 @@ watch(
           <DateTimeDetails v-model="businessHourNode" />
         </div>
       </div>
-    </div>
-  </div>
+    </template>
+  </DrawerLayout>
 </template>
