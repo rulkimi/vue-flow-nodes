@@ -10,6 +10,7 @@ export const useMainStore = defineStore('main', () => {
   const newNodeData = ref<any>(null);
 
   const nodeIds = ref<string[]>([]);
+  const edgeIds = ref<string[]>([]);
 
   const getNodeDescription = (nodeType: string) => {
     switch (nodeType) {
@@ -44,16 +45,19 @@ export const useMainStore = defineStore('main', () => {
     }
   };
 
-  const edges = computed(() =>
-    nodes.value
+  const edges = computed(() => {
+    const computedEdges = nodes.value
       .filter(node => node.parentId && node.parentId !== -1)
       .map(node => ({
         id: `${node.parentId}-${node.id}`,
         source: `${node.parentId}`,
         target: `${node.id}`,
         type: node.type === 'dateTimeConnector' ? 'custom' : node.type === 'emptyNode' ? 'empty' : 'button',
-      }))
-  );
+      }));
+    
+    edgeIds.value = computedEdges.map(edge => edge.id);
+    return computedEdges;
+  });
 
   const setActiveNodeId = (nodeId: string | null) => {
     activeEdgeId.value = null;
@@ -117,10 +121,11 @@ export const useMainStore = defineStore('main', () => {
   return {
     nodes,
     edges,
+    edgeIds,
     activeNodeId,
     activeEdgeId,
     newNodeData,
-    nodeIds, // Expose the list of node IDs
+    nodeIds,
     setActiveNodeId,
     setNodes,
     addNode,
