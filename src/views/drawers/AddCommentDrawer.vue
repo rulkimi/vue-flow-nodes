@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useMainStore } from '../../stores';
-import { computed, ref} from 'vue';
+import { computed, ref, watch } from 'vue';
 
 import { Node } from '../../types'
 
@@ -28,6 +28,19 @@ const update = () => {
     }
   })
 }
+
+watch(
+  () => props.nodeId,
+  (newNodeId) => {
+    store.setActiveNodeId(newNodeId);
+
+    const newNode = store.nodes?.find((node: Node) => node.id === newNodeId);
+    if (newNode) {
+      commentTitle.value = newNode.data.name || '';
+      commentText.value = newNode.data.comment || '';
+    }
+  }
+);
 </script>
 
 <template>
@@ -74,6 +87,8 @@ const update = () => {
         </button>
       </div>
     </div>
+
+    
 
   </div>
 </template>
