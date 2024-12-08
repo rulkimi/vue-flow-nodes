@@ -3,10 +3,10 @@ import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useMainStore } from '../stores';
 import { useToastStore } from '../stores/toastStore';
-import { useVueFlow, DefaultEdge } from '@vue-flow/core';
 import { Node, NodeData } from '../types'
 import { convertCamelToKebab } from '../utils';
 
+import { useVueFlow, DefaultEdge } from '@vue-flow/core';
 import { NodeMouseEvent, VueFlow } from '@vue-flow/core';
 import { Background } from '@vue-flow/background';
 import { MiniMap } from '@vue-flow/minimap';
@@ -23,75 +23,59 @@ import DateTimeConnectorNode from '../components/nodes/DateTimeConnectorNode.vue
 import EmptyNode from '../components/nodes/EmptyNode.vue';
 import EmptyEdge from '../components/edges/EmptyEdge.vue';
 
-const vueFlowKey = ref(0)
-const store = useMainStore()
+const router = useRouter();
+const store = useMainStore();
+const toast = useToastStore();
+const { findEdge, updateNode, addNodes } = useVueFlow();
 
-const router = useRouter()
-const onNodeClick = ({ node }: NodeMouseEvent) => {
-  store.setActiveNodeId(node.id)
-
-  if (node.type === 'dateTime') router.push({ name: 'date-time', params: { nodeId: node.id } })
-  else if (node.type === 'sendMessage') router.push({ name: 'send-message', params: { nodeId: node.id } })
-  else if (node.type === 'addComment') router.push({ name: 'add-comment', params: { nodeId: node.id } })
-  else router.push({ name: 'flowchart' })
-}
-
-const { findEdge, updateNode, addNodes } = useVueFlow()
-
-const moveChildNodes = (parentNodeId: string, yOffset: number) => {
-  const childEdges = store.edges.filter((e: DefaultEdge) => e.source === parentNodeId);
-
-  const childNodes = childEdges.map((e: DefaultEdge) => store.nodes.find((n: Node) => n.id === e.target));
-
-  childNodes.forEach((childNode) => {
-    if (childNode) {
-      const newChildPosition = {
-        x: childNode.position.x,
-        y: childNode.position.y + yOffset
-      };
-
-      updateNode(childNode.id, { position: newChildPosition });
-      store.editNode(childNode.id, { position: newChildPosition });
-
-      moveChildNodes(childNode.id, yOffset);
-    }
-  });
-};
-
-const generateRandomId = () => {
-  let id;
-  do {
-    id = Math.random().toString(16).slice(2, 8); 
-  } while (store.nodeIds.includes(id)); 
-  return id;
-};
-
-const toast = useToastStore()
+onMounted(() => {
+  setTimeout(() => {
+    store.nodes.forEach((node: Node) => {
+      const hasOutgoingEdge = store.edges.some(
+        (edge: DefaultEdge) => edge.source === node.id
+      )
+      if (!hasOutgoingEdge && node.type !== 'emptyNode') {
+        const newNode = {
+          id: generateRandomId(),
+          type: 'emptyNode',
+          data: {},
+          position: { 
+            x: node.position.x,
+            y: node.position.y + 250
+          },
+          parentId: node.id
+        }
+        addNodes(newNode)
+        store.addNode(newNode)
+      } 
+    })
+  }, 50)
+});
 
 const addNewNode = () => {
   const edge = findEdge(store.activeEdgeId);
   if (!edge) return;
   const { sourceNode, targetNode } = edge;
 
-  let data: NodeData = {}
+  let data: NodeData = {};
   if (store.newNodeData.type === 'sendMessage') {
     data = {
       name: store.newNodeData.title,
       payload: store.newNodeData.messages
-    }
+    };
   } else if (store.newNodeData.type === 'addComment') {
     data = {
       name: store.newNodeData.title,
       comment: store.newNodeData.comment
-    }
+    };
   } else if (store.newNodeData.type === 'dateTime') {
     data = {
       action: store.newNodeData.action,
       name: store.newNodeData.title,
       times: store.newNodeData.times,
-      timezone: store.newNodeData.timezone,
-    }
-  }
+      timezone: store.newNodeData.timezone
+    };
+  };
 
   const newNode = {
     id: generateRandomId(),
@@ -110,16 +94,14 @@ const addNewNode = () => {
 
   router.push({ 
     name: convertCamelToKebab(store.newNodeData.type),
-    params: {
-      nodeId: newNode.id
-    }
-  })
+    params: { nodeId: newNode.id }
+  });
 
   toast.showToast({
     message: `<strong>${newNode.name}</strong> node added.`,
     icon: 'circle-check',
     iconColor: 'green'
-  })
+  });
 
   const updatedTargetPosition = {
     x: targetNode.position.x,
@@ -158,40 +140,49 @@ const removeNode = () => {
     message: `<strong>${nodeToRemove?.name ?? ''}</strong> node deleted.`,
     icon: 'circle-check',
     iconColor: 'green'
-  })
+  });
 };
 
+const onNodeClick = ({ node }: NodeMouseEvent) => {
+  store.setActiveNodeId(node.id);
 
-onMounted(() => {
-  setTimeout(() => {
-    store.nodes.forEach((node: Node) => {
-      const hasOutgoingEdge = store.edges.some(
-        (edge: DefaultEdge) => edge.source === node.id
-      )
-      if (!hasOutgoingEdge && node.type !== 'emptyNode') {
-        const newNode = {
-          id: generateRandomId(),
-          type: 'emptyNode',
-          data: {},
-          position: { 
-            x: node.position.x,
-            y: node.position.y + 250
-          },
-          parentId: node.id
-        }
-        addNodes(newNode)
-        store.addNode(newNode)
-      } 
-    })
-  }, 50)
-})
+  if (node.type === 'dateTime') router.push({ name: 'date-time', params: { nodeId: node.id } });
+  else if (node.type === 'sendMessage') router.push({ name: 'send-message', params: { nodeId: node.id } });
+  else if (node.type === 'addComment') router.push({ name: 'add-comment', params: { nodeId: node.id } });
+  else router.push({ name: 'flowchart' })
+};
+
+const moveChildNodes = (parentNodeId: string, yOffset: number) => {
+  const childEdges = store.edges.filter((e: DefaultEdge) => e.source === parentNodeId);
+  const childNodes = childEdges.map((e: DefaultEdge) => store.nodes.find((n: Node) => n.id === e.target));
+
+  childNodes.forEach((childNode) => {
+    if (childNode) {
+      const newChildPosition = {
+        x: childNode.position.x,
+        y: childNode.position.y + yOffset
+      };
+      updateNode(childNode.id, { position: newChildPosition });
+      store.editNode(childNode.id, { position: newChildPosition });
+
+      moveChildNodes(childNode.id, yOffset);
+    }
+  });
+};
+
+const generateRandomId = () => {
+  let id;
+  do {
+    id = Math.random().toString(16).slice(2, 8); 
+  } while (store.nodeIds.includes(id)); 
+  return id;
+};
 </script>
 
 <template>
   <BaseLayout>
     <template #canvas>
       <VueFlow
-        :key="vueFlowKey"
         :nodes="store.nodes"
         :edges="store.edges"
         fit-view-on-init
