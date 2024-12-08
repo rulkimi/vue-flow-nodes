@@ -230,7 +230,7 @@ onMounted(() => {
             class="border border-red-500/50 text-red-500 font-semibold px-4 py-2 rounded-lg shadow-sm hover:bg-red-500 hover:text-white transition-all duration-300"
             @click="removeNode"
           >
-            Remove Node
+            Delete Node
           </button>
           <button
             v-if="store.activeEdgeId"

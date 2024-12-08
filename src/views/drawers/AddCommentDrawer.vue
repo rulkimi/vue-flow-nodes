@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useMainStore } from '../../stores';
-import { computed } from 'vue';
+import { computed, ref} from 'vue';
 
 import { Node } from '../../types'
 
@@ -16,13 +16,25 @@ const node = computed(() => {
   return store.nodes.find((node: Node) => node.id === props.nodeId)
 })
 
+const commentTitle = ref(node?.value?.data.name)
+const commentText = ref(node?.value?.data.comment)
+
+const update = () => {
+  if (!node.value) return
+  store.editNode(node.value.id, {
+    data: {
+      name: commentTitle.value,
+      comment: commentText.value
+    }
+  })
+}
 </script>
 
 <template>
   <div v-if="node">
     <div class="flex items-center gap-2 mb-4">
       <font-awesome-icon style="color: #8b93d0" :icon="['far', 'comment-dots']" size="xl" />
-      <h2 class="text-2xl font-bold">{{ node.name }}</h2>
+      <h2 class="text-2xl font-bold">{{ node.data.name }}</h2>
     </div>
     <div class="border-b pb-2">
       <span>
@@ -31,7 +43,36 @@ const node = computed(() => {
     </div>
 
     <div class="mt-4">
-      {{ node.data.comment }}
+      <div class="flex flex-col gap-2">
+        <label>
+          <p class="text-slate-500 mb-1">Title<sup class="text-red-500">*</sup></p>
+          <input
+            v-model="commentTitle"
+            id="add-comment-title"
+            type="text"
+            placeholder="E.g. Welcome Message"
+            class="border rounded-lg px-2 py-1 w-full"
+          >
+        </label>
+        <label>
+          <p class="text-slate-500 mb-1">Comment<sup class="text-red-500">*</sup></p>
+          <input
+            v-model="commentText"
+            id="add-comment-title"
+            type="text"
+            placeholder="E.g. Welcome Message"
+            class="border rounded-lg px-2 py-1 w-full"
+          >
+        </label>
+      </div>
+      <div class="text-end">
+        <button
+          class="mt-4 py-1 px-2 border border-blue-500/50 text-blue-500 font-bold rounded-md hover:bg-blue-500 hover:text-white transition-colors duration-300"
+          @click="update"
+        >
+          Save
+        </button>
+      </div>
     </div>
 
   </div>
