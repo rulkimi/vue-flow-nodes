@@ -19,26 +19,17 @@ const emit = defineEmits(['update:modelSendMessageTitle', 'update:modelMessages'
 
 watch(
   () => messages.value,
-  () => {
+  (newValue) => {
+    emit('update:modelMessages', newValue);
     store.setNewNodeData({ messages: messages, title: sendMessageTitle.value, type: 'sendMessage' });
   },
   { deep: true }
 );
 
-watch(
-  () => sendMessageTitle.value,
-  (newValue) => {
-    emit('update:modelSendMessageTitle', newValue);
-  }
-);
-
-watch(
-  () => messages.value,
-  (newValue) => {
-    emit('update:modelMessages', newValue);
-  },
-  { deep: true }
-);
+const updateSendMessageTitleValue = (event: Event) => {
+  const input = event.target as HTMLInputElement
+  emit('update:modelSendMessageTitle', input.value);
+}
 
 const onFileChange = (event: Event, index: number) => {
   const input = event.target as HTMLInputElement;
@@ -97,6 +88,7 @@ const openUrl = (url: string) => {
       type="text"
       placeholder="E.g. Welcome Message"
       class="border rounded-lg px-2 py-1 w-full"
+      @input="updateSendMessageTitleValue"
     >
   </label>
   <div>
