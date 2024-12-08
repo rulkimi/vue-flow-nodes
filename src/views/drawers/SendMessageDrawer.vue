@@ -61,9 +61,7 @@ watch(() => props.nodeId, (newNodeId) => {
     </div>
 
     <div class="border-b pb-2">
-      <span>
-        Send a message, including text or attachment.
-      </span>
+      <span>{{ node.data.description }}</span>
     </div>
 
     <div class="mt-4">

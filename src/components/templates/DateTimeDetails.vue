@@ -48,26 +48,29 @@ function updateNode(newValue: any) {
       </div>
     </div>
 
-    <select
-      v-model="props.modelValue.data.timezone"
-      id="timezone"
-      class="border rounded-lg p-1 w-full"
-      @change="updateNode(props.modelValue)"
-    >
-      <option disabled>Select Time Zone</option>
-      <option value="UTC">(GMT+00:00) UTC</option>
-      <option value="EST">(GMT-05:00) Eastern Time (US & Canada)</option>
-      <option value="CST">(GMT-06:00) Central Time (US & Canada)</option>
-      <option value="MST">(GMT-07:00) Mountain Time (US & Canada)</option>
-      <option value="PST">(GMT-08:00) Pacific Time (US & Canada)</option>
-      <option value="GMT">(GMT+00:00) London</option>
-      <option value="CET">(GMT+01:00) Berlin</option>
-      <option value="JST">(GMT+09:00) Tokyo</option>
-      <option value="CST-China">(GMT+08:00) Shanghai</option>
-      <option value="GST">(GMT+04:00) Dubai</option>
-      <option value="AEDT">(GMT+11:00) Sydney</option>
-      <option value="IST">(GMT+05:30) India Standard Time</option>
-    </select>
+    <label>
+      <p class="text-slate-500 mb-1 font-semibold">Time Zone<sup class="text-red-500">*</sup></p>
+      <select
+        v-model="props.modelValue.data.timezone"
+        id="timezone"
+        class="border rounded-lg p-1 w-full"
+        @change="updateNode(props.modelValue)"
+      >
+        <option disabled>Select Time Zone</option>
+        <option value="UTC">(GMT+00:00) UTC</option>
+        <option value="EST">(GMT-05:00) Eastern Time (US & Canada)</option>
+        <option value="CST">(GMT-06:00) Central Time (US & Canada)</option>
+        <option value="MST">(GMT-07:00) Mountain Time (US & Canada)</option>
+        <option value="PST">(GMT-08:00) Pacific Time (US & Canada)</option>
+        <option value="GMT">(GMT+00:00) London</option>
+        <option value="CET">(GMT+01:00) Berlin</option>
+        <option value="JST">(GMT+09:00) Tokyo</option>
+        <option value="CST-China">(GMT+08:00) Shanghai</option>
+        <option value="GST">(GMT+04:00) Dubai</option>
+        <option value="AEDT">(GMT+11:00) Sydney</option>
+        <option value="IST">(GMT+05:30) India Standard Time</option>
+      </select>
+    </label>
 
   </template>
 </template>

@@ -11,11 +11,21 @@ export const useMainStore = defineStore('main', () => {
 
   const nodeIds = ref<string[]>([]);
 
+  const getNodeDescription = (nodeType: string) => {
+    switch (nodeType) {
+      case 'sendMessage': return 'Send a message, including text or attachment.';
+      case 'dateTime': return 'Allows a branch to be created based on date & time conditions. Use it to set business hours or date range conditions.';
+      case 'addComment': return 'Remark for more explanation.';
+      default: return ''
+    }
+  };
+
   const createNode = (node: Node): Node => ({
     ...node,
     data: {
       ...node.data,
       name: node.name,
+      description: getNodeDescription(node.type)
     },
     position: node.position || getDefaultPosition(node.id),
     draggable: node.type !== 'dateTimeConnector',
@@ -118,5 +128,6 @@ export const useMainStore = defineStore('main', () => {
     editNode,
     setActiveEdgeId,
     setNewNodeData,
+    getNodeDescription,
   };
 });

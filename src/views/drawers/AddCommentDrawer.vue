@@ -58,14 +58,14 @@ watch(
 
     <div class="border-b pb-2">
       <span>
-        Remark for more explanation.
+        {{ node.data.description }}
       </span>
     </div>
 
     <div class="mt-4">
       <div class="flex flex-col gap-2">
         <label>
-          <p class="text-slate-500 mb-1">Title<sup class="text-red-500">*</sup></p>
+          <p class="text-slate-500 mb-1 font-semibold">Title<sup class="text-red-500">*</sup></p>
           <input
             v-model="commentTitle"
             id="add-comment-title"
@@ -75,7 +75,7 @@ watch(
           >
         </label>
         <label>
-          <p class="text-slate-500 mb-1">Comment<sup class="text-red-500">*</sup></p>
+          <p class="text-slate-500 mb-1 font-semibold">Comment<sup class="text-red-500">*</sup></p>
           <input
             v-model="commentText"
             id="add-comment-text"

@@ -61,19 +61,22 @@ const addNewNode = () => {
   if (store.newNodeData.type === 'sendMessage') {
     data = {
       name: store.newNodeData.title,
-      payload: store.newNodeData.messages
+      payload: store.newNodeData.messages,
+      description: store.getNodeDescription(store.newNodeData.type)
     };
   } else if (store.newNodeData.type === 'addComment') {
     data = {
       name: store.newNodeData.title,
-      comment: store.newNodeData.comment
+      comment: store.newNodeData.comment,
+      description: store.getNodeDescription(store.newNodeData.type)
     };
   } else if (store.newNodeData.type === 'dateTime') {
     data = {
       action: store.newNodeData.action,
       name: store.newNodeData.title,
       times: store.newNodeData.times,
-      timezone: store.newNodeData.timezone
+      timezone: store.newNodeData.timezone,
+      description: store.getNodeDescription(store.newNodeData.type)
     };
   };
 

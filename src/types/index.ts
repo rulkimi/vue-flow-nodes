@@ -7,6 +7,7 @@ export interface NodeData {
   comment?: string;
   name?: string
   times?: Array<{ startTime: string, endTime: string, day: string}>
+  description?: string
 }
 
 export interface Node {

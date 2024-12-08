@@ -154,7 +154,7 @@ watch(
 
         <div class="flex flex-col gap-2 mt-4">
           <label>
-            <p class="text-slate-500 mb-1">Title<sup class="text-red-500">*</sup></p>
+            <p class="text-slate-500 mb-1 font-semibold">Title<sup class="text-red-500">*</sup></p>
             <input
               v-model="addCommentTitle"
               id="add-comment-title-drawer"
@@ -164,7 +164,7 @@ watch(
             >
           </label>
           <label>
-            <p class="text-slate-500 mb-1">Comment<sup class="text-red-500">*</sup></p>
+            <p class="text-slate-500 mb-1 font-semibold">Comment<sup class="text-red-500">*</sup></p>
             <input
               v-model="addCommentText"
               id="add-comment-text-drawer"
@@ -180,6 +180,16 @@ watch(
       <div v-else-if="selectedNodeType === 'businessHours'">
         <div class="flex flex-col gap-2 mt-4">
           <div class="font-bold">Business Hours</div>
+          <div class="grid grid-cols-12 py-4">
+            <div class="col-span-3 ml-6">
+              <font-awesome-icon class="mr-1" :icon="['far', 'calendar']" />
+              <span>Day</span>
+            </div>
+            <div class="col-span-9">
+              <font-awesome-icon class="mr-1" :icon="['far', 'clock']" />
+              <span>Time</span>
+            </div>
+          </div>
           <DateTimeDetails v-model="businessHourNode" />
         </div>
       </div>

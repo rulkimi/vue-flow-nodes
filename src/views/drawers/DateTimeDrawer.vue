@@ -44,10 +44,7 @@ const update = () => {
       <h2 class="text-2xl font-bold">Business Hours</h2>
     </div>
     <div class="border-b pb-2">
-      <span>
-        Allows a branch to be created based on date & time conditions.
-        Use it to set business hours or date range conditions.
-      </span>
+      <span>{{ node?.data.description }}</span>
     </div>
     <div class="grid grid-cols-12 py-4">
       <div class="col-span-3 ml-6">
