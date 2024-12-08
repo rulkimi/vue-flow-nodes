@@ -5,6 +5,7 @@ import { TextPayload, AttachmentPayload } from '../../types';
 
 import SendMessageDetails from '../../components/templates/SendMessageDetails.vue';
 import DateTimeDetails from '../../components/templates/DateTimeDetails.vue';
+import AddCommentDetails from '../../components/templates/AddCommentDetails.vue';
 
 const props = defineProps<{
   edgeId: string
@@ -155,26 +156,10 @@ watch(
         <div class="font-bold">Add Comment</div>
 
         <div class="flex flex-col gap-2 mt-4">
-          <label>
-            <p class="text-slate-500 mb-1 font-semibold">Title<sup class="text-red-500">*</sup></p>
-            <input
-              v-model="addCommentTitle"
-              id="add-comment-title-drawer"
-              type="text"
-              placeholder="E.g. Welcome Message"
-              class="border rounded-lg px-2 py-1 w-full"
-            >
-          </label>
-          <label>
-            <p class="text-slate-500 mb-1 font-semibold">Comment<sup class="text-red-500">*</sup></p>
-            <input
-              v-model="addCommentText"
-              id="add-comment-text-drawer"
-              type="text"
-              placeholder="E.g. Welcome Message"
-              class="border rounded-lg px-2 py-1 w-full"
-            >
-          </label>
+          <AddCommentDetails
+            v-model:model-comment-title="addCommentTitle"
+            v-model:model-comment-text="addCommentText"
+          />
         </div>
 
       </div>
