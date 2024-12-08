@@ -120,6 +120,7 @@ const removeNode = () => {
 
   store.removeNode(nodeId);
   store.setActiveNodeId(null);
+  router.push({ name: 'flowchart' })
 };
 
 
