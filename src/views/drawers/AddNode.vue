@@ -97,7 +97,7 @@ onMounted(() => {
     </div>
     <div class="border-b pb-2">
       <span>
-        Remark for more explanation.
+        Nodes represent specific actions or steps within the flow.
       </span>
     </div>
 
@@ -174,7 +174,10 @@ onMounted(() => {
 
       </div>
       <div v-else-if="selectedNodeType === 'businessHours'">
-        <DateTimeDetails v-model="businessHourNode" />
+        <div class="flex flex-col gap-2 mt-4">
+          <div class="font-bold">Business Hours</div>
+          <DateTimeDetails v-model="businessHourNode" />
+        </div>
       </div>
     </div>
 
