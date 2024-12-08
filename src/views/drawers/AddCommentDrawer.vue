@@ -4,6 +4,7 @@ import { useMainStore } from '../../stores';
 import { useToastStore } from '../../stores/toastStore';
 import { Node } from '../../types'
 import AddCommentDetails from '../../components/templates/AddCommentDetails.vue';
+import DrawerLayout from '../../layouts/DrawerLayout.vue';
 
 const props = defineProps<{
   nodeId: string
@@ -51,19 +52,14 @@ watch(
 </script>
 
 <template>
-  <div v-if="node">
-    <div class="flex items-center gap-2 mb-4">
-      <font-awesome-icon style="color: #8b93d0" :icon="['far', 'comment-dots']" size="xl" />
-      <h2 class="text-2xl font-bold">{{ node.data.name }}</h2>
-    </div>
-
-    <div class="border-b pb-2">
-      <span>
-        {{ node.data.description }}
-      </span>
-    </div>
-
-    <div class="mt-4">
+  <DrawerLayout
+    v-if="node"
+    color="#8b93d0"
+    :title="node.data.name"
+    :description="node.data.description"
+    icon="comment-dots"
+  >
+    <template #content>
       <div class="flex flex-col gap-2">
         <AddCommentDetails
           v-model:model-comment-title="commentTitle"
@@ -78,6 +74,6 @@ watch(
           Save
         </button>
       </div>
-    </div>
-  </div>
+    </template>
+  </DrawerLayout>
 </template>
