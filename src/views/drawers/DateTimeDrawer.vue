@@ -2,7 +2,8 @@
 import { computed } from 'vue';
 import { useMainStore } from '../../stores';
 import { Node } from '../../types'
-import { capitalizeFirstLetter } from '../../utils';
+
+import DateTimeDetails from '../../components/templates/DateTimeDetails.vue';
 
 const props = defineProps<{
   nodeId: string
@@ -15,6 +16,17 @@ const node = computed(() => {
   if (!store.nodes) return;
   return store.nodes.find((node: Node) => node.id === props.nodeId)
 })
+
+const update = () => {
+  if (!node.value) return;
+  store.editNode(node.value.id, {
+    data: {
+      ...node.value.data,
+      times: node.value.data.times,
+      timezone: node.value.data.timezone
+    },
+  });
+};
 </script>
 
 <template>
@@ -39,45 +51,14 @@ const node = computed(() => {
         <span>Time</span>
       </div>
     </div>
-    <template v-if="node">
-      <div class="flex flex-col gap-2 mb-12">
-        <div
-          v-for="item in node.data.times"
-          :key="item.day"
-          class="grid grid-cols-12"
-        >
-          <span class="col-span-1"></span>
-          <span class="col-span-2 text-start font-bold">{{ capitalizeFirstLetter(item.day) }}</span>
-          <div class="col-span-3 flex items-center gap-4">
-            <input
-              v-model="item.startTime"
-              :id="`${item.day}-starttime`"
-              class="border rounded-lg p-1 w-16 text-center"
-            />
-            <font-awesome-icon :icon="['far', 'clock']" />
-          </div>
-          <span class="col-span-1">to</span>
-          <div class="col-span-3 flex items-center gap-4">
-            <input
-              v-model="item.endTime"
-              :id="`${item.day}-endtime`"
-              class="border rounded-lg p-1 w-16 text-center"
-            />
-            <font-awesome-icon :icon="['far', 'clock']" />
-          </div>
-        </div>
-      </div>
-      <label>
-        <p class="text-slate-500 mb-1">Time Zone</p>
-        <select
-          v-model="node.data.timezone"
-          id="timezone"
-          class="border rounded-lg p-1 w-full"
-        >
-          <option disabled>Select Time Zone</option>
-          <option value="UTC">(GMT+00:00) UTC</option>
-        </select>
-      </label>
-    </template>
+    <DateTimeDetails v-model="node" />
+    <div class="text-end">
+      <button
+        class="mt-4 py-1 px-2 border border-blue-500/50 text-blue-500 font-bold rounded-md hover:bg-blue-500 hover:text-white transition-colors duration-300"
+        @click="update"
+      >
+        Save
+      </button>
+    </div>
   </div>
 </template>

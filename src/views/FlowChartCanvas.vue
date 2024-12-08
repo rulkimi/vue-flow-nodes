@@ -3,7 +3,7 @@ import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useMainStore } from '../stores';
 import { useVueFlow, DefaultEdge } from '@vue-flow/core';
-import { Node } from '../types'
+import { Node, NodeData } from '../types'
 
 import { NodeMouseEvent, VueFlow } from '@vue-flow/core';
 import { Background } from '@vue-flow/background';
@@ -69,16 +69,21 @@ const addNewNode = () => {
   if (!edge) return;
   const { sourceNode, targetNode } = edge;
 
-  let data;
+  let data: NodeData = {}
   if (store.newNodeData.type === 'sendMessage') {
     data = {
       name: store.newNodeData.title,
       payload: store.newNodeData.messages
     }
-  } else {
+  } else if (store.newNodeData.type === 'addComment') {
     data = {
       name: store.newNodeData.title,
       comment: store.newNodeData.comment
+    }
+  } else if (store.newNodeData.type === 'businessHours') {
+    data = {
+      times: store.newNodeData.times,
+      timezone: store.newNodeData.timezone,
     }
   }
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, nextTick, watch, onMounted } from 'vue';
+import { ref, watch, onMounted } from 'vue';
 import { useMainStore } from '../../stores';
 import SendMessageDetails from '../../components/templates/SendMessageDetails.vue';
 
