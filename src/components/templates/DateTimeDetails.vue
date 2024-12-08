@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import { useMainStore } from '../../stores';
 import { capitalizeFirstLetter } from '../../utils';
 
 const props = defineProps<{
@@ -8,8 +9,10 @@ const props = defineProps<{
   modelDateTimeTitle?: string
 }>();
 
+const store = useMainStore();
+
 const title = ref(props.modelDateTimeTitle);
-const description = ref(props.modelDateTimeDescription);
+const description = ref(props.modelDateTimeDescription || store.getNodeDescription('dateTime'));
 
 const emit = defineEmits(['update:modelNode', 'update:modelDateTimeDescription', 'update:modelDateTimeTitle'])
 

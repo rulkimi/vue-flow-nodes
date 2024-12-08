@@ -91,8 +91,6 @@ const addNewNode = () => {
     },
     parentId: sourceNode.id
   };
-
-  console.log(newNode)
   
   addNodes(newNode);
   store.addNode(newNode);

@@ -67,10 +67,15 @@ const businessHourNode = ref({
   }
 });
 const businessHoursTitle = ref('Business Hours');
-const businessHoursDescription = ref();
+const businessHoursDescription = ref('');
 
 watch(
-  [() => businessHourNode.value, () => selectedNodeType.value],
+  [
+    () => businessHourNode.value, 
+    () => selectedNodeType.value, 
+    () => businessHoursDescription.value, 
+    () => businessHoursTitle.value
+  ],
   () => {
     if (selectedNodeType.value === 'businessHours') {
       store.setNewNodeData({
@@ -82,6 +87,7 @@ watch(
         timezone: businessHourNode.value.data.timezone
       });
     }
+    console.log(store.newNodeData)
   },
   { deep: true }
 );
@@ -174,7 +180,7 @@ watch(
           <DateTimeDetails
             v-model:model-node="businessHourNode"
             v-model:model-date-time-title="businessHoursTitle"
-            v-bind:model-date-time-description="businessHoursDescription"
+            v-model:model-date-time-description="businessHoursDescription"
           />
         </div>
       </div>
