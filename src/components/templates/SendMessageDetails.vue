@@ -1,21 +1,19 @@
 <script setup lang="ts">
 import { ref, nextTick, watch } from 'vue'
 import { useMainStore } from '../../stores';
-
-const store = useMainStore()
-
-type TextPayload = { id: string, type: 'text'; text: string };
-type AttachmentPayload = { id: string, type: 'attachment'; attachment: File | string };
+import { TextPayload, AttachmentPayload } from '../../types';
 
 const props = defineProps<{
   modelSendMessageTitle?: string;
   modelMessages?: Array<TextPayload | AttachmentPayload>
-}>()
+}>();
 
-const sendMessageTitle = ref(props.modelSendMessageTitle || '')
-const messages = ref<Array<TextPayload | AttachmentPayload>>(props.modelMessages || [])
+const emit = defineEmits(['update:modelSendMessageTitle', 'update:modelMessages']);
 
-const emit = defineEmits(['update:modelSendMessageTitle', 'update:modelMessages'])
+const store = useMainStore();
+
+const sendMessageTitle = ref(props.modelSendMessageTitle || '');
+const messages = ref<Array<TextPayload | AttachmentPayload>>(props.modelMessages || []);
 
 watch(
   () => messages.value,
@@ -25,20 +23,6 @@ watch(
   },
   { deep: true }
 );
-
-const updateSendMessageTitleValue = (event: Event) => {
-  const input = event.target as HTMLInputElement
-  emit('update:modelSendMessageTitle', input.value);
-}
-
-const onFileChange = (event: Event, index: number) => {
-  const input = event.target as HTMLInputElement;
-  const file = input.files?.[0];
-  if (file) {
-    const updatedMessage = { ...messages.value[index], attachment: file };
-    messages.value.splice(index, 1, updatedMessage);
-  }
-};
 
 const addTextMessage = () => {
   const generatedId = Date.now().toString()
@@ -50,11 +34,6 @@ const addTextMessage = () => {
   });
 };
 
-const deleteMessage = (index: number) => {
-  messages.value.splice(index, 1);
-};
-
-
 const addAttachmentMessage = () => {
   const generatedId = Date.now().toString()
   const newMessage: AttachmentPayload = { id: generatedId, type: 'attachment', attachment: 'No File Chosen' };
@@ -63,6 +42,24 @@ const addAttachmentMessage = () => {
     const fileInputElement = document.getElementById(generatedId) as HTMLInputElement;
     fileInputElement?.click();
   });
+};
+
+const deleteMessage = (index: number) => {
+  messages.value.splice(index, 1);
+};
+
+const updateSendMessageTitleValue = (event: Event) => {
+  const input = event.target as HTMLInputElement
+  emit('update:modelSendMessageTitle', input.value);
+};
+
+const onFileChange = (event: Event, index: number) => {
+  const input = event.target as HTMLInputElement;
+  const file = input.files?.[0];
+  if (file) {
+    const updatedMessage = { ...messages.value[index], attachment: file };
+    messages.value.splice(index, 1, updatedMessage);
+  }
 };
 
 const openImage = (attachment: File) => {
@@ -81,13 +78,15 @@ const openImage = (attachment: File) => {
 
 const openUrl = (url: string) => {
   window.open(url, '_blank')
-}
+};
 </script>
 
 <template>
   <div class="flex flex-col gap-4">
     <label>
-      <p class="text-slate-500 mb-1 font-semibold">Title<sup class="text-red-500">*</sup></p>
+      <p class="text-slate-500 mb-1 font-semibold">
+        Title<sup class="text-red-500">*</sup>
+      </p>
       <input
         v-model="sendMessageTitle"
         id="send-message-title"
@@ -98,7 +97,9 @@ const openUrl = (url: string) => {
       >
     </label>
     <div>
-      <p class="text-slate-500 mb-1 font-semibold">Messages<sup class="text-red-500">*</sup></p>
+      <p class="text-slate-500 mb-1 font-semibold">
+        Messages<sup class="text-red-500">*</sup>
+      </p>
       <transition-group name="messages" tag="ul" class="flex flex-col gap-4">
         <div
           v-for="(message, index) in messages"
@@ -146,8 +147,13 @@ const openUrl = (url: string) => {
                 />
               </p>
               <div class="border rounded-lg px-2 py-1 w-full flex items-center gap-2">
-                <div class="px-1 py-0.5 bg-blue-500/10 rounded-full text-sm text-nowrap">Choose File</div>
-                <span class="text-nowrap overflow-hidden text-ellipsis" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                <div class="px-1 py-0.5 bg-blue-500/10 rounded-full text-sm text-nowrap">
+                  Choose File
+                </div>
+                <span
+                  class="text-nowrap overflow-hidden text-ellipsis"
+                  style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+                >
                   {{
                     typeof message.attachment === 'string'
                       ? message.attachment
@@ -164,7 +170,10 @@ const openUrl = (url: string) => {
             </label>
           </div>
         </div>
-        <div key="add-text-attachment" class="bg-blue-500/10 border-2 border-dotted border-blue-500 rounded-lg p-2 flex gap-2">
+        <div
+          key="add-text-attachment"
+          class="bg-blue-500/10 border-2 border-dotted border-blue-500 rounded-lg p-2 flex gap-2"
+        >
           <div
             class="w-full bg-white px-3 py-2 rounded-lg cursor-pointer hover:scale-105 transition-transform duration-300"
             @click="addTextMessage"

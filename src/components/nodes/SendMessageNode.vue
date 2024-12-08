@@ -4,9 +4,7 @@ import NodeBox from '../templates/NodeBox.vue'
 import { ref } from 'vue'
 import { useVueFlow } from '@vue-flow/core'
 import { useMainStore } from '../../stores';
-
-type TextPayload = { type: 'text'; text: string };
-type AttachmentPayload = { type: 'attachment'; attachment: string | File };
+import { TextPayload, AttachmentPayload } from '../../types';
 
 const props = defineProps<{
   id: string

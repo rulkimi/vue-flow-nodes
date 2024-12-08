@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, watch, onMounted } from 'vue';
 import { useMainStore } from '../../stores';
+import { TextPayload, AttachmentPayload } from '../../types';
 
 import SendMessageDetails from '../../components/templates/SendMessageDetails.vue';
 import DateTimeDetails from '../../components/templates/DateTimeDetails.vue';
@@ -39,9 +40,6 @@ const nodeTypes = ref([
   }
 ]);
 const selectedNodeType = ref();
-
-type TextPayload = { id: string, type: 'text'; text: string };
-type AttachmentPayload = { id: string, type: 'attachment'; attachment: File | string };
 
 const messages = ref<Array<TextPayload | AttachmentPayload>>([]);
 const sendMessageTitle = ref();

@@ -19,3 +19,6 @@ export interface Node {
   parentId?: string | number;
   draggable?: boolean
 }
+
+export type TextPayload = { id: string, type: 'text'; text: string };
+export type AttachmentPayload = { id: string, type: 'attachment'; attachment: File | string };
