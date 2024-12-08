@@ -26,7 +26,7 @@ export const useMainStore = defineStore('main', () => {
     data: {
       ...node.data,
       name: node.name,
-      description: getNodeDescription(node.type)
+      description: node.data.description ?? getNodeDescription(node.type)
     },
     position: node.position || getDefaultPosition(node.id),
     draggable: node.type !== 'dateTimeConnector',

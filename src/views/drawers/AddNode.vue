@@ -86,7 +86,12 @@ watch(
 watch(
   [() => addCommentTitle.value, () => addCommentText.value],
   () => {
-    store.setNewNodeData({ comment: addCommentText.value, title: addCommentTitle.value, type: selectedNodeType.value });
+    store.setNewNodeData({ 
+      comment: addCommentText.value, 
+      title: addCommentTitle.value, 
+      type: selectedNodeType.value,
+      description: addCommentDescription.value
+    });
   },
   { deep: true }
 );
