@@ -49,6 +49,7 @@ const onAddButtonClick = (edgeId: string) => {
       class="nodrag nopan"
     >
       <button
+        :class="{ 'ring-2 ring-blue-500' : store.activeEdgeId === id }"
         class="text-xs text-gray-500 bg-white p-1 rounded-full border flex items-center justify-center border-gray-400"
         @click="onAddButtonClick(id)"
       >
