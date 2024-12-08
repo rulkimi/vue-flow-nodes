@@ -8,7 +8,7 @@ const toastStore = useToastStore();
   <transition name="appear" mode="out-in">
     <div
       v-if="toastStore.toasts.length"
-      class="fixed bottom-4 right-4"
+      class="fixed bottom-24 right-4"
     >
       <transition-group name="list" tag="ul" class="flex flex-col gap-2">
         <li
