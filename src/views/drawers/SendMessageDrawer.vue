@@ -33,10 +33,10 @@ const update = () => {
 watch(() => props.nodeId, (newNodeId) => {
   store.setActiveNodeId(newNodeId);
   const newNode = store.nodes?.find((node: Node) => node.id === newNodeId);
-  
+
   if (newNode) {
     messageTitle.value = newNode?.data?.name ?? '';
-    payload.value = JSON.parse(JSON.stringify(newNode?.data?.payload)) ?? {};
+    payload.value = newNode?.data?.payload ?? {};
     sendMessageKey.value++
   }
 });

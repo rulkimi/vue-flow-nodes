@@ -34,7 +34,7 @@ const nodeTypes = ref([
 const selectedNodeType = ref()
 
 type TextPayload = { id: string, type: 'text'; text: string };
-type AttachmentPayload = { id: string, type: 'attachment'; attachment: File | null | string };
+type AttachmentPayload = { id: string, type: 'attachment'; attachment: File | string };
 
 const messages = ref<Array<TextPayload | AttachmentPayload>>([])
 const sendMessageTitle = ref()
