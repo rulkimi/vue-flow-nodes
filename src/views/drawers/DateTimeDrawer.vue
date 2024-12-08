@@ -5,6 +5,7 @@ import { useToastStore } from '../../stores/toastStore';
 import { Node } from '../../types'
 
 import DateTimeDetails from '../../components/templates/DateTimeDetails.vue';
+import DrawerLayout from '../../layouts/DrawerLayout.vue';
 
 const props = defineProps<{
   nodeId: string
@@ -38,32 +39,32 @@ const update = () => {
 </script>
 
 <template>
-  <div>
-    <div class="flex items-center gap-2 mb-4">
-      <font-awesome-icon style="color: #f9511e" :icon="['far', 'calendar-days']" size="xl" />
-      <h2 class="text-2xl font-bold">Business Hours</h2>
-    </div>
-    <div class="border-b pb-2">
-      <span>{{ node?.data.description }}</span>
-    </div>
-    <div class="grid grid-cols-12 py-4">
-      <div class="col-span-3 ml-6">
-        <font-awesome-icon class="mr-1" :icon="['far', 'calendar']" />
-        <span>Day</span>
+  <DrawerLayout
+    color="#f9511e"
+    icon="calendar-days"
+    title="Business Hours"
+    :description="node?.data.description"
+  >
+    <template #content>
+      <div class="grid grid-cols-12 py-4">
+        <div class="col-span-3 ml-6">
+          <font-awesome-icon class="mr-1" :icon="['far', 'calendar']" />
+          <span>Day</span>
+        </div>
+        <div class="col-span-9">
+          <font-awesome-icon class="mr-1" :icon="['far', 'clock']" />
+          <span>Time</span>
+        </div>
       </div>
-      <div class="col-span-9">
-        <font-awesome-icon class="mr-1" :icon="['far', 'clock']" />
-        <span>Time</span>
+      <DateTimeDetails v-model="node" />
+      <div class="text-end">
+        <button
+          class="mt-4 py-1 px-2 border border-blue-500/50 text-blue-500 font-bold rounded-md hover:bg-blue-500 hover:text-white transition-colors duration-300"
+          @click="update"
+        >
+          Save
+        </button>
       </div>
-    </div>
-    <DateTimeDetails v-model="node" />
-    <div class="text-end">
-      <button
-        class="mt-4 py-1 px-2 border border-blue-500/50 text-blue-500 font-bold rounded-md hover:bg-blue-500 hover:text-white transition-colors duration-300"
-        @click="update"
-      >
-        Save
-      </button>
-    </div>
-  </div>
+    </template>
+  </DrawerLayout>
 </template>
