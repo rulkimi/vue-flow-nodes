@@ -5,7 +5,7 @@ import { useMainStore } from '../../stores';
 const store = useMainStore()
 
 type TextPayload = { id: string, type: 'text'; text: string };
-type AttachmentPayload = { id: string, type: 'attachment'; attachment: File | null | string };
+type AttachmentPayload = { id: string, type: 'attachment'; attachment: File | string };
 
 const props = defineProps<{
   modelSendMessageTitle?: string;
@@ -61,13 +61,31 @@ const addTextMessage = () => {
 
 const addAttachmentMessage = () => {
   const generatedId = Date.now().toString()
-  const newMessage: AttachmentPayload = { id: generatedId, type: 'attachment', attachment: null };
+  const newMessage: AttachmentPayload = { id: generatedId, type: 'attachment', attachment: 'No File Chosen' };
   messages.value.push(newMessage);
   nextTick(() => {
     const fileInputElement = document.getElementById(generatedId) as HTMLInputElement;
     fileInputElement?.click();
   });
 };
+
+const openImage = (attachment: File) => {
+  if (attachment && attachment.type.startsWith('image/')) {
+    const imageUrl = URL.createObjectURL(attachment);
+
+    window.open(imageUrl, '_blank');
+
+    setTimeout(() => {
+      URL.revokeObjectURL(imageUrl);
+    }, 1000); 
+  } else {
+    alert('Not a valid image');
+  }
+};
+
+const openUrl = (url: string) => {
+  window.open(url, '_blank')
+}
 </script>
 
 <template>
@@ -100,7 +118,21 @@ const addAttachmentMessage = () => {
         </div>
         <div v-else-if="message.type === 'attachment'">
           <label class="cursor-pointer">
-            <p class="text-slate-500 mb-1 text-sm">Message #{{ index + 1 }} - {{ message.type }}</p>
+            <p class="text-slate-500 mb-1 text-sm">
+              Message #{{ index + 1 }} - {{ message.type }} 
+              <span v-if="message.attachment !== 'No File Chosen'" class="text-blue-500">・ 
+                <span 
+                  class="hover:underline cursor-pointer"
+                  @click.prevent="
+                    typeof message.attachment === 'string'
+                      ? openUrl(message.attachment)
+                      : openImage(message.attachment)
+                  "
+                >
+                  Preview
+                </span>
+              </span>
+            </p>
             <div class="border rounded-lg px-2 py-1 w-full flex items-center gap-2">
               <div class="px-1 py-0.5 bg-blue-500/10 rounded-full text-sm text-nowrap">Choose File</div>
               <span class="text-nowrap overflow-hidden text-ellipsis" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">

@@ -6,7 +6,7 @@ import { useVueFlow } from '@vue-flow/core'
 import { useMainStore } from '../../stores';
 
 type TextPayload = { type: 'text'; text: string };
-type AttachmentPayload = { type: 'attachment'; attachment: string };
+type AttachmentPayload = { type: 'attachment'; attachment: string | File };
 
 const props = defineProps<{
   id: string
@@ -47,7 +47,7 @@ for (const edge of outputEdges) {
             <div class="italic">{{ item.text }}</div>
           </template>
           <template v-else-if="item.type === 'attachment'">
-            <div class="italic">{{ item.attachment }}</div>
+            <div class="italic">{{ typeof item.attachment === 'string' ? item.attachment : item.attachment.name }}</div>
           </template>
         </div>
       </div>
