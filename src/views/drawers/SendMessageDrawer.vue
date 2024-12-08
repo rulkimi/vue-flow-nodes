@@ -21,7 +21,7 @@ const node = computed(() => {
 
 const messageTitle = ref(node?.value?.data.name);
 const description = ref(node?.value?.data.description);
-const payload = ref(JSON.parse(JSON.stringify(node?.value?.data.payload)));
+const payload = ref((node?.value?.data.payload));
 const sendMessageKey = ref(0);
 
 const toast = useToastStore();
@@ -50,7 +50,7 @@ watch(() => props.nodeId, (newNodeId) => {
 
   if (newNode) {
     messageTitle.value = newNode?.data?.name ?? '';
-    payload.value = newNode?.data?.payload ?? {};
+    payload.value = newNode.data.payload;
     description.value = newNode?.data?.description ?? '';
     sendMessageKey.value++;
   }

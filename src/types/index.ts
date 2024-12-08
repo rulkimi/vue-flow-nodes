@@ -21,5 +21,5 @@ export interface Node {
   draggable?: boolean
 }
 
-export type TextPayload = { id: string, type: 'text'; text: string };
-export type AttachmentPayload = { id: string, type: 'attachment'; attachment: File | string };
+export type TextPayload = { id?: string, type: 'text'; text: string };
+export type AttachmentPayload = { id?: string, type: 'attachment'; attachment: File | string };

@@ -5,7 +5,7 @@ import { TextPayload, AttachmentPayload } from '../../types';
 
 const props = defineProps<{
   modelSendMessageTitle?: string;
-  modelMessages?: Array<TextPayload | AttachmentPayload>
+  modelMessages?: Array<TextPayload | AttachmentPayload> | any
   modelDescription?: string
 }>();
 
@@ -27,7 +27,6 @@ watch(
       description: description.value,
       type: 'sendMessage' 
     });
-    console.log(description.value)
   },
   { deep: true }
 );
