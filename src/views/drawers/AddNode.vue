@@ -66,6 +66,8 @@ const businessHourNode = ref({
     timezone: 'UTC'
   }
 });
+const businessHoursTitle = ref('Business Hours');
+const businessHoursDescription = ref();
 
 watch(
   [() => businessHourNode.value, () => selectedNodeType.value],
@@ -73,7 +75,8 @@ watch(
     if (selectedNodeType.value === 'businessHours') {
       store.setNewNodeData({
         action: 'businessHours',
-        title: 'Business Hours',
+        title: businessHoursTitle.value,
+        description: businessHoursDescription.value,
         type: 'dateTime',
         times: businessHourNode.value.data.times,
         timezone: businessHourNode.value.data.timezone
@@ -168,17 +171,11 @@ watch(
       <div v-else-if="selectedNodeType === 'businessHours'">
         <div class="flex flex-col gap-2 mt-4">
           <div class="font-bold">Business Hours</div>
-          <div class="grid grid-cols-12 py-4">
-            <div class="col-span-3 ml-6">
-              <font-awesome-icon class="mr-1" :icon="['far', 'calendar']" />
-              <span>Day</span>
-            </div>
-            <div class="col-span-9">
-              <font-awesome-icon class="mr-1" :icon="['far', 'clock']" />
-              <span>Time</span>
-            </div>
-          </div>
-          <DateTimeDetails v-model="businessHourNode" />
+          <DateTimeDetails
+            v-model:model-node="businessHourNode"
+            v-model:model-date-time-title="businessHoursTitle"
+            v-bind:model-date-time-description="businessHoursDescription"
+          />
         </div>
       </div>
     </template>

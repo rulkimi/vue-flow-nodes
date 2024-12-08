@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { useMainStore } from '../../stores';
 import { useToastStore } from '../../stores/toastStore';
 import { Node } from '../../types'
@@ -21,13 +21,18 @@ const node = computed(() => {
   return store.nodes.find((node: Node) => node.id === props.nodeId);
 });
 
+const description = ref(node?.value?.data.description);
+const title = ref(node?.value?.data.name);
+
 const update = () => {
   if (!node.value) return;
   store.editNode(node.value.id, {
     data: {
       ...node.value.data,
       times: node.value.data.times,
-      timezone: node.value.data.timezone
+      timezone: node.value.data.timezone,
+      description: description.value,
+      name: title.value
     },
   });
   toast.showToast({
@@ -36,27 +41,34 @@ const update = () => {
     iconColor: '#f9511e'
   });
 };
+
+watch(
+  () => props.nodeId,
+  (newNodeId) => {
+    store.setActiveNodeId(newNodeId);
+
+    const newNode = store.nodes?.find((node: Node) => node.id === newNodeId);
+    if (newNode) {
+      title.value = newNode.data.name || '';
+      description.value = newNode.data.description || store.getNodeDescription('addComment');
+    }
+  }
+);
 </script>
 
 <template>
   <DrawerLayout
     color="#f9511e"
     icon="calendar-days"
-    title="Business Hours"
+    :title="node?.data.name"
     :description="node?.data.description"
   >
     <template #content>
-      <div class="grid grid-cols-12 py-4">
-        <div class="col-span-3 ml-6">
-          <font-awesome-icon class="mr-1" :icon="['far', 'calendar']" />
-          <span>Day</span>
-        </div>
-        <div class="col-span-9">
-          <font-awesome-icon class="mr-1" :icon="['far', 'clock']" />
-          <span>Time</span>
-        </div>
-      </div>
-      <DateTimeDetails v-model="node" />
+      <DateTimeDetails
+        v-model:model-node="node"
+        v-model:model-date-time-title="title"
+        v-model:model-date-time-description="description"
+      />
       <div class="text-end">
         <button
           class="mt-4 py-1 px-2 border border-blue-500/50 text-blue-500 font-bold rounded-md hover:bg-blue-500 hover:text-white transition-colors duration-300"

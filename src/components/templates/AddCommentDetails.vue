@@ -27,7 +27,6 @@ const updateAddCommentTextValue = (event: Event) => {
 };
 
 const updateAddCommentDescriptiontValue = (event: Event) => {
-  console.log('new description')
   const input = event.target as HTMLInputElement
   emit('update:modelCommentDescription', input.value);
 };
