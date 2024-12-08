@@ -161,7 +161,7 @@ onMounted(() => {
             >
           </label>
           <label>
-            <p class="text-slate-500 mb-1">Title<sup class="text-red-500">*</sup></p>
+            <p class="text-slate-500 mb-1">Comment<sup class="text-red-500">*</sup></p>
             <input
               v-model="addCommentText"
               id="add-comment-text"

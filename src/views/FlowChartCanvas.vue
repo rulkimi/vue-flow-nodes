@@ -5,6 +5,7 @@ import { useMainStore } from '../stores';
 import { useToastStore } from '../stores/toastStore';
 import { useVueFlow, DefaultEdge } from '@vue-flow/core';
 import { Node, NodeData } from '../types'
+import { convertCamelToKebab } from '../utils';
 
 import { NodeMouseEvent, VueFlow } from '@vue-flow/core';
 import { Background } from '@vue-flow/background';
@@ -106,6 +107,13 @@ const addNewNode = () => {
   
   addNodes(newNode);
   store.addNode(newNode);
+
+  router.push({ 
+    name: convertCamelToKebab(store.newNodeData.type),
+    params: {
+      nodeId: newNode.id
+    }
+  })
 
   toast.showToast({
     message: `<strong>${newNode.name}</strong> node added.`,
