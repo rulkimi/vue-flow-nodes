@@ -212,15 +212,14 @@ const openUrl = (url: string) => {
             <font-awesome-icon class="text-slate-500 mr-1" :icon="['fas', 'paperclip']" /> Add Attachment
           </div>
         </div>
-        <div class="text-end">
-        <button
-          key="last-child"
-          class="py-1 px-2 border border-blue-500/50 text-blue-500 font-bold rounded-md hover:bg-blue-500 hover:text-white transition-colors duration-300"
-          @click="emit('save')"
-        >
-          Save
-        </button>
-      </div>
+        <div class="text-end" key="last-child">
+          <button
+            class="py-1 px-2 border border-blue-500/50 text-blue-500 font-bold rounded-md hover:bg-blue-500 hover:text-white transition-colors duration-300"
+            @click="emit('save')"
+          >
+            Save
+          </button>
+        </div>
       </transition-group>
     </div>
   </div>
