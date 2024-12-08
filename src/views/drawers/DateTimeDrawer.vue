@@ -58,6 +58,7 @@ watch(
 
 <template>
   <DrawerLayout
+    v-if="node"
     color="#f9511e"
     icon="calendar-days"
     :title="node?.data.name"
