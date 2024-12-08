@@ -1,9 +1,8 @@
-import { createWebHistory, createRouter, RouteRecordRaw } from 'vue-router';
-import { useMainStore } from '../stores';
+import { createWebHistory, createRouter, RouteLocation } from 'vue-router';
 
 import FlowChartCanvas from '../views/FlowChartCanvas.vue';
 
-const routes: RouteRecordRaw[] = [
+const routes = [
   { path: '/', redirect: { name: 'flowchart' } },
   { 
     path: '/flowchart',
@@ -14,16 +13,7 @@ const routes: RouteRecordRaw[] = [
         path: 'date-time/:nodeId?',
         name: 'date-time',
         component: () => import('../views/drawers/DateTimeDrawer.vue'),
-        beforeEnter: (to, _from, next) => {
-          const store = useMainStore();
-          const nodeId = to.params.nodeId as string;
-          if (nodeId && !store.nodeIds.includes(nodeId)) {
-            next({ name: 'flowchart' });
-          } else {
-            next();
-          }
-        },
-        props: route => ({
+        props: (route: RouteLocation) => ({
           nodeId: route.params.nodeId
         })
       },
@@ -31,16 +21,7 @@ const routes: RouteRecordRaw[] = [
         path: 'send-message/:nodeId?',
         name: 'send-message',
         component: () => import('../views/drawers/SendMessageDrawer.vue'),
-        beforeEnter: (to, _from, next) => {
-          const store = useMainStore();
-          const nodeId = to.params.nodeId as string;
-          if (nodeId && !store.nodeIds.includes(nodeId)) {
-            next({ name: 'flowchart' });
-          } else {
-            next();
-          }
-        },
-        props: route => ({
+        props: (route: RouteLocation) => ({
           nodeId: route.params.nodeId,
         })
       },
@@ -48,16 +29,7 @@ const routes: RouteRecordRaw[] = [
         path: 'add-comment/:nodeId?',
         name: 'add-comment',
         component: () => import('../views/drawers/AddCommentDrawer.vue'),
-        beforeEnter: (to, _from, next) => {
-          const store = useMainStore();
-          const nodeId = to.params.nodeId as string;
-          if (nodeId && !store.nodeIds.includes(nodeId)) {
-            next({ name: 'flowchart' });
-          } else {
-            next();
-          }
-        },
-        props: route => ({
+        props: (route: RouteLocation) => ({
           nodeId: route.params.nodeId,
         })
       },
@@ -65,16 +37,7 @@ const routes: RouteRecordRaw[] = [
         path: 'add-node/:edgeId?',
         name: 'add-node',
         component: () => import('../views/drawers/AddNode.vue'),
-        beforeEnter: (to, _from, next) => {
-          const store = useMainStore();
-          const edgeId = to.params.edgeId as string;
-          if (edgeId && !store.edgeIds.includes(edgeId)) {
-            next({ name: 'flowchart' });
-          } else {
-            next();
-          }
-        },
-        props: route => ({
+        props: (route: RouteLocation) => ({
           edgeId: route.params.edgeId,
         })
       }
@@ -85,11 +48,11 @@ const routes: RouteRecordRaw[] = [
     name: 'not-found',
     redirect: '/'
   }
-];
+]
 
 const router = createRouter({
   history: createWebHistory(),
   routes,
-});
+})
 
-export default router;
+export default router; 
