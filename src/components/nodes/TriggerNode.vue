@@ -3,7 +3,7 @@ import NodeBox from '../templates/NodeBox.vue'
 
 import { useVueFlow } from '@vue-flow/core'
 import { useMainStore } from '../../stores';
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 
 const props = defineProps<{
   id: string
@@ -27,26 +27,26 @@ const description = computed(() => {
 const store = useMainStore()
 const themeColor = ref('#ea487e')
 
-const { getConnectedEdges } = useVueFlow()
+const { getConnectedEdges } = useVueFlow();
 
-const connectedEdges = getConnectedEdges(props.id);
-const outputEdges = connectedEdges.filter(edge => edge.source === props.id);
-for (const edge of outputEdges) {
-  edge.style = {
-    stroke: themeColor.value
-  };
+const updateEdgeStyles = () => {
+  const connectedEdges = getConnectedEdges(props.id);
+  const outputEdges = connectedEdges.filter(edge => edge.source === props.id);
+
+  for (const edge of outputEdges) {
+    edge.style = {
+      stroke: themeColor.value,
+    };
+  }
 }
 
-// function onSelect(color) {
-//   updateNodeData(props.id, { color, isGradient: false })
-
-//   const connectedEdges = getConnectedEdges(props.id)
-//   for (const edge of connectedEdges) {
-//     edge.style = {
-//       stroke: color,
-//     }
-//   }
-// }
+watch(
+  () => store.edges, 
+  () => {
+    updateEdgeStyles();
+  },
+  { deep: true, immediate: true } 
+);
 </script>
 
 <template>
