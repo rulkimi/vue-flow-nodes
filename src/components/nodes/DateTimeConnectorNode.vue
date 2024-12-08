@@ -1,26 +1,39 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { useVueFlow } from '@vue-flow/core'
+import { ref, watch } from 'vue';
+import { useVueFlow } from '@vue-flow/core';
 import { capitalizeFirstLetter } from '../../utils';
+import { useMainStore } from '../../stores';
 
 const props = defineProps<{
-  id: string
+  id: string;
   data: {
-    connectorType: 'success' | 'failure'
-  }
+    connectorType: 'success' | 'failure';
+  };
 }>();
 
-const themeColor = ref('#f9511e')
+const store = useMainStore();
+const themeColor = ref('#f9511e');
 
-const { getConnectedEdges } = useVueFlow()
+const { getConnectedEdges } = useVueFlow();
 
-const connectedEdges = getConnectedEdges(props.id);
-const outputEdges = connectedEdges.filter(edge => edge.source === props.id);
-for (const edge of outputEdges) {
-  edge.style = {
-    stroke: themeColor.value
-  };
+const updateEdgeStyles = () => {
+  const connectedEdges = getConnectedEdges(props.id);
+  const outputEdges = connectedEdges.filter(edge => edge.source === props.id);
+
+  for (const edge of outputEdges) {
+    edge.style = {
+      stroke: themeColor.value,
+    };
+  }
 }
+
+watch(
+  () => store.edges, 
+  () => {
+    updateEdgeStyles();
+  },
+  { deep: true, immediate: true } 
+);
 </script>
 
 <template>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import NodeBox from '../templates/NodeBox.vue'
 
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useVueFlow } from '@vue-flow/core'
 import { useMainStore } from '../../stores';
 
@@ -31,15 +31,26 @@ const description = computed(() => {
 
 const themeColor = ref('#f9511e')
 
-const { getConnectedEdges } = useVueFlow()
+const { getConnectedEdges } = useVueFlow();
 
-const connectedEdges = getConnectedEdges(props.id);
-const outputEdges = connectedEdges.filter(edge => edge.source === props.id);
-for (const edge of outputEdges) {
-  edge.style = {
-    stroke: themeColor.value
-  };
+const updateEdgeStyles = () => {
+  const connectedEdges = getConnectedEdges(props.id);
+  const outputEdges = connectedEdges.filter(edge => edge.source === props.id);
+
+  for (const edge of outputEdges) {
+    edge.style = {
+      stroke: themeColor.value,
+    };
+  }
 }
+
+watch(
+  () => store.edges, 
+  () => {
+    updateEdgeStyles();
+  },
+  { deep: true, immediate: true } 
+);
 </script>
 
 <template>
