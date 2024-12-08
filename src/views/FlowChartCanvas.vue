@@ -62,13 +62,13 @@ const addNewNode = () => {
     data = {
       name: store.newNodeData.title,
       payload: store.newNodeData.messages,
-      description: store.getNodeDescription(store.newNodeData.type)
+      description: store.newNodeData.description ?? store.getNodeDescription(store.newNodeData.type)
     };
   } else if (store.newNodeData.type === 'addComment') {
     data = {
       name: store.newNodeData.title,
       comment: store.newNodeData.comment,
-      description: store.getNodeDescription(store.newNodeData.type)
+      description: store.newNodeData.description ?? store.getNodeDescription(store.newNodeData.type)
     };
   } else if (store.newNodeData.type === 'dateTime') {
     data = {
@@ -76,7 +76,7 @@ const addNewNode = () => {
       name: store.newNodeData.title,
       times: store.newNodeData.times,
       timezone: store.newNodeData.timezone,
-      description: store.getNodeDescription(store.newNodeData.type)
+      description: store.newNodeData.description ?? store.getNodeDescription(store.newNodeData.type)
     };
   };
 
@@ -91,6 +91,8 @@ const addNewNode = () => {
     },
     parentId: sourceNode.id
   };
+
+  console.log(newNode)
   
   addNodes(newNode);
   store.addNode(newNode);

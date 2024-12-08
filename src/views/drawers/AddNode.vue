@@ -45,10 +45,11 @@ const selectedNodeType = ref();
 
 const messages = ref<Array<TextPayload | AttachmentPayload>>([]);
 const sendMessageTitle = ref();
-const description = ref('');
+const sendMessageDescription = ref('');
 
 const addCommentTitle = ref();
 const addCommentText = ref();
+const addCommentDescription = ref()
 
 const businessHourNode = ref({
   type: 'dateTime',
@@ -137,11 +138,11 @@ watch(
       <div v-if="selectedNodeType === 'sendMessage'">
         <div class="font-bold">Send Messages</div>
 
-        <div class="flex flex-col gap-2 mt-4">
+        <div class="flex flex-col gap-4 mt-4">
           <SendMessageDetails
             v-model:model-messages="messages"
             v-model:model-send-message-title="sendMessageTitle"   
-            v-model:model-description="description"        
+            v-model:model-description="sendMessageDescription"        
           />
         </div>
 
@@ -149,10 +150,11 @@ watch(
       <div v-else-if="selectedNodeType === 'addComment'">
         <div class="font-bold">Add Comment</div>
 
-        <div class="flex flex-col gap-2 mt-4">
+        <div class="flex flex-col gap-4 mt-4">
           <AddCommentDetails
             v-model:model-comment-title="addCommentTitle"
             v-model:model-comment-text="addCommentText"
+            v-model:model-comment-description="addCommentDescription"
           />
         </div>
 

@@ -15,7 +15,7 @@ const store = useMainStore();
 
 const sendMessageTitle = ref(props.modelSendMessageTitle || '');
 const messages = ref<Array<TextPayload | AttachmentPayload>>(props.modelMessages || []);
-const description = ref(props.modelDescription || '')
+const description = ref(props.modelDescription || store.getNodeDescription('sendMessage'))
 
 watch(
   () => messages.value,
@@ -27,6 +27,7 @@ watch(
       description: description.value,
       type: 'sendMessage' 
     });
+    console.log(description.value)
   },
   { deep: true }
 );
