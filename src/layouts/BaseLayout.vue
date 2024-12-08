@@ -1,3 +1,7 @@
+<script setup>
+import AlertToast from '../components/AlertToast.vue';
+</script>
+
 <template>
   <div class="relative flex w-full h-full">
     <div class="flex-grow">
@@ -7,4 +11,5 @@
       <slot name="drawer"></slot>
     </div>
   </div>
+  <AlertToast />
 </template>

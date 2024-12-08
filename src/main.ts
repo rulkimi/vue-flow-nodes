@@ -3,6 +3,7 @@ import './style.css'
 import App from './App.vue'
 import router from './routers'
 import { createPinia } from 'pinia'
+import toast from './plugins/toast';
 
 /* import the fontawesome core */
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -23,5 +24,7 @@ const pinia = createPinia()
 
 app.use(router)
 app.use(pinia)
+app.use(toast);
+
 app.component('font-awesome-icon', FontAwesomeIcon)
 app.mount('#app')
