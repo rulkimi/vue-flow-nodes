@@ -19,6 +19,7 @@ import AddCommentNode from '../components/nodes/AddCommentNode.vue';
 import DateTimeNode from '../components/nodes/DateTimeNode.vue';
 import DateTimeConnectorNode from '../components/nodes/DateTimeConnectorNode.vue';
 import EmptyNode from '../components/nodes/EmptyNode.vue';
+import EmptyEdge from '../components/edges/EmptyEdge.vue';
 
 const vueFlowKey = ref(0)
 const store = useMainStore()
@@ -33,7 +34,7 @@ const onNodeClick = ({ node }: NodeMouseEvent) => {
   else router.push({ name: 'flowchart' })
 }
 
-const { findEdge, updateNode, addNodes, removeNodes } = useVueFlow()
+const { findEdge, updateNode, addNodes } = useVueFlow()
 
 const moveChildNodesRecursively = (parentNodeId: string, yOffset: number) => {
   const childEdges = store.edges.filter((e: DefaultEdge) => e.source === parentNodeId);
@@ -56,7 +57,13 @@ const moveChildNodesRecursively = (parentNodeId: string, yOffset: number) => {
   });
 };
 
-const generateRandomId = () => Math.random().toString(16).slice(2, 8);
+const generateRandomId = () => {
+  let id;
+  do {
+    id = Math.random().toString(16).slice(2, 8); 
+  } while (store.nodeIds.includes(id)); 
+  return id;
+};
 
 const addNewNode = () => {
   const edge = findEdge(store.activeEdgeId);
@@ -201,6 +208,19 @@ onMounted(() => {
             :target-position="customEdgeProps.targetPosition"
             :marker-end="customEdgeProps.markerEnd"
             :style="customEdgeProps.style"
+          />
+        </template>
+        <template #edge-empty="emptyEdgeProps">
+          <EmptyEdge
+            :id="emptyEdgeProps.id"
+            :source-x="emptyEdgeProps.sourceX"
+            :source-y="emptyEdgeProps.sourceY"
+            :target-x="emptyEdgeProps.targetX"
+            :target-y="emptyEdgeProps.targetY"
+            :source-position="emptyEdgeProps.sourcePosition"
+            :target-position="emptyEdgeProps.targetPosition"
+            :marker-end="emptyEdgeProps.markerEnd"
+            :style="emptyEdgeProps.style"
           />
         </template>
 

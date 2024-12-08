@@ -9,6 +9,8 @@ export const useMainStore = defineStore('main', () => {
   const activeEdgeId = ref<string | null>(null);
   const newNodeData = ref<any>(null);
 
+  const nodeIds = ref<string[]>([]);
+
   const createNode = (node: Node): Node => ({
     ...node,
     data: {
@@ -39,21 +41,29 @@ export const useMainStore = defineStore('main', () => {
         id: `${node.parentId}-${node.id}`,
         source: `${node.parentId}`,
         target: `${node.id}`,
-        type: node.type === 'dateTimeConnector' ? 'custom' : 'button',
+        type: node.type === 'dateTimeConnector' ? 'custom' : node.type === 'emptyNode' ? 'empty' : 'button',
       }))
   );
 
   const setActiveNodeId = (nodeId: string | null) => {
-    activeEdgeId.value = null
+    activeEdgeId.value = null;
     activeNodeId.value = nodeId;
   };
 
   const addNode = (node: Node) => {
-    nodes.value.push(createNode(node));
+    const newNode = createNode(node);
+
+    if (!nodeIds.value.includes(newNode.id)) {
+      nodeIds.value.push(newNode.id); // Add the new node's ID to the list
+    }
+
+    nodes.value.push(newNode);
   };
 
   const removeNode = (nodeId: string) => {
+    // Remove the node by ID from both nodes and IDs list
     nodes.value = nodes.value.filter(node => node.id !== nodeId);
+    nodeIds.value = nodeIds.value.filter(id => id !== nodeId);
   };
 
   const editNode = (nodeId: string, updatedProperties: Partial<Node>) => {
@@ -73,16 +83,20 @@ export const useMainStore = defineStore('main', () => {
   };
 
   const setNodes = (initialNodes: Node[]) => {
-    nodes.value = initialNodes.map((node: any) =>
-      createNode({
+    nodes.value = initialNodes.map((node: any) => {
+      const newNode = createNode({
         ...node,
         id: typeof node.id === 'number' ? node.id.toString() : node.id,
-      })
-    );
+      });
+      if (!nodeIds.value.includes(newNode.id)) {
+        nodeIds.value.push(newNode.id);
+      }
+      return newNode;
+    });
   };
 
   const setActiveEdgeId = (newEdgeId: string | null) => {
-    activeNodeId.value = null
+    activeNodeId.value = null;
     activeEdgeId.value = newEdgeId;
   };
 
@@ -96,6 +110,7 @@ export const useMainStore = defineStore('main', () => {
     activeNodeId,
     activeEdgeId,
     newNodeData,
+    nodeIds, // Expose the list of node IDs
     setActiveNodeId,
     setNodes,
     addNode,
