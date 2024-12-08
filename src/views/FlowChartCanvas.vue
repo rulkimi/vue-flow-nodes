@@ -86,6 +86,7 @@ const addNewNode = () => {
   const newNode = {
     id: generateRandomId(),
     data: data,
+    name: store.newNodeData.title,
     type: store.newNodeData.type,
     position: { 
       x: targetNode.position.x,
