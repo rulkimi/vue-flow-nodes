@@ -19,6 +19,7 @@ const node = computed(() => {
 });
 
 const messageTitle = ref(node?.value?.data.name);
+const description = ref(node?.value?.data.description);
 const payload = ref(JSON.parse(JSON.stringify(node?.value?.data.payload)));
 const sendMessageKey = ref(0);
 
@@ -30,7 +31,8 @@ const update = () => {
     data: {
       ...node.value.data,
       name: messageTitle.value,
-      payload: payload.value
+      payload: payload.value,
+      description: description.value
     }
   });
 
@@ -48,6 +50,7 @@ watch(() => props.nodeId, (newNodeId) => {
   if (newNode) {
     messageTitle.value = newNode?.data?.name ?? '';
     payload.value = newNode?.data?.payload ?? {};
+    description.value = newNode?.data?.description ?? '';
     sendMessageKey.value++;
   }
 });
@@ -57,7 +60,7 @@ watch(() => props.nodeId, (newNodeId) => {
   <div v-if="node">
     <div class="flex items-center gap-2 mb-4">
       <font-awesome-icon style="color: #3baca1" :icon="['far', 'paper-plane']" size="xl" />
-      <h2 class="text-2xl font-bold">{{ node.name }}</h2>
+      <h2 class="text-2xl font-bold">{{ node.data.name }}</h2>
     </div>
 
     <div class="border-b pb-2">
@@ -69,6 +72,7 @@ watch(() => props.nodeId, (newNodeId) => {
         :key="sendMessageKey"
         v-model:model-send-message-title="messageTitle"
         v-model:model-messages="payload" 
+        v-model:model-description="description"
       />
       <div class="text-end">
         <button

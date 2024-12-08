@@ -43,6 +43,7 @@ const selectedNodeType = ref();
 
 const messages = ref<Array<TextPayload | AttachmentPayload>>([]);
 const sendMessageTitle = ref();
+const description = ref('');
 
 const addCommentTitle = ref();
 const addCommentText = ref();
@@ -144,7 +145,8 @@ watch(
         <div class="flex flex-col gap-2 mt-4">
           <SendMessageDetails
             v-model:model-messages="messages"
-            v-model:model-send-message-title="sendMessageTitle"           
+            v-model:model-send-message-title="sendMessageTitle"   
+            v-model:model-description="description"        
           />
         </div>
 

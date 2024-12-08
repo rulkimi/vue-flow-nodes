@@ -6,20 +6,27 @@ import { TextPayload, AttachmentPayload } from '../../types';
 const props = defineProps<{
   modelSendMessageTitle?: string;
   modelMessages?: Array<TextPayload | AttachmentPayload>
+  modelDescription?: string
 }>();
 
-const emit = defineEmits(['update:modelSendMessageTitle', 'update:modelMessages']);
+const emit = defineEmits(['update:modelSendMessageTitle', 'update:modelMessages', 'update:modelDescription']);
 
 const store = useMainStore();
 
 const sendMessageTitle = ref(props.modelSendMessageTitle || '');
 const messages = ref<Array<TextPayload | AttachmentPayload>>(props.modelMessages || []);
+const description = ref(props.modelDescription || '')
 
 watch(
   () => messages.value,
   (newValue) => {
     emit('update:modelMessages', newValue);
-    store.setNewNodeData({ messages: messages, title: sendMessageTitle.value, type: 'sendMessage' });
+    store.setNewNodeData({ 
+      messages: messages.value, 
+      title: sendMessageTitle.value, 
+      description: description.value,
+      type: 'sendMessage' 
+    });
   },
   { deep: true }
 );
@@ -51,6 +58,11 @@ const deleteMessage = (index: number) => {
 const updateSendMessageTitleValue = (event: Event) => {
   const input = event.target as HTMLInputElement
   emit('update:modelSendMessageTitle', input.value);
+};
+
+const updateDescriptionValue = (event: Event) => {
+  const input = event.target as HTMLInputElement
+  emit('update:modelDescription', input.value);
 };
 
 const onFileChange = (event: Event, index: number) => {
@@ -94,6 +106,19 @@ const openUrl = (url: string) => {
         placeholder="E.g. Welcome Message"
         class="border rounded-lg px-2 py-1 w-full"
         @input="updateSendMessageTitleValue"
+      >
+    </label>
+    <label>
+      <p class="text-slate-500 mb-1 font-semibold">
+        Description<sup class="text-red-500">*</sup>
+      </p>
+      <input
+        v-model="description"
+        id="send-message-description"
+        type="text"
+        placeholder="E.g. Welcome Message"
+        class="border rounded-lg px-2 py-1 w-full"
+        @input="updateDescriptionValue"
       >
     </label>
     <div>
