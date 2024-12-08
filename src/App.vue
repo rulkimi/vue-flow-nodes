@@ -2,17 +2,16 @@
 import { useMainStore } from './stores';
 import { onBeforeMount } from 'vue';
 
-const store = useMainStore()
+const store = useMainStore();
 
 onBeforeMount(async () => {
   try {
-    // Replace 'example.json' with your file name
     const response = await fetch('/payload.json'); 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
-    }
+    };
     const data = await response.json();
-    store.setNodes(data)
+    store.setNodes(data);
   } catch (error) {
     console.error('Error fetching the JSON file:', error);
   }
