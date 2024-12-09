@@ -167,6 +167,7 @@ const getDrawerDescription = () => {
       <div v-html="getDrawerDescription()"></div>
     </template>
     <template #top-content>
+      <p class="text-slate-500 mb-2 font-semibold">Select Node Type</p>
       <div class="flex flex-col space-y-2">
         <label
           v-for="type in nodeTypes"
