@@ -147,6 +147,14 @@ watch(
   },
   { deep: true }
 );
+
+const getDrawerDescription = () => {
+  const target = store.nodes.find(node => node.id === store.edges.find(edge => edge.id === props.edgeId)?.target)?.name
+  let source = store.nodes.find(node => node.id === store.edges.find(edge => edge.id === props.edgeId)?.source)?.name
+  if (!source) source = 'Trigger';
+  if (!target) return `Adding node from <strong>${source}</strong>`
+  return `Adding node between <strong>${source}</strong> and <strong>${target}</strong>`
+}
 </script>
 
 <template>
@@ -154,10 +162,11 @@ watch(
     color="#8b93d0"
     icon="square-plus"
     title="Add Node"
-    description="Nodes represent specific actions or steps within the flow."
   >
+    <template #description>
+      <div v-html="getDrawerDescription()"></div>
+    </template>
     <template #top-content>
-      <p class="text-slate-500 mb-2">Select Node Type</p>
       <div class="flex flex-col space-y-2">
         <label
           v-for="type in nodeTypes"

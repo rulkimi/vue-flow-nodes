@@ -3,8 +3,8 @@ import { computed, useSlots } from 'vue';
 
 defineProps<{
   color?: string
-  title: string | undefined
-  description: string | undefined
+  title?: string | undefined
+  description?: string | undefined
   icon: string
 }>();
 
