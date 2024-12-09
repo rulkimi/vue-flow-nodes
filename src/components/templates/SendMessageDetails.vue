@@ -82,7 +82,7 @@ const updateSendMessageTitleValue = (event: Event) => {
 };
 
 const updateDescriptionValue = (event: Event) => {
-  const input = event.target as HTMLInputElement;
+  const input = event.target as HTMLTextAreaElement;
   emit('update:modelDescription', input.value);
 };
 
@@ -130,14 +130,14 @@ const openUrl = (url: string) => {
     </label>
     <label>
       <p class="text-slate-500 mb-1 font-semibold">Description</p>
-      <input
+      <textarea
         v-model="description"
         id="send-message-description"
         type="text"
         placeholder="E.g. Image and greetings to welcome users."
         class="border rounded-lg px-2 py-1 w-full"
         @input="updateDescriptionValue"
-      >
+      ></textarea>
     </label>
     <div>
       <p class="text-slate-500 mb-1 font-semibold">

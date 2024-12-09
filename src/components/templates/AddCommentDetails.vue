@@ -27,7 +27,7 @@ const updateAddCommentTextValue = (event: Event) => {
 };
 
 const updateAddCommentDescriptiontValue = (event: Event) => {
-  const input = event.target as HTMLInputElement
+  const input = event.target as HTMLTextAreaElement
   emit('update:modelCommentDescription', input.value);
 };
 
@@ -62,14 +62,14 @@ watch(
   </label>
   <label>
     <p class="text-slate-500 mb-1 font-semibold">Description</p>
-    <input
+    <textarea
       v-model="addCommentDescription"
       id="add-comment-description-drawer"
       type="text"
       placeholder="E.g. Comments for more details"
       class="border rounded-lg px-2 py-1 w-full"
       @input="updateAddCommentDescriptiontValue"
-    >
+    ></textarea>
   </label>
   <label>
     <p class="text-slate-500 mb-1 font-semibold">Comment<sup class="text-red-500">*</sup></p>
