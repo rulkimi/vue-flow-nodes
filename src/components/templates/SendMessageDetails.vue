@@ -1,13 +1,14 @@
 <script setup lang="ts">
-import { ref, nextTick, watch } from 'vue'
+import { ref, nextTick, watch } from 'vue';
 import { useMainStore } from '../../stores';
 import { useRoute } from 'vue-router';
 import { TextPayload, AttachmentPayload } from '../../types';
+import { deepCopy } from '../../utils';
 
 const props = defineProps<{
   modelSendMessageTitle?: string;
-  modelMessages?: Array<TextPayload | AttachmentPayload> | any
-  modelDescription?: string
+  modelMessages?: Array<TextPayload | AttachmentPayload> | any;
+  modelDescription?: string;
 }>();
 
 const emit = defineEmits(['update:modelSendMessageTitle', 'update:modelMessages', 'update:modelDescription', 'save']);
@@ -16,27 +17,34 @@ const store = useMainStore();
 const route = useRoute();
 
 const sendMessageTitle = ref(props.modelSendMessageTitle || '');
-const messages = ref<Array<TextPayload | AttachmentPayload>>(props.modelMessages || []);
-const description = ref(props.modelDescription || store.getNodeDescription('sendMessage'))
+const messages = ref<Array<TextPayload | AttachmentPayload>>(
+  deepCopy(props.modelMessages || [])
+);
+const description = ref(props.modelDescription || store.getNodeDescription('sendMessage'));
+
+const emitUpdate = () => {
+  emit('update:modelMessages', deepCopy(messages.value));
+};
 
 watch(
   () => messages.value,
   (newValue) => {
-    emit('update:modelMessages', newValue);
-    store.setNewNodeData({ 
-      messages: messages.value, 
-      title: sendMessageTitle.value, 
+    emit('update:modelMessages', deepCopy(newValue));
+    store.setNewNodeData({
+      messages: deepCopy(newValue),
+      title: sendMessageTitle.value,
       description: description.value,
-      type: 'sendMessage' 
+      type: 'sendMessage',
     });
   },
   { deep: true }
 );
 
 const addTextMessage = () => {
-  const generatedId = Date.now().toString()
+  const generatedId = Date.now().toString();
   const newMessage: TextPayload = { id: generatedId, type: 'text', text: '' };
   messages.value.push(newMessage);
+  emitUpdate();
   nextTick(() => {
     const inputElement = document.getElementById(generatedId) as HTMLInputElement;
     inputElement?.focus();
@@ -44,9 +52,10 @@ const addTextMessage = () => {
 };
 
 const addAttachmentMessage = () => {
-  const generatedId = Date.now().toString()
+  const generatedId = Date.now().toString();
   const newMessage: AttachmentPayload = { id: generatedId, type: 'attachment', attachment: 'No File Chosen' };
   messages.value.push(newMessage);
+  emitUpdate();
   nextTick(() => {
     const fileInputElement = document.getElementById(generatedId) as HTMLInputElement;
     fileInputElement?.click();
@@ -54,16 +63,26 @@ const addAttachmentMessage = () => {
 };
 
 const deleteMessage = (index: number) => {
-  messages.value.splice(index, 1);
+  const updatedMessages = [...messages.value];
+  updatedMessages.splice(index, 1);
+  messages.value = updatedMessages;
+  emitUpdate();
+};
+
+const updateMessageField = (index: number, field: keyof TextPayload | keyof AttachmentPayload, value: any) => {
+  const updatedMessages = [...messages.value];
+  updatedMessages[index] = { ...updatedMessages[index], [field]: value };
+  messages.value = updatedMessages;
+  emitUpdate();
 };
 
 const updateSendMessageTitleValue = (event: Event) => {
-  const input = event.target as HTMLInputElement
+  const input = event.target as HTMLInputElement;
   emit('update:modelSendMessageTitle', input.value);
 };
 
 const updateDescriptionValue = (event: Event) => {
-  const input = event.target as HTMLInputElement
+  const input = event.target as HTMLInputElement;
   emit('update:modelDescription', input.value);
 };
 
@@ -71,8 +90,7 @@ const onFileChange = (event: Event, index: number) => {
   const input = event.target as HTMLInputElement;
   const file = input.files?.[0];
   if (file) {
-    const updatedMessage = { ...messages.value[index], attachment: file };
-    messages.value.splice(index, 1, updatedMessage);
+    updateMessageField(index, 'attachment', file);
   }
 };
 
@@ -84,14 +102,14 @@ const openImage = (attachment: File) => {
 
     setTimeout(() => {
       URL.revokeObjectURL(imageUrl);
-    }, 1000); 
+    }, 1000);
   } else {
     alert('Not a valid image');
   }
 };
 
 const openUrl = (url: string) => {
-  window.open(url, '_blank')
+  window.open(url, '_blank');
 };
 </script>
 
