@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import { BaseEdge, EdgeLabelRenderer, getStraightPath, Position } from '@vue-flow/core';
+import { BaseEdge, EdgeLabelRenderer, getSmoothStepPath, Position } from '@vue-flow/core';
 import { useMainStore } from '../../stores';
 import { useRouter } from 'vue-router';
 
@@ -16,7 +16,7 @@ const props = defineProps<{
   style?: any
 }>()
 
-const path = computed(() => getStraightPath(props));
+const path = computed(() => getSmoothStepPath(props));
 
 const router = useRouter();
 const store = useMainStore();
