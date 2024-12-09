@@ -47,8 +47,8 @@ watch(
     :border-color="store.activeNodeId === id ? themeColor: ''"
   >
     <template #description>
-      <div class="flex flex-col gap-2">
-        <div
+      <ul class="flex flex-col gap-2">
+        <li
           v-for="item in data.payload"
         >
           <div>Message:</div>
@@ -58,8 +58,8 @@ watch(
           <template v-else-if="item.type === 'attachment'">
             <div class="italic">{{ typeof item.attachment === 'string' ? item.attachment : item.attachment.name }}</div>
           </template>
-        </div>
-      </div>
+        </li>
+      </ul>
     </template>
   </NodeBox>
 </template>

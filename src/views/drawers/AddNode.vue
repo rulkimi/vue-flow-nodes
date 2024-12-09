@@ -168,38 +168,38 @@ const getDrawerDescription = () => {
     </template>
     <template #top-content>
       <p class="text-slate-500 mb-2 font-semibold">Select Node Type</p>
-      <div class="flex flex-col space-y-2">
-        <label
-          v-for="type in nodeTypes"
-          :key="type.value"
-          class="cursor-pointer flex items-center justify-center border rounded-lg p-4 w-full h-16 transition-all duration-200"
-          :class="selectedNodeType === type.value ? 'bg-blue-500/10 border-blue-500' : 'hover:bg-gray-100'"
-        >
-          <div class="w-full grid grid-cols-12">
-            <div class="col-span-2 flex items-center justify-start">
-              <font-awesome-icon
-                :style="{ color: type.color }"
-                :icon="['far', type.icon]"
-                size="xl"
-              />
-            </div>
-            <div class="col-span-8 ">
-              <div class="text-start text-sm text-slate-700 font-bold">
-                {{ type.label }}
+      <ul class="flex flex-col space-y-2">
+        <li v-for="type in nodeTypes" :key="type.value">
+          <label
+            class="cursor-pointer flex items-center justify-center border rounded-lg p-4 w-full h-16 transition-all duration-200"
+            :class="selectedNodeType === type.value ? 'bg-blue-500/10 border-blue-500' : 'hover:bg-gray-100'"
+          >
+            <div class="w-full grid grid-cols-12">
+              <div class="col-span-2 flex items-center justify-start">
+                <font-awesome-icon
+                  :style="{ color: type.color }"
+                  :icon="['far', type.icon]"
+                  size="xl"
+                />
               </div>
-              <div class="text-xs">{{ type.description }}</div>
+              <div class="col-span-8 ">
+                <div class="text-start text-sm text-slate-700 font-bold">
+                  {{ type.label }}
+                </div>
+                <div class="text-xs">{{ type.description }}</div>
+              </div>
+              <div class="col-span-2 flex justify-end items-center">
+                <input
+                  :id="type.value + '-id'"
+                  type="radio"
+                  v-model="selectedNodeType"
+                  :value="type.value"
+                />
+              </div>
             </div>
-            <div class="col-span-2 flex justify-end items-center">
-              <input
-                :id="type.value + '-id'"
-                type="radio"
-                v-model="selectedNodeType"
-                :value="type.value"
-              />
-            </div>
-          </div>
-        </label>
-      </div>
+          </label>
+        </li>
+      </ul>
     </template>
     <template #content>
       <div v-if="selectedNodeType === 'sendMessage'">

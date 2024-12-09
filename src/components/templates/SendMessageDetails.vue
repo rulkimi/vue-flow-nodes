@@ -144,7 +144,7 @@ const openUrl = (url: string) => {
         Messages<sup class="text-red-500">*</sup>
       </p>
       <transition-group name="messages" tag="ul" class="flex flex-col gap-4">
-        <div
+        <li
           v-for="(message, index) in messages"
           :key="message.id ?? index"
         >
@@ -213,8 +213,8 @@ const openUrl = (url: string) => {
               >
             </label>
           </div>
-        </div>
-        <div
+        </li>
+        <li
           key="add-text-attachment"
           class="bg-blue-500/10 border-2 border-dotted border-blue-500 rounded-lg p-2 flex gap-2"
         >
@@ -230,15 +230,15 @@ const openUrl = (url: string) => {
           >
             <font-awesome-icon class="text-slate-500 mr-1" :icon="['fas', 'paperclip']" /> Add Attachment
           </div>
-        </div>
-        <div v-if="route.name !== 'add-node'" class="text-end" key="last-child">
+        </li>
+        <li v-if="route.name !== 'add-node'" class="text-end" key="last-child">
           <button
             class="py-1 px-2 border border-blue-500/50 text-blue-500 font-bold rounded-md hover:bg-blue-500 hover:text-white transition-colors duration-300"
             @click="emit('save')"
           >
             Save
           </button>
-        </div>
+        </li>
       </transition-group>
     </div>
   </div>

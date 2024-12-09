@@ -88,8 +88,8 @@ const updateTitle = (event: Event) => {
         <span>Time</span>
       </div>
     </div>
-    <div class="flex flex-col gap-2 mb-12">
-      <div
+    <ul class="flex flex-col gap-2 mb-12">
+      <li
         v-for="item in props.modelNode.data.times"
         :key="item.day"
         class="grid grid-cols-12 items-center gap-4"
@@ -119,8 +119,8 @@ const updateTitle = (event: Event) => {
             @change="updateNode(props.modelNode)"
           />
         </div>
-      </div>
-    </div>
+      </li>
+    </ul>
 
   </template>
 </template>
