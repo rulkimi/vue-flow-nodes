@@ -46,7 +46,7 @@ const updateAddCommentDescriptiontValue = (event: Event) => {
     >
   </label>
   <label>
-    <p class="text-slate-500 mb-1 font-semibold">Description<sup class="text-red-500">*</sup></p>
+    <p class="text-slate-500 mb-1 font-semibold">Description</p>
     <input
       v-model="addCommentDescription"
       id="add-comment-description-drawer"

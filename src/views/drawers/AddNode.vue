@@ -77,6 +77,7 @@ watch(
     store.setNewNodeData({});
 
     if (newType === 'sendMessage') {
+      store.setNewNodeData({ type: 'sendMessage' })
       messages.value = [{ id: Date.now().toString(), type: 'text', text: '' }];
       sendMessageTitle.value = '';
       sendMessageDescription.value = '';

@@ -129,9 +129,7 @@ const openUrl = (url: string) => {
       >
     </label>
     <label>
-      <p class="text-slate-500 mb-1 font-semibold">
-        Description<sup class="text-red-500">*</sup>
-      </p>
+      <p class="text-slate-500 mb-1 font-semibold">Description</p>
       <input
         v-model="description"
         id="send-message-description"

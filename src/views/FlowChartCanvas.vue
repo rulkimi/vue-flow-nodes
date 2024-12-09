@@ -52,10 +52,65 @@ onMounted(() => {
   }, 50)
 });
 
+const validateNodeData = (type: string, newNodeData: any) => {
+  switch (type) {
+    case 'sendMessage':
+      if (!newNodeData.title || !newNodeData.messages) {
+        return {
+          valid: false,
+          message: `Please provide both title and messages for the Send Message node.`,
+        };
+      }
+      return { valid: true };
+
+    case 'addComment':
+      if (!newNodeData.title || !newNodeData.comment) {
+        return {
+          valid: false,
+          message: `Please provide both title and comment for the Add Comment node.`,
+        };
+      }
+      return { valid: true };
+
+    case 'dateTime':
+      if (!newNodeData.times || !newNodeData.timezone || !newNodeData.title) {
+        return {
+          valid: false,
+          message: `Please provide title, times, and timezone for the DateTime node.`,
+        };
+      }
+      return { valid: true };
+
+    default:
+      return {
+        valid: false,
+        message: `Unknown node type.`,
+      };
+  }
+};
+
 const addNewNode = () => {
   const edge = findEdge(store.activeEdgeId);
-  if (!edge) return;
+  if (!edge) { 
+    toast.showToast({
+      message: 'The edge doesnt exist, please choose again where you would like to add node.',
+      icon: 'circle-xmark',
+      iconColor: 'red',
+    })
+    return;
+  } 
   const { sourceNode, targetNode } = edge;
+
+  const validationResult = validateNodeData(store.newNodeData.type, store.newNodeData);
+
+  if (!validationResult.valid) {
+    toast.showToast({
+      message: validationResult.message || 'An error occured.',
+      icon: 'circle-xmark',
+      iconColor: 'red',
+    });
+    return;
+  };
 
   let data: NodeData = {};
   if (store.newNodeData.type === 'sendMessage') {
@@ -91,7 +146,7 @@ const addNewNode = () => {
     },
     parentId: sourceNode.id
   };
-  
+
   addNodes(newNode);
   store.addNode(newNode);
 
