@@ -136,7 +136,7 @@ const openUrl = (url: string) => {
         v-model="description"
         id="send-message-description"
         type="text"
-        placeholder="E.g. Welcome Message"
+        placeholder="E.g. Image and greetings to welcome users."
         class="border rounded-lg px-2 py-1 w-full"
         @input="updateDescriptionValue"
       >

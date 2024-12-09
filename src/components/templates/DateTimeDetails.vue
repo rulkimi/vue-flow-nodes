@@ -37,7 +37,7 @@ const updateTitle = (event: Event) => {
       <input
         v-model="title"
         id="datetime-title-drawer"
-        placeholder="E.g. Welcome Message"
+        placeholder="E.g. Business Hours"
         class="border rounded-lg px-2 py-1 w-full"
         @input="updateTitle"
       >
@@ -47,7 +47,7 @@ const updateTitle = (event: Event) => {
       <textarea
         v-model="description"
         id="datetime-description-drawer"
-        placeholder="E.g. Welcome Message"
+        placeholder="E.g. Allows a branch to be created based on date & time conditions"
         class="border rounded-lg px-2 py-1 w-full"
         @input="updateDescription"
       ></textarea>

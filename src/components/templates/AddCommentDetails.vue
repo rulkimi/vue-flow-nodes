@@ -40,7 +40,7 @@ const updateAddCommentDescriptiontValue = (event: Event) => {
       v-model="addCommentTitle"
       id="add-comment-title-drawer"
       type="text"
-      placeholder="E.g. Welcome Message"
+      placeholder="E.g. Add Comment #1"
       class="border rounded-lg px-2 py-1 w-full"
       @input="updateAddCommentTitleValue"
     >
@@ -51,7 +51,7 @@ const updateAddCommentDescriptiontValue = (event: Event) => {
       v-model="addCommentDescription"
       id="add-comment-description-drawer"
       type="text"
-      placeholder="E.g. Welcome Message"
+      placeholder="E.g. Comments for more details"
       class="border rounded-lg px-2 py-1 w-full"
       @input="updateAddCommentDescriptiontValue"
     >
@@ -62,7 +62,7 @@ const updateAddCommentDescriptiontValue = (event: Event) => {
       v-model="addCommentText"
       id="add-comment-text-drawer"
       type="text"
-      placeholder="E.g. Welcome Message"
+      placeholder="E.g. User message during off hours"
       class="border rounded-lg px-2 py-1 w-full"
       @input="updateAddCommentTextValue"
     >
