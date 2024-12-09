@@ -29,7 +29,7 @@ export const useMainStore = defineStore('main', () => {
       description: node.data.description ?? getNodeDescription(node.type)
     },
     position: node.position || getDefaultPosition(node.id),
-    draggable: node.type !== 'dateTimeConnector',
+    // draggable: node.type !== 'dateTimeConnector',
   });
 
   const getDefaultPosition = (id: string): { x: number; y: number } => {
