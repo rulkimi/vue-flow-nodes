@@ -28,7 +28,8 @@ const update = () => {
   store.editNode(node.value.id, {
     data: {
       name: commentTitle.value,
-      comment: commentText.value
+      comment: commentText.value,
+      description: description.value
     }
   })
   toast.showToast({

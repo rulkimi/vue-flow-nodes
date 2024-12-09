@@ -50,7 +50,7 @@ watch(
     const newNode = store.nodes?.find((node: Node) => node.id === newNodeId);
     if (newNode) {
       title.value = newNode.data.name || '';
-      description.value = newNode.data.description || store.getNodeDescription('addComment');
+      description.value = newNode.data.description || store.getNodeDescription('dateTime');
     }
   }
 );
