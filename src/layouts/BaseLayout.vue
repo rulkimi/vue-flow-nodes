@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useMainStore } from '../stores';
 import AlertToast from '../components/AlertToast.vue';
+import FloatingInfo from '../components/FloatingInfo.vue';
 
 const store = useMainStore();
 const toggleDrawer = () => {
@@ -10,6 +11,9 @@ const toggleDrawer = () => {
 
 <template>
   <div class="relative flex w-full h-full">
+
+    <FloatingInfo />
+
     <div class="flex-grow">
       <slot name="canvas"></slot>
     </div>
