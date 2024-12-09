@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { useMainStore } from '../../stores';
 
 const props = defineProps<{
@@ -30,6 +30,21 @@ const updateAddCommentDescriptiontValue = (event: Event) => {
   const input = event.target as HTMLInputElement
   emit('update:modelCommentDescription', input.value);
 };
+
+
+watch(
+  [() => addCommentTitle.value, () => addCommentText.value],
+  () => {
+    store.setNewNodeData({ 
+      comment: addCommentText.value, 
+      title: addCommentTitle.value, 
+      type: 'addComment',
+      description: addCommentDescription.value
+    });
+    console.log(addCommentDescription.value)
+  },
+  { deep: true }
+);
 </script>
 
 

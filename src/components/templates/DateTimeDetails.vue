@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import { useMainStore } from '../../stores';
 import { capitalizeFirstLetter } from '../../utils';
 
@@ -28,6 +28,25 @@ const updateTitle = (event: Event) => {
   const input = event.target as HTMLInputElement
   emit('update:modelDateTimeTitle', input.value);
 };
+
+watch(
+  [
+    () => props.modelNode, 
+    () => description.value, 
+    () => title.value
+  ],
+  () => {
+    store.setNewNodeData({
+      action: 'businessHours',
+      title: title.value,
+      description: description.value,
+      type: 'dateTime',
+      times: props.modelNode.data.times,
+      timezone: props.modelNode.data.timezone
+    });
+  },
+  { deep: true }
+);
 </script>
 
 <template>
@@ -43,7 +62,7 @@ const updateTitle = (event: Event) => {
       >
     </label>
     <label>
-      <p class="text-slate-500 mb-1 font-semibold">Description<</p>
+      <p class="text-slate-500 mb-1 font-semibold">Description</p>
       <textarea
         v-model="description"
         id="datetime-description-drawer"

@@ -111,43 +111,6 @@ watch(
   }
 );
 
-watch(
-  [
-    () => businessHourNode.value, 
-    () => selectedNodeType.value, 
-    () => businessHoursDescription.value, 
-    () => businessHoursTitle.value
-  ],
-  () => {
-    if (selectedNodeType.value === 'businessHours') {
-      store.setNewNodeData({
-        action: 'businessHours',
-        title: businessHoursTitle.value,
-        description: businessHoursDescription.value,
-        type: 'dateTime',
-        times: businessHourNode.value.data.times,
-        timezone: businessHourNode.value.data.timezone
-      });
-    }
-  },
-  { deep: true }
-);
-
-watch(
-  [() => addCommentTitle.value, () => addCommentText.value],
-  () => {
-    if (selectedNodeType.value === 'addComment') {
-      store.setNewNodeData({ 
-        comment: addCommentText.value, 
-        title: addCommentTitle.value, 
-        type: selectedNodeType.value,
-        description: addCommentDescription.value
-      });
-    }
-  },
-  { deep: true }
-);
-
 const getDrawerDescription = () => {
   const target = store.nodes.find(node => node.id === store.edges.find(edge => edge.id === props.edgeId)?.target)?.name
   let source = store.nodes.find(node => node.id === store.edges.find(edge => edge.id === props.edgeId)?.source)?.name
