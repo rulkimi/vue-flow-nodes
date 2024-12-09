@@ -129,7 +129,6 @@ watch(
         timezone: businessHourNode.value.data.timezone
       });
     }
-    console.log(store.newNodeData)
   },
   { deep: true }
 );
