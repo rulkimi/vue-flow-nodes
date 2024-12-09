@@ -24,7 +24,7 @@ const showTips = ref(true)
         </li>
         <li class="flex items-start">
           <span class="text-blue-500 mr-2">2.</span>
-          Select a node type on the right
+          Select a node type on the drawer at the right side
         </li>
         <li class="flex items-start">
           <span class="text-blue-500 mr-2">3.</span>
