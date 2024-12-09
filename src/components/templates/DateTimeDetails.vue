@@ -12,7 +12,7 @@ const props = defineProps<{
 const store = useMainStore();
 
 const title = ref(props.modelDateTimeTitle);
-const description = ref(props.modelDateTimeDescription || store.getNodeDescription('dateTime'));
+const description = ref(props.modelDateTimeDescription ?? store.getNodeDescription('dateTime'));
 
 const emit = defineEmits(['update:modelNode', 'update:modelDateTimeDescription', 'update:modelDateTimeTitle'])
 

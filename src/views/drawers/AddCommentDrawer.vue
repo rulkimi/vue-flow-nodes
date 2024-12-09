@@ -22,6 +22,7 @@ const node = computed(() => {
 const commentTitle = ref(node?.value?.data.name);
 const commentText = ref(node?.value?.data.comment);
 const description = ref(node?.value?.data.description);
+const addCommentKey = ref(0);
 
 const update = () => {
   if (!node.value) return
@@ -46,9 +47,10 @@ watch(
 
     const newNode = store.nodes?.find((node: Node) => node.id === newNodeId);
     if (newNode) {
-      commentTitle.value = newNode.data.name || '';
-      commentText.value = newNode.data.comment || '';
-      description.value = newNode.data.description || store.getNodeDescription('addComment');
+      commentTitle.value = newNode.data.name;
+      commentText.value = newNode.data.comment;
+      description.value = newNode.data.description;
+      addCommentKey.value++
     }
   }
 );
@@ -65,6 +67,7 @@ watch(
     <template #content>
       <div class="flex flex-col gap-4">
         <AddCommentDetails
+          :key="addCommentKey"
           v-model:model-comment-title="commentTitle"
           v-model:model-comment-text="commentText"
           v-model:model-comment-description="description"

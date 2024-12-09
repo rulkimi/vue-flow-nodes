@@ -23,6 +23,7 @@ const node = computed(() => {
 
 const description = ref(node?.value?.data.description);
 const title = ref(node?.value?.data.name);
+const dateTimeKey = ref(0);
 
 const update = () => {
   if (!node.value) return;
@@ -51,6 +52,7 @@ watch(
     if (newNode) {
       title.value = newNode.data.name || '';
       description.value = newNode.data.description || store.getNodeDescription('dateTime');
+      dateTimeKey.value++;
     }
   }
 );
@@ -66,6 +68,7 @@ watch(
   >
     <template #content>
       <DateTimeDetails
+        :key="dateTimeKey"
         v-model:model-node="node"
         v-model:model-date-time-title="title"
         v-model:model-date-time-description="description"

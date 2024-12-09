@@ -12,9 +12,9 @@ const store = useMainStore();
 
 const emit = defineEmits(['update:modelCommentTitle', 'update:modelCommentText', 'update:modelCommentDescription']);
 
-const addCommentTitle = ref(props.modelCommentTitle || '');
-const addCommentText = ref(props.modelCommentText || '');
-const addCommentDescription = ref(props.modelCommentDescription || store.getNodeDescription('addComment'));
+const addCommentTitle = ref(props.modelCommentTitle ?? '');
+const addCommentText = ref(props.modelCommentText ?? '');
+const addCommentDescription = ref(props.modelCommentDescription ?? store.getNodeDescription('addComment'));
 
 const updateAddCommentTitleValue = (event: Event) => {
   const input = event.target as HTMLInputElement
@@ -33,7 +33,7 @@ const updateAddCommentDescriptiontValue = (event: Event) => {
 
 
 watch(
-  [() => addCommentTitle.value, () => addCommentText.value],
+  [() => addCommentTitle.value, () => addCommentText.value, () => addCommentDescription.value],
   () => {
     store.setNewNodeData({ 
       comment: addCommentText.value, 
