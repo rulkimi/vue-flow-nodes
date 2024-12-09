@@ -77,21 +77,28 @@ watch(
     store.setNewNodeData({});
 
     if (newType === 'sendMessage') {
-      store.setNewNodeData({ type: 'sendMessage' })
       messages.value = [{ id: Date.now().toString(), type: 'text', text: '' }];
       sendMessageTitle.value = '';
-      sendMessageDescription.value = '';
+      sendMessageDescription.value = store.getNodeDescription('sendMessage');
+      store.setNewNodeData({ 
+        type: 'sendMessage',
+        description: sendMessageDescription.value
+      })
     }
 
     if (newType === 'addComment') {
       addCommentTitle.value = '';
       addCommentText.value = '';
-      addCommentDescription.value = '';
+      addCommentDescription.value = store.getNodeDescription('addComment');
+      store.setNewNodeData({ 
+        type: 'addComment',
+        description: addCommentDescription.value
+      })
     }
 
     if (newType === 'businessHours') {
-      businessHoursTitle.value = '';
-      businessHoursDescription.value = '';
+      businessHoursTitle.value = 'Business Hours';
+      businessHoursDescription.value = store.getNodeDescription('dateTime');
       businessHourNode.value = {
         type: 'dateTime',
         data: {
@@ -107,6 +114,15 @@ watch(
           timezone: 'UTC',
         },
       };
+      store.setNewNodeData({ 
+        action: 'businessHours',
+        type: 'dateTime',
+        title: businessHoursTitle.value,
+        description: businessHoursDescription.value,
+        times: businessHourNode.value.data.times,
+        timezone: businessHourNode.value.data.timezone
+      })
+
     }
   }
 );
