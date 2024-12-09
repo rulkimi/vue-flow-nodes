@@ -25,7 +25,7 @@ const updateEdgeStyles = () => {
       stroke: themeColor.value,
     };
   }
-}
+};
 
 watch(
   () => store.edges, 

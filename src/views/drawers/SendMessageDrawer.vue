@@ -12,7 +12,7 @@ const props = defineProps<{
 }>();
 
 const store = useMainStore();
-store.setActiveNodeId(props.nodeId)
+store.setActiveNodeId(props.nodeId);
 
 const node = computed(() => {
   if (!store.nodes) return;

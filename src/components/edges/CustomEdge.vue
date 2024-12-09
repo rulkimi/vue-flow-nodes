@@ -12,9 +12,9 @@ const props = defineProps<{
   targetPosition: Position
   markerEnd?: string
   style?: any
-}>()
+}>();
 
-const path = computed(() => getSmoothStepPath(props))
+const path = computed(() => getSmoothStepPath(props));
 </script>
 
 <template>

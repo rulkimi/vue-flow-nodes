@@ -1,13 +1,12 @@
 <script setup lang="ts">
-
-import { ref } from 'vue'
-import { useVueFlow } from '@vue-flow/core'
+import { ref } from 'vue';
+import { useVueFlow } from '@vue-flow/core';
 
 const props = defineProps<{
   id: string
 }>();
 
-const themeColor = ref('green')
+const themeColor = ref('green');
 
 const { getConnectedEdges } = useVueFlow();
 
@@ -17,7 +16,7 @@ for (const edge of outputEdges) {
   edge.style = {
     stroke: themeColor.value
   };
-}
+};
 </script>
 
 <template>

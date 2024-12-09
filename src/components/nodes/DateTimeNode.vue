@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import NodeBox from '../templates/NodeBox.vue'
+import NodeBox from '../templates/NodeBox.vue';
 
-import { computed, ref, watch } from 'vue'
-import { useVueFlow } from '@vue-flow/core'
+import { computed, ref, watch } from 'vue';
+import { useVueFlow } from '@vue-flow/core';
 import { useMainStore } from '../../stores';
 
 const props = defineProps<{
@@ -14,7 +14,7 @@ const props = defineProps<{
   }
 }>();
 
-const store = useMainStore()
+const store = useMainStore();
 
 const description = computed(() => {
   let action;
@@ -29,7 +29,7 @@ const description = computed(() => {
   return `${action} - ${props.data.timezone}`
 });
 
-const themeColor = ref('#f9511e')
+const themeColor = ref('#f9511e');
 
 const { getConnectedEdges } = useVueFlow();
 
@@ -42,7 +42,7 @@ const updateEdgeStyles = () => {
       stroke: themeColor.value,
     };
   }
-}
+};
 
 watch(
   () => store.edges, 

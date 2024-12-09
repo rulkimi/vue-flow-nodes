@@ -68,14 +68,13 @@ export const useMainStore = defineStore('main', () => {
     const newNode = createNode(node);
 
     if (!nodeIds.value.includes(newNode.id)) {
-      nodeIds.value.push(newNode.id); // Add the new node's ID to the list
+      nodeIds.value.push(newNode.id);
     }
 
     nodes.value.push(newNode);
   };
 
   const removeNode = (nodeId: string) => {
-    // Remove the node by ID from both nodes and IDs list
     nodes.value = nodes.value.filter(node => node.id !== nodeId);
     nodeIds.value = nodeIds.value.filter(id => id !== nodeId);
   };

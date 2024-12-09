@@ -5,7 +5,7 @@ import FloatingInfo from '../components/FloatingInfo.vue';
 
 const store = useMainStore();
 const toggleDrawer = () => {
-  store.setIsDrawerOpen(!store.isDrawerOpen)
+  store.setIsDrawerOpen(!store.isDrawerOpen);
 };
 </script>
 

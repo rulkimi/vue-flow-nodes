@@ -2,7 +2,7 @@
 import { computed, ref, watch } from 'vue';
 import { useMainStore } from '../../stores';
 import { useToastStore } from '../../stores/toastStore';
-import { Node } from '../../types'
+import { Node } from '../../types';
 import AddCommentDetails from '../../components/templates/AddCommentDetails.vue';
 import DrawerLayout from '../../layouts/DrawerLayout.vue';
 
@@ -16,7 +16,7 @@ store.setActiveNodeId(props.nodeId);
 
 const node = computed(() => {
   if (!store.nodes) return;
-  return store.nodes.find((node: Node) => node.id === props.nodeId)
+  return store.nodes.find((node: Node) => node.id === props.nodeId);
 });
 
 const commentTitle = ref(node?.value?.data.name);
@@ -38,7 +38,7 @@ const update = () => {
     icon: 'comment-dots',
     iconColor: '#8b93d0'
   });
-}
+};
 
 watch(
   () => props.nodeId,
@@ -50,7 +50,7 @@ watch(
       commentTitle.value = newNode.data.name;
       commentText.value = newNode.data.comment;
       description.value = newNode.data.description;
-      addCommentKey.value++
+      addCommentKey.value++;
     }
   }
 );

@@ -41,7 +41,6 @@ watch(
       type: 'addComment',
       description: addCommentDescription.value
     });
-    console.log(addCommentDescription.value)
   },
   { deep: true }
 );

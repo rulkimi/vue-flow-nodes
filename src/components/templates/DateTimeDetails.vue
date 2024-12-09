@@ -14,11 +14,11 @@ const store = useMainStore();
 const title = ref(props.modelDateTimeTitle);
 const description = ref(props.modelDateTimeDescription ?? store.getNodeDescription('dateTime'));
 
-const emit = defineEmits(['update:modelNode', 'update:modelDateTimeDescription', 'update:modelDateTimeTitle'])
+const emit = defineEmits(['update:modelNode', 'update:modelDateTimeDescription', 'update:modelDateTimeTitle']);
 
 function updateNode(newValue: any) {
   emit('update:modelNode', newValue);
-}
+};
 
 const updateDescription = (event: Event) => {
   const input = event.target as HTMLTextAreaElement

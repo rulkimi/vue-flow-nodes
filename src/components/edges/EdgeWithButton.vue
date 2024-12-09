@@ -16,15 +16,14 @@ const props = defineProps<{
   style?: any
 }>()
 
-const path = computed(() => getSmoothStepPath(props))
+const path = computed(() => getSmoothStepPath(props));
 
-const router = useRouter()
-const store = useMainStore()
+const router = useRouter();
+const store = useMainStore();
 const onAddButtonClick = (edgeId: string) => {
-  // addNewNode(edgeId)
   store.setActiveEdgeId(edgeId)
   router.push({ name: 'add-node', params: { edgeId: edgeId } })
-}
+};
 </script>
 
 <template>

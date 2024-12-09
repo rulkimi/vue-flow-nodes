@@ -8,7 +8,7 @@ defineProps<{
   icon: string
 }>();
 
-const slot = useSlots()
+const slot = useSlots();
 const hasTopContent = computed(() => !!slot['top-content']);
 </script>
 

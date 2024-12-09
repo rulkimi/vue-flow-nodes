@@ -3,7 +3,7 @@ import { onMounted } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { useMainStore } from '../stores';
 import { useToastStore } from '../stores/toastStore';
-import { Node, NodeData } from '../types'
+import { Node, NodeData } from '../types';
 import { convertCamelToKebab } from '../utils';
 
 import { useVueFlow, DefaultEdge } from '@vue-flow/core';

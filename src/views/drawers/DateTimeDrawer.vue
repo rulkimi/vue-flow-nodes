@@ -2,7 +2,7 @@
 import { computed, ref, watch } from 'vue';
 import { useMainStore } from '../../stores';
 import { useToastStore } from '../../stores/toastStore';
-import { Node } from '../../types'
+import { Node } from '../../types';
 
 import DateTimeDetails from '../../components/templates/DateTimeDetails.vue';
 import DrawerLayout from '../../layouts/DrawerLayout.vue';

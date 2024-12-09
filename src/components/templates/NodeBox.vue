@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, watch } from 'vue'
+import { ref, onMounted, watch } from 'vue';
 
 defineProps<{
   title: string
@@ -9,29 +9,28 @@ defineProps<{
   borderColor?: string
 }>();
 
-const isExpanded = ref(false)
-const isOverflowing = ref(false)
-const descriptionRef = ref<HTMLElement | null>(null)
+const isExpanded = ref(false);
+const isOverflowing = ref(false);
+const descriptionRef = ref<HTMLElement | null>(null);
 
 const checkOverflow = () => {
   if (descriptionRef.value) {
-    isOverflowing.value =
-      descriptionRef.value.scrollHeight > descriptionRef.value.clientHeight
+    isOverflowing.value = descriptionRef.value.scrollHeight > descriptionRef.value.clientHeight;
   }
-}
+};
 
 const toggleDescription = () => {
-  isExpanded.value = !isExpanded.value
-}
+  isExpanded.value = !isExpanded.value;
+};
 
 onMounted(() => {
-  checkOverflow()
-})
+  checkOverflow();
+});
 
 watch(
   () => descriptionRef.value?.innerText,
   () => checkOverflow()
-)
+);
 </script>
 
 <template>

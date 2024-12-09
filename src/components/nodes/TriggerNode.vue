@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import NodeBox from '../templates/NodeBox.vue'
+import NodeBox from '../templates/NodeBox.vue';
 
-import { useVueFlow } from '@vue-flow/core'
+import { useVueFlow } from '@vue-flow/core';
 import { useMainStore } from '../../stores';
-import { computed, ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue';
 
 const props = defineProps<{
   id: string
@@ -24,8 +24,8 @@ const description = computed(() => {
   }
 });
 
-const store = useMainStore()
-const themeColor = ref('#ea487e')
+const store = useMainStore();
+const themeColor = ref('#ea487e');
 
 const { getConnectedEdges } = useVueFlow();
 
@@ -38,7 +38,7 @@ const updateEdgeStyles = () => {
       stroke: themeColor.value,
     };
   }
-}
+};
 
 watch(
   () => store.edges, 

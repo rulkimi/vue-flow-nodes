@@ -15,7 +15,7 @@ const props = defineProps<{
 const store = useMainStore();
 
 onMounted(() => {
-  store.setActiveEdgeId(props.edgeId)
+  store.setActiveEdgeId(props.edgeId);
 });
 
 const nodeTypes = ref([
@@ -51,7 +51,7 @@ const sendMessageDescription = ref('');
 
 const addCommentTitle = ref();
 const addCommentText = ref();
-const addCommentDescription = ref()
+const addCommentDescription = ref();
 
 const businessHourNode = ref({
   type: 'dateTime',
@@ -128,12 +128,12 @@ watch(
 );
 
 const getDrawerDescription = () => {
-  const target = store.nodes.find(node => node.id === store.edges.find(edge => edge.id === props.edgeId)?.target)?.name
-  let source = store.nodes.find(node => node.id === store.edges.find(edge => edge.id === props.edgeId)?.source)?.name
+  const target = store.nodes.find(node => node.id === store.edges.find(edge => edge.id === props.edgeId)?.target)?.name;
+  let source = store.nodes.find(node => node.id === store.edges.find(edge => edge.id === props.edgeId)?.source)?.name;
   if (!source) source = 'Trigger';
-  if (!target) return `Adding node from <strong>${source}</strong>`
-  return `Adding node between <strong>${source}</strong> and <strong>${target}</strong>`
-}
+  if (!target) return `Adding node from <strong>${source}</strong>`;
+  return `Adding node between <strong>${source}</strong> and <strong>${target}</strong>`;
+};
 </script>
 
 <template>
