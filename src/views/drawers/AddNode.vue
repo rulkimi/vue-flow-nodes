@@ -43,7 +43,9 @@ const nodeTypes = ref([
 ]);
 const selectedNodeType = ref();
 
-const messages = ref<Array<TextPayload | AttachmentPayload>>([]);
+const messages = ref<Array<TextPayload | AttachmentPayload>>([
+  { id: Date.now().toString(), type: 'text', text: '' }
+]);
 const sendMessageTitle = ref();
 const sendMessageDescription = ref('');
 
@@ -68,6 +70,45 @@ const businessHourNode = ref({
 });
 const businessHoursTitle = ref('Business Hours');
 const businessHoursDescription = ref('');
+
+watch(
+  () => selectedNodeType.value,
+  (newType) => {
+    store.setNewNodeData({});
+
+    if (newType === 'sendMessage') {
+      messages.value = [{ id: Date.now().toString(), type: 'text', text: '' }];
+      sendMessageTitle.value = '';
+      sendMessageDescription.value = '';
+    }
+
+    if (newType === 'addComment') {
+      addCommentTitle.value = '';
+      addCommentText.value = '';
+      addCommentDescription.value = '';
+    }
+
+    if (newType === 'businessHours') {
+      businessHoursTitle.value = '';
+      businessHoursDescription.value = '';
+      businessHourNode.value = {
+        type: 'dateTime',
+        data: {
+          times: [
+            { day: 'mon', startTime: '09:00', endTime: '17:00' },
+            { day: 'tue', startTime: '09:00', endTime: '17:00' },
+            { day: 'wed', startTime: '09:00', endTime: '17:00' },
+            { day: 'thu', startTime: '09:00', endTime: '17:00' },
+            { day: 'fri', startTime: '09:00', endTime: '17:00' },
+            { day: 'sat', startTime: '09:00', endTime: '17:00' },
+            { day: 'sun', startTime: '09:00', endTime: '17:00' },
+          ],
+          timezone: 'UTC',
+        },
+      };
+    }
+  }
+);
 
 watch(
   [
@@ -95,12 +136,14 @@ watch(
 watch(
   [() => addCommentTitle.value, () => addCommentText.value],
   () => {
-    store.setNewNodeData({ 
-      comment: addCommentText.value, 
-      title: addCommentTitle.value, 
-      type: selectedNodeType.value,
-      description: addCommentDescription.value
-    });
+    if (selectedNodeType.value === 'addComment') {
+      store.setNewNodeData({ 
+        comment: addCommentText.value, 
+        title: addCommentTitle.value, 
+        type: selectedNodeType.value,
+        description: addCommentDescription.value
+      });
+    }
   },
   { deep: true }
 );

@@ -163,6 +163,7 @@ const openUrl = (url: string) => {
               <input
                 :id="message.id ?? `message-${index}`"
                 v-model="message.text"
+                placeholder="E.g. Hello, Welcome to the chat!"
                 class="border rounded-lg px-2 py-1 w-full"
               />
             </label>
