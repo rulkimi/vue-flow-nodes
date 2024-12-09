@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 import { useMainStore } from '../stores';
 import { useToastStore } from '../stores/toastStore';
 import { Node, NodeData } from '../types'
@@ -24,6 +24,7 @@ import EmptyNode from '../components/nodes/EmptyNode.vue';
 import EmptyEdge from '../components/edges/EmptyEdge.vue';
 
 const router = useRouter();
+const route = useRoute();
 const store = useMainStore();
 const toast = useToastStore();
 const { findEdge, updateNode, addNodes } = useVueFlow();
@@ -313,7 +314,7 @@ const generateRandomId = () => {
   </BaseLayout>
   <div class="fixed z-10 bottom-4 right-4 flex gap-2">
     <button
-      v-if="store.activeNodeId"
+      v-if="store.activeNodeId && route.params.nodeId"
       :class="store.isDrawerOpen ? 'md:block ' : 'hidden md:block'"
       class="bg-white border border-red-500/50 text-red-500 font-semibold px-4 py-2 rounded-lg shadow-sm hover:bg-red-500 hover:text-white transition-all duration-300"
       @click="removeNode"
