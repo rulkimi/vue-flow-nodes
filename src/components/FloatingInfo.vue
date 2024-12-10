@@ -20,7 +20,7 @@ const showTips = ref(true);
       <ul class="text-sm text-gray-600 space-y-2 leading-5">
         <li class="flex items-start">
           <span class="text-blue-500 mr-2">1.</span>
-          Click a button on the edge to add the node
+          Click the + button on the line to add a node
         </li>
         <li class="flex items-start">
           <span class="text-blue-500 mr-2">2.</span>
