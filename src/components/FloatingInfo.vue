@@ -30,6 +30,10 @@ const showTips = ref(true);
           <span class="text-blue-500 mr-2">3.</span>
           Enter the required details
         </li>
+        <li class="flex items-start">
+          <span class="text-blue-500 mr-2">4.</span>
+          Note that description field is auto filled, feel free to add custom description
+        </li>
       </ul>
     </div>
   </transition>
